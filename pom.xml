@@ -7,13 +7,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
-  
+    <prerequisites>
+        <maven>3.3.9</maven>
+        </prerequisites>  
   <build>
   
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <version>3.2</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -25,7 +27,7 @@
   	<dependency>
   		<groupId>com.tinkerforge</groupId>
   		<artifactId>tinkerforge</artifactId>
-  		<version>2.1.6</version>
+  		<version>2.1.9</version>
   	</dependency>
   </dependencies>
   <organization>
