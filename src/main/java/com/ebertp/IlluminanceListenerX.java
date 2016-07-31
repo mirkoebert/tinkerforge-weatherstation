@@ -19,7 +19,7 @@ final class IlluminanceListenerX implements IlluminanceListener {
 	@Override
 	public void illuminance(int illuminance) {
 		long ill = Math.round(illuminance/10.0);
-		System.out.println("Ill: "+ill);
+		System.out.println("Illuminance: "+ill);
 		try {
 			if(ill>500){
 				lcd.backlightOff();

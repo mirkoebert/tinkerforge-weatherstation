@@ -18,7 +18,7 @@ final class AirPressureListenerX implements AirPressureListener {
 
 	@Override
 	public void airPressure(int airPressure) {
-        System.out.println("Luftdruck: " + airPressure/1000 + " mBar");
+        System.out.println("Air pressure: " + airPressure/1000 + " mBar");
         try {
         	float QFE = airPressure/1000f;
         	double Tg = 0.0065;
