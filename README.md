@@ -1,8 +1,12 @@
 # tinkerforge-weatherstation
-Simple weather station software for tinkerfoge weather station kit.
-More Information, see http://programming-2.blogspot.de/2016/07/tinkerforge-weather-station-published.html
+Simple weather station software for Tinkerfoge weather station kit.
+More Information, see 
+* http://programming-2.blogspot.de/2016/07/tinkerforge-weather-station-published.html
+* http://www.tinkerforge.com/de/doc/Kits/WeatherStation/WeatherStation.html#starter-kit-weather-station
 
-
+## Requirements
+* Java 8 JDK
+* Maven 
 
 ## Build
 ```bash
@@ -26,4 +30,13 @@ If a sensor value has changed, the new value is printed out to console and the d
 
 
 Stop the program with `<crtl><c>`
+
+
+or 
+
+Execute on RED Brick http://www.tinkerforge.com/de/doc/Hardware/Bricks/RED_Brick.html
+Please make sure that the RED Brick is under your master brick. If not you've got a Java Exception like  
+```
+Exception in thread "main" com.tinkerforge.TimeoutException: Did not receive response in time for function ID 3
+´´´
 
