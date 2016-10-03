@@ -20,7 +20,7 @@ See folder `target`.
 mvn exec:java -Dexec.mainClass="com.ebertp.WeatherStation"
 ```
 
-or
+**or**
 
 
 ```bash
@@ -32,7 +32,7 @@ If a sensor value has changed, the new value is printed out to console and the d
 Stop the program with `<crtl><c>`
 
 
-or 
+**or** 
 
 Execute on RED Brick http://www.tinkerforge.com/de/doc/Hardware/Bricks/RED_Brick.html
 
@@ -45,9 +45,11 @@ Exception in thread "main" com.tinkerforge.TimeoutException: Did not receive res
 ## Features
 * Multithreaded with Call Backs
 * Measures 
-** Ambient Light in lux
-** Air pressure in hPa
-** Relative Humidity in %
-** Temperature (only as chip temperature) in degree Celsius.
+  * Ambient Light in lux
+  * Air pressure in hPa
+  * Relative Humidity in %
+  * Temperature (only as chip temperature) in degree Celsius.
 * Date and Time
-* Warning
+* Warnings
+  * Humidity to low or to high
+  * Frost - planing
