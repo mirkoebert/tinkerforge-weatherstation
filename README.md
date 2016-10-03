@@ -35,8 +35,19 @@ Stop the program with `<crtl><c>`
 or 
 
 Execute on RED Brick http://www.tinkerforge.com/de/doc/Hardware/Bricks/RED_Brick.html
+
+
 Please make sure that the RED Brick is under your master brick. If not you've got a Java Exception like  
 ```
 Exception in thread "main" com.tinkerforge.TimeoutException: Did not receive response in time for function ID 3
-´´´
+```
 
+## Features
+* Multithreaded with Call Backs
+* Measures 
+** Ambient Light in lux
+** Air pressure in hPa
+** Relative Humidity in %
+** Temperature (only as chip temperature) in degree Celsius.
+* Date and Time
+* Warning
