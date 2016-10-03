@@ -7,7 +7,7 @@ import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
-class HumidityListenerX implements HumidityListener {
+class HumidityListenerX implements HumidityListener, SensorWithWarningsInterface{
 	
 	private BrickletLCD20x4 lcd;
 	private String warningMessage = "Warn: Humidity";
@@ -32,13 +32,13 @@ class HumidityListenerX implements HumidityListener {
 		}
     }
 	
-	public String getMessage(){
-		String r = "                                ";
+	@Override
+	public String getWarningMessage(){
+		String r = "";
 		if((System.currentTimeMillis() - lastWarningOccurance) < 2000){
 			r = warningMessage;
 		}
-		return r;
-		
+		return r;		
 	}
     
 }

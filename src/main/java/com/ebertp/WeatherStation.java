@@ -30,7 +30,9 @@ public final class WeatherStation {
 		ipcon.connect(HOST, PORT);
 
 		HumidityListenerX humx = new HumidityListenerX(lcd);
-		WarningView wv = new WarningView(lcd,humx);
+		WarningView wv = new WarningView(lcd);
+		wv.addWarningSensor(humx);
+		
 
 		
 		lcd.backlightOff();
@@ -50,6 +52,7 @@ public final class WeatherStation {
 		Thread t2 = new Thread(wv);
 		t2.start();
 		TemperatureHelper th = new TemperatureHelper(lcd, bar);
+		wv.addWarningSensor(th);
 		Thread t3 = new Thread(th);
 		t3.start();
 

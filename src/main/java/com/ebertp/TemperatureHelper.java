@@ -7,12 +7,13 @@ import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
-public final class TemperatureHelper implements Runnable {
+public final class TemperatureHelper implements Runnable, SensorWithWarningsInterface {
 
 		private BrickletLCD20x4 lcd;
 		private BrickletBarometer barometer;
 		DecimalFormat df = new DecimalFormat("#.0");
-		
+		private long lastWarningOccurance = 0;
+		private String warningMessage = "Warn: Frost damage risk";		
 
 		public TemperatureHelper(BrickletLCD20x4 lcd, BrickletBarometer barometer) {
 			this.lcd=lcd;
@@ -30,6 +31,11 @@ public final class TemperatureHelper implements Runnable {
 					float rf = raw/100.f;
 					message = df.format(rf)+" C";
 					lcd.writeLine((short)1, (short)0, message );
+					if(rf<5){
+						System.out.println("Warn: Temp: " + rf + " C");
+						lastWarningOccurance = System.currentTimeMillis();
+					}
+								
 				} catch (TimeoutException | NotConnectedException e) {
 					e.printStackTrace();
 				}
@@ -41,6 +47,15 @@ public final class TemperatureHelper implements Runnable {
 			}
 
 
+		}
+
+		@Override
+		public String getWarningMessage() {
+			String r = "";
+			if((System.currentTimeMillis() - lastWarningOccurance) < 2000){
+				r = warningMessage;
+			}
+			return r;
 		}
 
 	}

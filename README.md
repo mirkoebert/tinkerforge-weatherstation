@@ -52,4 +52,4 @@ Exception in thread "main" com.tinkerforge.TimeoutException: Did not receive res
 * Date and Time
 * Warnings
   * Humidity to low or to high
-  * Frost - planing
+  * Frost damage
