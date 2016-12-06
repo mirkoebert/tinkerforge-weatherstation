@@ -7,38 +7,46 @@ import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
-class HumidityListenerX implements HumidityListener, SensorWithWarningsInterface{
-	
-	private BrickletLCD20x4 lcd;
-	private String warningMessage = "Warn: Humidity";
-	private long lastWarningOccurance = 0;
-	private DecimalFormat df = new DecimalFormat("#.0");
+/**
+ * Humidity listener that also calculates warning if the relative humidity is
+ * out of human comfort zone. The Warning is displayed on the LCD display.
+ *
+ * @author mebert
+ *
+ */
+class HumidityListenerX implements HumidityListener, SensorWithWarningsInterface {
 
-	public HumidityListenerX(BrickletLCD20x4 lcd) {
-		this.lcd=lcd;
+	private final DecimalFormat df = new DecimalFormat("#.0");
+	private long lastWarningOccurance = 0;
+	private final BrickletLCD20x4 lcd;
+	private final String warningMessage = "Warn: Humidity";
+
+	public HumidityListenerX(final BrickletLCD20x4 lcd) {
+		this.lcd = lcd;
 	}
 
-	public void humidity(int humidity) {
-        double h = humidity/10.0;
+	@Override
+	public String getWarningMessage() {
+		String r = "";
+		if (System.currentTimeMillis() - lastWarningOccurance < 4000) {
+			r = warningMessage;
+		}
+		return r;
+	}
+
+	@Override
+	public void humidity(final int humidity) {
+		final double h = humidity / 10.0;
 		System.out.println("Relative Humidity: " + h + " %RH");
-        try {
-			lcd.writeLine((short)0, (short)0, df.format(h) + " %RH");
-			if((h>60)||(h<40)){
+		try {
+			lcd.writeLine((short) 0, (short) 0, df.format(h) + " %RH");
+			if (h > 60 || h < 40) {
 				System.out.println("Warn: Humidity: " + h + " %RH");
 				lastWarningOccurance = System.currentTimeMillis();
 			}
 		} catch (TimeoutException | NotConnectedException e) {
 			e.printStackTrace();
 		}
-    }
-	
-	@Override
-	public String getWarningMessage(){
-		String r = "";
-		if((System.currentTimeMillis() - lastWarningOccurance) < 2000){
-			r = warningMessage;
-		}
-		return r;		
 	}
-    
+
 }
