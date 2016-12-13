@@ -1,8 +1,10 @@
 # tinkerforge-weatherstation
-Simple weather station software for Tinkerfoge weather station kit.
+Simple weather station software for Tinkerfoge weather station kit plus RED plus WIFI (WLAN) USB stick.
 More Information, see 
 * http://programming-2.blogspot.de/2016/07/tinkerforge-weather-station-published.html
 * http://www.tinkerforge.com/de/doc/Kits/WeatherStation/WeatherStation.html#starter-kit-weather-station
+* RED http://www.tinkerforge.com/en/doc/Hardware/Bricks/RED_Brick.html#red-brick
+* WIFI (WLAN) USB stick Edimax EW-7811Un http://amzn.to/2httW5O
 
 ## Requirements
 * Java 8 JDK
