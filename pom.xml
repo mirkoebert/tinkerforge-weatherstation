@@ -4,7 +4,7 @@
     <artifactId>tinkerforge-weatherstation</artifactId>
     <version>0.0.3-SNAPSHOT</version>
     <name>tinkerforge-weatherstation</name>
-    <description>BOM3: Brigade of Monkeys 3 - a software robustness test tool. </description>
+    <description>Simple weather station based on Tinkerforge weather station kit.</description>
     <url>http://maven.apache.org</url>
     <developers>
         <developer>
