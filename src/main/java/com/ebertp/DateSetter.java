@@ -12,7 +12,7 @@ final class DateSetter implements Runnable {
 
 	private BrickletLCD20x4 lcd;
 	private Date d;
-	private SimpleDateFormat sdf1 = new SimpleDateFormat("d.MMMM yy");
+	private SimpleDateFormat sdf1 = new SimpleDateFormat("d. MMMM");
 	private SimpleDateFormat sdf2 = new SimpleDateFormat("EE, HH:mm:ss");
 	private boolean timeOrdate = true;
 
