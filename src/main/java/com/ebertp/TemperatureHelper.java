@@ -32,7 +32,7 @@ public final class TemperatureHelper implements Runnable, SensorWithWarningsInte
 					message = df.format(rf)+" C";
 					lcd.writeLine((short)1, (short)0, message );
 					if(rf<4){
-						System.out.println("Warn: Temp: " + rf + " C");
+						System.err.println("Warn: Temp: " + rf + " C");
 						lastWarningOccurance = System.currentTimeMillis();
 					}
 								

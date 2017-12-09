@@ -35,41 +35,41 @@ public final class WeatherStation {
 		final BrickletAmbientLight ambientLight = new BrickletAmbientLight(UIDamb, ipcon);
 
 		ipcon.connect(HOST, PORT);
+		lcd.backlightOff();
+		lcd.clearDisplay();
+		lcd.writeLine((short)0, (short)0, "Weather Station" );
+		lcd.backlightOn();
 
+		
+		
 		final HumidityListenerX humx = new HumidityListenerX(lcd);
 		final WarningView wv = new WarningView(lcd);
 		wv.addWarningSensor(humx);
 
-		lcd.backlightOff();
-		lcd.clearDisplay();
 		hum.setHumidityCallbackPeriod(18001);
 		hum.addHumidityListener(humx);
+		
 		bar.setAirPressureCallbackPeriod(19002);
 		bar.addAirPressureListener(new AirPressureListenerX(lcd, bar));
+		
 		ambientLight.setIlluminanceCallbackPeriod(23001);
 		ambientLight.addIlluminanceListener(new IlluminanceListenerX(lcd));
 
 		final DateSetter ds = new DateSetter(lcd);
 		final Thread t = new Thread(ds);
 		t.start();
-		lcd.backlightOn();
 		final Thread t2 = new Thread(wv);
 		t2.start();
 		final TemperatureHelper th = new TemperatureHelper(lcd, bar);
 		wv.addWarningSensor(th);
 		final Thread t3 = new Thread(th);
 		t3.start();
-
+		
+		lcd.clearDisplay();
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("Shutdown");
-				try {
-					lcd.backlightOff();
-					lcd.clearDisplay();
-				} catch (TimeoutException | NotConnectedException e) {
-					e.printStackTrace();
-				}
+				//
 			}
 		}));
 	}
@@ -77,7 +77,13 @@ public final class WeatherStation {
 	@Override
 	protected void finalize() throws Throwable {
 		super.finalize();
-		System.out.println("YYY");
+		System.out.println("Shutdown");
+		try {
+			lcd.backlightOff();
+			lcd.clearDisplay();
+		} catch (TimeoutException | NotConnectedException e) {
+			e.printStackTrace();
+		}
 		ipcon.disconnect();
 	}
 }
