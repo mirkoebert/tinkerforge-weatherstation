@@ -40,7 +40,7 @@ public final class WeatherStation {
 		lcd.clearDisplay();
 		hum.setHumidityCallbackPeriod(4011);
 		hum.addHumidityListener(humx);
-		bar.setAirPressureCallbackPeriod(15001);
+		bar.setAirPressureCallbackPeriod(19020);
 		bar.addAirPressureListener(new AirPressureListenerX(lcd, bar));
 		ambientLight.setIlluminanceCallbackPeriod(1301);
 		ambientLight.addIlluminanceListener(new IlluminanceListenerX(lcd));

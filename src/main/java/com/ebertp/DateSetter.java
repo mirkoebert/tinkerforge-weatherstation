@@ -13,7 +13,7 @@ final class DateSetter implements Runnable {
 	private BrickletLCD20x4 lcd;
 	private Date d;
 	private SimpleDateFormat sdf1 = new SimpleDateFormat("d. MMMM");
-	private SimpleDateFormat sdf2 = new SimpleDateFormat("EE, HH:mm:ss");
+	private SimpleDateFormat sdf2 = new SimpleDateFormat("EE HH:mm:ss");
 	private boolean timeOrdate = true;
 
 	public DateSetter(BrickletLCD20x4 lcd) {
@@ -31,6 +31,7 @@ final class DateSetter implements Runnable {
 				} else {
 					message = sdf2.format(d);
 				}
+				message = fillWithBlankToLength(12, message);
 				lcd.writeLine((short)1, (short)8, message );
 				timeOrdate = !timeOrdate;
 			} catch (TimeoutException | NotConnectedException e) {
@@ -42,8 +43,11 @@ final class DateSetter implements Runnable {
 				e.printStackTrace();
 			}
 		}
-
-
+	}
+	
+	String fillWithBlankToLength(int length, String s) {
+		String padded = String.format("%-"+length+"s", s);
+		return padded;
 	}
 
 }
