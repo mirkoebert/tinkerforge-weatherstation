@@ -31,7 +31,7 @@ public final class TemperatureHelper implements Runnable, SensorWithWarningsInte
 					float rf = raw/100.f;
 					message = df.format(rf)+" C";
 					lcd.writeLine((short)1, (short)0, message );
-					if(rf<5){
+					if(rf<4){
 						System.out.println("Warn: Temp: " + rf + " C");
 						lastWarningOccurance = System.currentTimeMillis();
 					}
@@ -39,8 +39,9 @@ public final class TemperatureHelper implements Runnable, SensorWithWarningsInte
 				} catch (TimeoutException | NotConnectedException e) {
 					e.printStackTrace();
 				}
+				// need this sleep, because this thread is not a call back listener
 				try {
-					Thread.sleep(3700);
+					Thread.sleep(11000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -52,7 +53,7 @@ public final class TemperatureHelper implements Runnable, SensorWithWarningsInte
 		@Override
 		public String getWarningMessage() {
 			String r = "";
-			if((System.currentTimeMillis() - lastWarningOccurance) < 2000){
+			if((System.currentTimeMillis() - lastWarningOccurance) < 30000){
 				r = warningMessage;
 			}
 			return r;
