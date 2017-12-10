@@ -55,3 +55,5 @@ Exception in thread "main" com.tinkerforge.TimeoutException: Did not receive res
 * Warnings
   * Humidity to low or to high
   * Frost damage
+  * Storm
+
