@@ -23,6 +23,10 @@ public class WeatherMonitor {
 	public boolean isFrostAlarm() {
 		return (m.getTempIn() < 5);
 	}
+	
+	public boolean isFireAlarm() {
+		return (m.getTempIn() > 55);
+	}
 
 	/**
 	 * @link http://www.bohlken.net/luftdruck2.htm

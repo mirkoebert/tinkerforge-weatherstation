@@ -53,6 +53,8 @@ public class WeatherViewLcd24x4 implements Runnable{
 				lcd.writeLine((short) 3, (short) 0,  "Warnung: Frostgefahr");
 			} else if (monitor.isStormAlarm()) {
 				lcd.writeLine((short) 3, (short) 0,  "Warnung: Sturm");
+			} else if (monitor.isFireAlarm()) {
+				lcd.writeLine((short) 3, (short) 0,  "Warnung: Feuer");
 			}
 			timeOrdate = !timeOrdate;
 
