@@ -38,15 +38,13 @@ public final class WeatherStation {
 		// start message
 		lcd.backlightOff();
 		lcd.clearDisplay();
-		lcd.writeLine((short)0, (short)0, "Weather Station" );
+		lcd.writeLine((short)0, (short)0, " Weather Station" );
 		lcd.backlightOn();
 		
 		WeatherModel m = new WeatherModel();
 		
 		
 		final HumidityListenerX humListener = new HumidityListenerX(m);
-//		final WarningView wv = new WarningView(lcd);
-//		wv.addWarningSensor(humListener);
 
 		humBrick.setHumidityCallbackPeriod(30003);
 		humBrick.addHumidityListener(humListener);
@@ -58,9 +56,9 @@ public final class WeatherStation {
 		ambientLightBrick.addIlluminanceListener(new IlluminanceListenerX(m));
 
 		final TemperatureHelper th = new TemperatureHelper(m, barBrick);
-//		wv.addWarningSensor(th);
+		WeatherMonitor monitor = new WeatherMonitor(m);
 		
-		WeatherViewLcd24x4 v = new WeatherViewLcd24x4(m, lcd);
+		WeatherViewLcd24x4 v = new WeatherViewLcd24x4(m, lcd, monitor);
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			@Override
 			public void run() {
