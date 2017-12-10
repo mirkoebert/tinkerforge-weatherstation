@@ -29,43 +29,38 @@ public final class WeatherStation {
 	public WeatherStation() throws Exception {
 		ipcon = new IPConnection();
 
-		final BrickletHumidity hum = new BrickletHumidity(UIDhum, ipcon);
+		final BrickletHumidity humBrick = new BrickletHumidity(UIDhum, ipcon);
 		lcd = new BrickletLCD20x4(UIDlcd, ipcon);
-		final BrickletBarometer bar = new BrickletBarometer(UIDbar, ipcon);
-		final BrickletAmbientLight ambientLight = new BrickletAmbientLight(UIDamb, ipcon);
+		final BrickletBarometer barBrick = new BrickletBarometer(UIDbar, ipcon);
+		final BrickletAmbientLight ambientLightBrick = new BrickletAmbientLight(UIDamb, ipcon);
 
 		ipcon.connect(HOST, PORT);
+		// start message
 		lcd.backlightOff();
 		lcd.clearDisplay();
 		lcd.writeLine((short)0, (short)0, "Weather Station" );
 		lcd.backlightOn();
+		
+		WeatherModel m = new WeatherModel();
+		
+		
+		final HumidityListenerX humListener = new HumidityListenerX(m);
+//		final WarningView wv = new WarningView(lcd);
+//		wv.addWarningSensor(humListener);
 
+		humBrick.setHumidityCallbackPeriod(30003);
+		humBrick.addHumidityListener(humListener);
 		
+		barBrick.setAirPressureCallbackPeriod(30002);
+		barBrick.addAirPressureListener(new AirPressureListenerX(m, barBrick));
 		
-		final HumidityListenerX humx = new HumidityListenerX(lcd);
-		final WarningView wv = new WarningView(lcd);
-		wv.addWarningSensor(humx);
+		ambientLightBrick.setIlluminanceCallbackPeriod(30001);
+		ambientLightBrick.addIlluminanceListener(new IlluminanceListenerX(m));
 
-		hum.setHumidityCallbackPeriod(18001);
-		hum.addHumidityListener(humx);
+		final TemperatureHelper th = new TemperatureHelper(m, barBrick);
+//		wv.addWarningSensor(th);
 		
-		bar.setAirPressureCallbackPeriod(19002);
-		bar.addAirPressureListener(new AirPressureListenerX(lcd, bar));
-		
-		ambientLight.setIlluminanceCallbackPeriod(23001);
-		ambientLight.addIlluminanceListener(new IlluminanceListenerX(lcd));
-
-		final DateSetter ds = new DateSetter(lcd);
-		final Thread t = new Thread(ds);
-		t.start();
-		final Thread t2 = new Thread(wv);
-		t2.start();
-		final TemperatureHelper th = new TemperatureHelper(lcd, bar);
-		wv.addWarningSensor(th);
-		final Thread t3 = new Thread(th);
-		t3.start();
-		
-		lcd.clearDisplay();
+		WeatherViewLcd24x4 v = new WeatherViewLcd24x4(m, lcd);
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			@Override
 			public void run() {

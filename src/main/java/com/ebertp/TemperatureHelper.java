@@ -1,36 +1,34 @@
 package com.ebertp;
 
-import java.text.DecimalFormat;
 
 import com.tinkerforge.BrickletBarometer;
-import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
 public final class TemperatureHelper implements Runnable, SensorWithWarningsInterface {
 
-		private BrickletLCD20x4 lcd;
 		private BrickletBarometer barometer;
-		DecimalFormat df = new DecimalFormat("#.0");
 		private long lastWarningOccurance = 0;
-		private String warningMessage = "Warn: Frost damage risk";		
+		private String warningMessage = "Warn: Frost damage risk";
+		private WeatherModel m;		
 
-		public TemperatureHelper(BrickletLCD20x4 lcd, BrickletBarometer barometer) {
-			this.lcd=lcd;
+		public TemperatureHelper(WeatherModel m, BrickletBarometer barometer) {
+			this.m = m;
 			this.barometer=barometer;
+			final Thread t3 = new Thread(this);
+			t3.start();
 		}
 
 		@Override
 		public void run() {
-			String message = "";
+//			String message = "";
 			while(true){
 				
 				try {
 					short raw = barometer.getChipTemperature();
 					System.out.println("Temp: "+raw);
 					float rf = raw/100.f;
-					message = df.format(rf)+" C";
-					lcd.writeLine((short)1, (short)0, message );
+					m.setTempIn(rf);
 					if(rf<4){
 						System.err.println("Warn: Temp: " + rf + " C");
 						lastWarningOccurance = System.currentTimeMillis();
@@ -41,7 +39,7 @@ public final class TemperatureHelper implements Runnable, SensorWithWarningsInte
 				}
 				// need this sleep, because this thread is not a call back listener
 				try {
-					Thread.sleep(11000);
+					Thread.sleep(30000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
