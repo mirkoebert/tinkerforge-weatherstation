@@ -55,7 +55,6 @@ public final class WeatherStation {
 		ambientLightBrick.setIlluminanceCallbackPeriod(30001);
 		ambientLightBrick.addIlluminanceListener(new IlluminanceListenerX(m));
 
-		final TemperatureHelper th = new TemperatureHelper(m, barBrick);
 		WeatherMonitor monitor = new WeatherMonitor(m);
 		
 		WeatherViewLcd24x4 v = new WeatherViewLcd24x4(m, lcd, monitor);

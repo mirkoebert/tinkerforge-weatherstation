@@ -68,7 +68,7 @@ public class WeatherViewLcd24x4 implements Runnable{
 	public void run() {
 		while(true){
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(3500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
