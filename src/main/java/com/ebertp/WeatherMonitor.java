@@ -8,7 +8,7 @@ public class WeatherMonitor {
 	private WeatherModel m;
 	private boolean alarm = false;
 	private List<AirpressurePoint> aplist = new ArrayList<AirpressurePoint>();
-	
+
 
 	public  WeatherMonitor(WeatherModel m) {
 		this.m = m;
@@ -23,9 +23,9 @@ public class WeatherMonitor {
 	public boolean isFrostAlarm() {
 		return (m.getTempIn() < 5);
 	}
-	
+
 	public boolean isFireAlarm() {
-		return (m.getTempIn() > 55);
+		return (m.getTempIn() > 50);
 	}
 
 	/**
@@ -38,11 +38,11 @@ public class WeatherMonitor {
 		double ap = m.getAirPressure();
 		long d = m.getDate();
 		AirpressurePoint cap = new AirpressurePoint(d,ap);
-		
-		
+
+
 		AirpressurePoint min = getMin(cap);
 		AirpressurePoint max = getMax(cap);
-		if ((max.airpressure -min.airpressure) > 3.3) {
+		if ((max.airpressure - min.airpressure) > 3.3) {
 			r = true;
 		} else if(((max.airpressure -min.airpressure) > 2) && (max.date < min.date) ) {
 			r = true;
@@ -70,7 +70,7 @@ public class WeatherMonitor {
 		}
 		return max;
 	}
-	
+
 	private void removeOldData() {
 		long now = System.currentTimeMillis();
 		final long h1inMsec = 60 * 60 * 1000;
@@ -80,6 +80,38 @@ public class WeatherMonitor {
 			}
 		}
 	}
-	
+
+	public String getForeCast() {
+		String r = "Das Wetter bleibt unverändert gut.";
+		double ap = m.getAirPressure();
+		long d = m.getDate();
+		AirpressurePoint cap = new AirpressurePoint(d,ap);
+
+
+		AirpressurePoint min = getMin(cap);
+		AirpressurePoint max = getMax(cap);
+		double delta = max.airpressure - min.airpressure;
+		if (isFallend(min, max)) {
+			if ((delta > 2)&&(delta>1)) { 
+				r="6-7 Bft";
+				if (delta > 2) {
+					r="8-12 Bft";
+				}
+			}
+		} else {
+			if((delta > 1.3)&&(delta < 2)) {
+				r = "6-7 Bft";
+			} else if((delta >=2)&& (delta < 3)) {
+				r = "8-9 Bft";
+			} else if (delta > 3) {
+				r = "10- Bft";
+			}
+		}
+		return r;
+	}
+
+	private boolean isFallend(AirpressurePoint min, AirpressurePoint max) {
+		return max.date < min.date;
+	}
 
 }

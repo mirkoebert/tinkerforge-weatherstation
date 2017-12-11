@@ -6,7 +6,6 @@ public class WeatherModel {
 	long illumination;
 	long date;
 	double airPressure, humdidity;
-	WarningMessage[] warninggs;
 
 	public long getDate() {
 		return date;
@@ -57,13 +56,6 @@ public class WeatherModel {
 		this.humdidity = humdidity;
 	}
 
-	public WarningMessage[] getWarninggs() {
-		return warninggs;
-	}
-
-	public void setWarninggs(WarningMessage[] warninggs) {
-		this.warninggs = warninggs;
-	}
 
 
 }

@@ -31,11 +31,10 @@ final class AirPressureListenerX implements AirPressureListener {
 		final float QFE = airPressure / 1000f;
 		m.setAirPressure(QFE);
 
-		double Tfe;
 		try {
-			Tfe = barometer.getChipTemperature() / 100.0;
-			final double QFF = QFE / Math.pow(1 - Tg * H / (273.15 + Tfe + Tg * H), 0.034163 / Tg);
-			m.setTempIn(QFF);
+			double Tfe = barometer.getChipTemperature() / 100.0;
+			m.setTempIn(Tfe);
+			//double QFF = QFE / Math.pow(1 - Tg * H / (273.15 + Tfe + Tg * H), 0.034163 / Tg);
 		} catch (TimeoutException | NotConnectedException e) {
 			e.printStackTrace();
 		}
