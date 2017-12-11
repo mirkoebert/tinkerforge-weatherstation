@@ -53,6 +53,7 @@ Exception in thread "main" com.tinkerforge.TimeoutException: Did not receive res
   * Temperature (only as chip temperature) in degree Celsius.
 * Date and Time
 * Forecast Wind
+* Switch Backlight off at night time
 * Warnings
   * Humidity to low or to high
   * Frost damage
