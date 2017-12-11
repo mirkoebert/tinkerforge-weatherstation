@@ -52,6 +52,7 @@ Exception in thread "main" com.tinkerforge.TimeoutException: Did not receive res
   * Relative Humidity in %
   * Temperature (only as chip temperature) in degree Celsius.
 * Date and Time
+* Forecast Wind
 * Warnings
   * Humidity to low or to high
   * Frost damage
