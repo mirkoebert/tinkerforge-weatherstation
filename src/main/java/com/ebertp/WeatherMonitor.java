@@ -82,7 +82,7 @@ public class WeatherMonitor {
 	}
 
 	public String getForeCast() {
-		String r = "Das Wetter bleibt unverändert gut.";
+		String r = "Wetter: unverändert gut";
 		double ap = m.getAirPressure();
 		long d = m.getDate();
 		AirpressurePoint cap = new AirpressurePoint(d,ap);

@@ -2,6 +2,7 @@ package com.ebertp;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.tinkerforge.BrickletLCD20x4;
@@ -32,7 +33,8 @@ public class WeatherViewLcd24x4 implements Runnable{
 	public void paint() {
 		try {
 			lcd.clearDisplay();
-			lcd.backlightOn();
+			switchBacklightOffAtNight();
+
 			lcd.writeLine((short) 0, (short) 12, (int) Math.round(m.getAirPressure()) + " hPa");
 			lcd.writeLine((short) 0, (short) 0 , df1.format(m.getHumdidity()) + " %RH");
 			lcd.writeLine((short) 1, (short) 0 , df1.format(m.getTempIn())+" C" );
@@ -46,7 +48,7 @@ public class WeatherViewLcd24x4 implements Runnable{
 				message = sdf2.format(d);
 			}
 			lcd.writeLine((short)1, (short)8, message );
-			
+
 			if (monitor.isHumidityAlarm()) {
 				lcd.writeLine((short) 3, (short) 0,  "Warnung: Luftfeuchtigkeit");
 			} else if (monitor.isFrostAlarm()) {
@@ -55,9 +57,25 @@ public class WeatherViewLcd24x4 implements Runnable{
 				lcd.writeLine((short) 3, (short) 0,  "Warnung: Sturm");
 			} else if (monitor.isFireAlarm()) {
 				lcd.writeLine((short) 3, (short) 0,  "Warnung: Feuer");
+			} else {
+				lcd.writeLine((short) 3, (short) 0,  monitor.getForeCast());
 			}
 			timeOrdate = !timeOrdate;
 
+		} catch (TimeoutException | NotConnectedException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	private void switchBacklightOffAtNight() {
+		int h = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+		try {
+			if ((h > 5)&&(h < 22)) {
+				lcd.backlightOn();
+			} else {
+				lcd.backlightOn();
+			}
 		} catch (TimeoutException | NotConnectedException e) {
 			e.printStackTrace();
 		}
