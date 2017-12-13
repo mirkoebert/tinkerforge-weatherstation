@@ -6,7 +6,12 @@ public class WeatherModel {
 	long illumination;
 	long date;
 	double airPressure, humdidity;
+	private WeatherMonitor monitor;
 
+	
+	public WeatherModel() {
+		monitor = new WeatherMonitor(this);
+	}
 	public long getDate() {
 		return date;
 	}
@@ -54,6 +59,22 @@ public class WeatherModel {
 
 	public void setHumdidity(double humdidity) {
 		this.humdidity = humdidity;
+	}
+
+	public String getForecast() {
+		String r = "";
+		if (monitor.isHumidityAlarm()) {
+			r = "Warnung: Luftfeuchtigkeit";
+		} else if (monitor.isFrostAlarm()) {
+			r = "Warnung: Frostgefahr";
+		} else if (monitor.isStormAlarm()) {
+			r = "Warnung: Sturm";
+		} else if (monitor.isFireAlarm()) {
+			r = "Warnung: Feuer";
+		} else {
+			r = monitor.getForeCast();
+		}
+		return r;
 	}
 
 

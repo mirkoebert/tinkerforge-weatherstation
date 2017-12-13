@@ -18,13 +18,12 @@ public class WeatherViewLcd24x4 implements Runnable{
 	private SimpleDateFormat sdf1 = new SimpleDateFormat("d. MMMM");
 	private SimpleDateFormat sdf2 = new SimpleDateFormat("EE HH:mm:ss");
 	private boolean timeOrdate = true;
-	private WeatherMonitor monitor;
+	
 
 
-	public WeatherViewLcd24x4(WeatherModel m, BrickletLCD20x4 lcd, WeatherMonitor monitor) {
+	public WeatherViewLcd24x4(WeatherModel m, BrickletLCD20x4 lcd) {
 		this.m=m;
 		this.lcd = lcd;
-		this.monitor = monitor;
 		final Thread t = new Thread(this);
 		t.start();
 	}
@@ -49,17 +48,8 @@ public class WeatherViewLcd24x4 implements Runnable{
 			}
 			lcd.writeLine((short)1, (short)8, message );
 
-			if (monitor.isHumidityAlarm()) {
-				lcd.writeLine((short) 3, (short) 0,  "Warnung: Luftfeuchtigkeit");
-			} else if (monitor.isFrostAlarm()) {
-				lcd.writeLine((short) 3, (short) 0,  "Warnung: Frostgefahr");
-			} else if (monitor.isStormAlarm()) {
-				lcd.writeLine((short) 3, (short) 0,  "Warnung: Sturm");
-			} else if (monitor.isFireAlarm()) {
-				lcd.writeLine((short) 3, (short) 0,  "Warnung: Feuer");
-			} else {
-				lcd.writeLine((short) 3, (short) 0,  monitor.getForeCast());
-			}
+			
+			lcd.writeLine((short) 3, (short) 0,  m.getForecast());
 			timeOrdate = !timeOrdate;
 
 		} catch (TimeoutException | NotConnectedException e) {
@@ -92,7 +82,6 @@ public class WeatherViewLcd24x4 implements Runnable{
 			}
 			paint();
 		}
-
-
 	}
+	
 }

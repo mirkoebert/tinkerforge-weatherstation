@@ -17,14 +17,29 @@ public final class WeatherStation {
 	// private static final String UIDmas = "6Ka5bE";
 	private static final String UIDhum = "nBj";
 	private static final String UIDlcd = "odC";
+	private static WeatherStation INSTANCE = null;
 
-	final BrickletLCD20x4 lcd;
+	private final BrickletLCD20x4 lcd;
+	private WeatherModel m;
 	
-	public static void main(final String[] args) throws Exception {
-		new WeatherStation();
-	}
-
 	private final IPConnection ipcon;
+
+	public static WeatherStation getInstance(){
+		if (INSTANCE == null) {
+			try {
+				INSTANCE = new WeatherStation();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return INSTANCE;
+	}
+	
+	public WeatherModel getModell() {
+		return m;
+	}
+	
+	
 
 	public WeatherStation() throws Exception {
 		ipcon = new IPConnection();
@@ -41,7 +56,7 @@ public final class WeatherStation {
 		lcd.writeLine((short)0, (short)0, " Weather Station" );
 		lcd.backlightOn();
 		
-		WeatherModel m = new WeatherModel();
+		m = new WeatherModel();
 		
 		
 		final HumidityListenerX humListener = new HumidityListenerX(m);
@@ -57,7 +72,7 @@ public final class WeatherStation {
 
 		WeatherMonitor monitor = new WeatherMonitor(m);
 		
-		WeatherViewLcd24x4 v = new WeatherViewLcd24x4(m, lcd, monitor);
+		WeatherViewLcd24x4 v = new WeatherViewLcd24x4(m, lcd);
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			@Override
 			public void run() {
