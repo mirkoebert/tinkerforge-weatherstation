@@ -44,6 +44,9 @@ Please make sure that the RED Brick is under your master brick. If not you've go
 Exception in thread "main" com.tinkerforge.TimeoutException: Did not receive response in time for function ID 3
 ```
 
+Open web site http://XXX.XXX.XXX.XXX:8888/ to show all information in browser. The web server is based on Spring Boot and runs on the RED Brick.
+
+
 ## Features
 * Multithreaded with Call Backs
 * Measures 
@@ -51,6 +54,7 @@ Exception in thread "main" com.tinkerforge.TimeoutException: Did not receive res
   * Air pressure in hPa
   * Relative Humidity in %
   * Temperature (only as chip temperature) in degree Celsius.
+* Output to LCD and as Website
 * Date and Time
 * Forecast Wind
 * Switch Backlight off at night time
