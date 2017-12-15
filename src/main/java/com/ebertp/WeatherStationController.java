@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @SpringBootApplication
 public class WeatherStationController {
 
-	@GetMapping("/test")
+	@GetMapping("/")
 	String home(Map<String, Object> model) {
 		WeatherStation w = WeatherStation.getInstance();
 		WeatherModel m = w.getModell();
@@ -26,12 +26,12 @@ public class WeatherStationController {
 		model.put("tempInn", m.getTempIn());
 		model.put("lum", m.getIllumination());
 		model.put("forecast", m.getForecast());
-		return "welcome";
+		return "index";
 	}
 	
 	
 
 	public static void main(String[] args) throws Exception {
-        SpringApplication.run(WeatherStationController.class, args);
+        	SpringApplication.run(WeatherStationController.class, args);
     }
 }
