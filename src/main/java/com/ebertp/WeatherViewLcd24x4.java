@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.springframework.boot.SpringApplication;
+
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
@@ -64,7 +66,7 @@ public class WeatherViewLcd24x4 implements Runnable{
 			if ((h > 5)&&(h < 22)) {
 				lcd.backlightOn();
 			} else {
-				lcd.backlightOn();
+				lcd.backlightOff();
 			}
 		} catch (TimeoutException | NotConnectedException e) {
 			e.printStackTrace();
@@ -83,5 +85,6 @@ public class WeatherViewLcd24x4 implements Runnable{
 			paint();
 		}
 	}
+
 	
 }

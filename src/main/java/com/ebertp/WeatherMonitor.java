@@ -1,6 +1,7 @@
 package com.ebertp;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class WeatherMonitor {
@@ -74,11 +75,17 @@ public class WeatherMonitor {
 	private void removeOldData() {
 		long now = System.currentTimeMillis();
 		final long h1inMsec = 60 * 60 * 1000;
-		for (AirpressurePoint airpressurePoint : aplist) {
+		for (Iterator iterator = aplist.iterator(); iterator.hasNext();) {
+			AirpressurePoint airpressurePoint = (AirpressurePoint) iterator.next();
 			if( (now - airpressurePoint.date) > h1inMsec) {
-				aplist.remove(airpressurePoint);
+				iterator.remove();
 			}
 		}
+//		for (AirpressurePoint airpressurePoint : aplist) {
+//			if( (now - airpressurePoint.date) > h1inMsec) {
+//				aplist.remove(airpressurePoint);
+//			}
+//		}
 	}
 
 	public String getForeCast() {
@@ -113,5 +120,6 @@ public class WeatherMonitor {
 	private boolean isFallend(AirpressurePoint min, AirpressurePoint max) {
 		return max.date < min.date;
 	}
+
 
 }

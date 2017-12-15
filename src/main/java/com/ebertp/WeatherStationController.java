@@ -21,7 +21,7 @@ public class WeatherStationController {
 		WeatherStation w = WeatherStation.getInstance();
 		WeatherModel m = w.getModell();
 		System.out.println("test");
-		model.put("airpressure", m.getAirPressure() );
+		model.put("airpressure", (int)Math.round(m.getAirPressure()) );
 		model.put("humidity", m.getHumdidity());
 		model.put("tempInn", m.getTempIn());
 		model.put("lum", m.getIllumination());
