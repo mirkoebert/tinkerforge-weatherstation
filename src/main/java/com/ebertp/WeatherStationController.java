@@ -34,6 +34,11 @@ public class WeatherStationController {
 		return "index";
 	}
 	
+	@GetMapping("/webcams")
+	String cams(Map<String, Object> model) {
+		model.put("date", sdf1.format(new Date()));
+		return "webcams";
+	}
 	
 
 	public static void main(String[] args) throws Exception {

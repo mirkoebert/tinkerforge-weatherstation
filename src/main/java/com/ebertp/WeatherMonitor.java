@@ -75,22 +75,20 @@ public class WeatherMonitor {
 	private void removeOldData() {
 		long now = System.currentTimeMillis();
 		final long h1inMsec = 60 * 60 * 1000;
-		for (Iterator iterator = aplist.iterator(); iterator.hasNext();) {
-			AirpressurePoint airpressurePoint = (AirpressurePoint) iterator.next();
+		for (Iterator<AirpressurePoint> iterator = aplist.iterator(); iterator.hasNext();) {
+			AirpressurePoint airpressurePoint = iterator.next();
 			if( (now - airpressurePoint.date) > h1inMsec) {
 				iterator.remove();
 			}
 		}
-//		for (AirpressurePoint airpressurePoint : aplist) {
-//			if( (now - airpressurePoint.date) > h1inMsec) {
-//				aplist.remove(airpressurePoint);
-//			}
-//		}
 	}
 
 	public String getForeCast() {
-		String r = "Wetter: unverändert gut";
+		String r = "Wetter: unverändert";
 		double ap = m.getAirPressure();
+		if(ap >1020) {
+			r = r + " gut";
+		}
 		long d = m.getDate();
 		AirpressurePoint cap = new AirpressurePoint(d,ap);
 
