@@ -55,6 +55,7 @@ Open web site http://XXX.XXX.XXX.XXX:8888/ to show all information in browser. T
   * Relative Humidity in %
   * Temperature (only as chip temperature) in degree Celsius.
 * Output to LCD and as Website
+* Integrate DWD (Deutscher Wetterdienst) Webcams
 * Date and Time
 * Forecast Wind
 * Switch Backlight off at night time
