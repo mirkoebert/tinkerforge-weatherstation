@@ -1,6 +1,6 @@
 package com.ebertp;
 
-public class WeatherModel {
+final public class WeatherModel {
 
 	double tempIn, tempOut;
 	long illumination;

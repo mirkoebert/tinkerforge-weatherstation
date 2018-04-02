@@ -1,5 +1,7 @@
 package com.ebertp;
 
+import org.springframework.stereotype.Component;
+
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletHumidity;
@@ -8,6 +10,7 @@ import com.tinkerforge.IPConnection;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
+@Component
 public final class WeatherStation {
 
 	private static final String HOST = "localhost";
@@ -17,23 +20,13 @@ public final class WeatherStation {
 	// private static final String UIDmas = "6Ka5bE";
 	private static final String UIDhum = "nBj";
 	private static final String UIDlcd = "odC";
-	private static WeatherStation INSTANCE = null;
 
 	private final BrickletLCD20x4 lcd;
 	private WeatherModel m;
 	
 	private final IPConnection ipcon;
 
-	public static WeatherStation getInstance(){
-		if (INSTANCE == null) {
-			try {
-				INSTANCE = new WeatherStation();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return INSTANCE;
-	}
+	
 	
 	public WeatherModel getModell() {
 		return m;

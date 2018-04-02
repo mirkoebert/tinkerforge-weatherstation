@@ -2,6 +2,7 @@ package com.ebertp;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,11 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @EnableAutoConfiguration
 @SpringBootApplication
 public class WeatherStationController {
-	
+
+	@Autowired
+	WeatherStation w;
 	
 	@GetMapping("/")
 	String home(Map<String, Object> model) {
-		WeatherStation w = WeatherStation.getInstance();
 		WeatherModel m = w.getModell();
 		System.out.println("test");
 		model.put("airpressure", (int)Math.round(m.getAirPressure()) );
@@ -38,7 +40,6 @@ public class WeatherStationController {
 	
 
 	public static void main(String[] args) throws Exception {
-		WeatherStation w = WeatherStation.getInstance();
         	SpringApplication.run(WeatherStationController.class, args);
     }
 }
