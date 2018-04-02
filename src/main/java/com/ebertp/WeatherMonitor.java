@@ -84,9 +84,9 @@ public class WeatherMonitor {
 	}
 
 	public String getForeCast() {
-		String r = "Wetter: unverändert";
+		String r = "unverändert";
 		double ap = m.getAirPressure();
-		if(ap >1020) {
+		if(ap >1019) {
 			r = r + " gut";
 		}
 		long d = m.getDate();

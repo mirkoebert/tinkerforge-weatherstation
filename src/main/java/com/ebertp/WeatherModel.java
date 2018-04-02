@@ -62,19 +62,22 @@ final public class WeatherModel {
 	}
 
 	public String getForecast() {
+		return  monitor.getForeCast();
+	}
+	
+	public String getWarning() {
 		String r = "";
 		if (monitor.isHumidityAlarm()) {
-			r = "Warnung: Luftfeuchtigkeit";
+			r = "Luftfeuchtigkeit";
 		} else if (monitor.isFrostAlarm()) {
-			r = "Warnung: Frostgefahr";
+			r = "Frostgefahr";
 		} else if (monitor.isStormAlarm()) {
-			r = "Warnung: Sturm";
+			r = "Sturm";
 		} else if (monitor.isFireAlarm()) {
-			r = "Warnung: Feuer";
-		} else {
-			r = monitor.getForeCast();
-		}
+			r = "Feuer";
+		} 
 		return r;
+
 	}
 
 

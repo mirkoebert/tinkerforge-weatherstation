@@ -28,6 +28,7 @@ public class WeatherStationController {
 		model.put("tempInn", m.getTempIn());
 		model.put("lum", m.getIllumination());
 		model.put("forecast", m.getForecast());
+		model.put("warning", m.getWarning());
 		model.put("date", DateX.getInstance().getDateString());
 		return "index";
 	}

@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -9,18 +10,30 @@
 <a href="/">Wetter</a> <a href="webcams">Wetter Webcams</a>
 <br> 
 <hr>
-{{date}}
-<br>
-Luftfeuchtigkeit: {{humidity}} %RH
-<br>
-Luftdruck: {{airpressure}} hPa
-<br>
-Temperatur Innen: {{tempInn}}°C
-<br>
-Helligkeit: {{lum}} lx
-<br>
-Vorhersage: {{forecast}}
-<br> 
+<table>
+  <tr>
+    <td></td><td>{{date}}</td>
+  </tr>
+  <tr>
+    <td>Luftfeuchtigkeit:</td><td>{{humidity}} %RH</td>
+  </tr>
+  <tr>
+    <td>Luftdruck:</td><td>{{airpressure}} hPa</td>
+  </tr>
+  <tr>
+    <td>Temperatur Innen:</td><td>{{tempInn}}°C</td>
+  </tr>
+  <tr>
+    <td>Helligkeit:</td><td>{{lum}} lx</td>
+  </tr>
+  <tr>
+    <td>Vorhersage:</td><td>{{forecast}}</td>
+  </tr>
+  <tr>
+    <td>Warnungen:</td><td>{{warning}}</td>
+  </tr>
+</table>
+
 
 </body>
 

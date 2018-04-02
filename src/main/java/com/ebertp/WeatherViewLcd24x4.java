@@ -49,8 +49,13 @@ public class WeatherViewLcd24x4 implements Runnable{
 			}
 			lcd.writeLine((short)1, (short)8, message );
 
-			
-			lcd.writeLine((short) 3, (short) 0, utf16ToKS0066U( m.getForecast()));
+			String w = m.getWarning();
+			if (w.isEmpty()) {
+				w = "Wetter: "+m.getForecast();
+			} else {
+				w = "Warnung: "+w;
+			}
+			lcd.writeLine((short) 3, (short) 0, utf16ToKS0066U( w));
 			timeOrdate = !timeOrdate;
 
 		} catch (TimeoutException | NotConnectedException e) {
