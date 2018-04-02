@@ -1,7 +1,5 @@
 package com.ebertp;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 import org.springframework.boot.SpringApplication;
@@ -12,13 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 
-
 @Controller
 @EnableAutoConfiguration
 @SpringBootApplication
 public class WeatherStationController {
-
-	private SimpleDateFormat sdf1 = new SimpleDateFormat("EE HH:mm:ss d. MMMM YYYY");
+	
 	
 	@GetMapping("/")
 	String home(Map<String, Object> model) {
@@ -30,13 +26,13 @@ public class WeatherStationController {
 		model.put("tempInn", m.getTempIn());
 		model.put("lum", m.getIllumination());
 		model.put("forecast", m.getForecast());
-		model.put("date", sdf1.format(new Date()));
+		model.put("date", DateX.getInstance().getDateString());
 		return "index";
 	}
 	
 	@GetMapping("/webcams")
 	String cams(Map<String, Object> model) {
-		model.put("date", sdf1.format(new Date()));
+		model.put("date", DateX.getInstance().getDateString());
 		return "webcams";
 	}
 	

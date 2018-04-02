@@ -39,7 +39,6 @@ public final class WeatherStation {
 		return m;
 	}
 	
-	
 
 	public WeatherStation() throws Exception {
 		ipcon = new IPConnection();
