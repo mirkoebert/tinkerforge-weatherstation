@@ -6,118 +6,115 @@ import java.util.List;
 
 public class WeatherMonitor {
 
-	private WeatherModel m;
-	private boolean alarm = false;
-	private List<AirpressurePoint> aplist = new ArrayList<AirpressurePoint>();
+    private WeatherModel weatherModel;
+    private boolean alarm = false;
+    private List<AirpressurePoint> aplist = new ArrayList<AirpressurePoint>();
 
+    public WeatherMonitor(WeatherModel m) {
+        this.weatherModel = m;
+    }
 
-	public  WeatherMonitor(WeatherModel m) {
-		this.m = m;
-	}
+    boolean isHumidityAlarm() {
+        double h = weatherModel.getHumdidity();
+        alarm = (h > 60 || h < 40);
+        return alarm;
+    }
 
-	boolean isHumidityAlarm(){
-		double h = m.getHumdidity();
-		alarm  = (h > 60 || h < 40);
-		return alarm;
-	}
+    public boolean isFrostAlarm() {
+        return (weatherModel.getTempIn() < 5);
+    }
 
-	public boolean isFrostAlarm() {
-		return (m.getTempIn() < 5);
-	}
+    public boolean isFireAlarm() {
+        return (weatherModel.getTempIn() > 50);
+    }
 
-	public boolean isFireAlarm() {
-		return (m.getTempIn() > 50);
-	}
+    /** 
+     * @link http://www.bohlken.net/luftdruck2.htm
+     * @return
+     */
+    public boolean isStormAlarm() {
+        removeOldData();
+        boolean r = false;
+        double ap = weatherModel.getAirPressure();
+        long d = weatherModel.getDate();
+        AirpressurePoint cap = new AirpressurePoint(d, ap);
 
-	/**
-	 * @link http://www.bohlken.net/luftdruck2.htm
-	 * @return
-	 */
-	public boolean isStormAlarm() {
-		removeOldData();
-		boolean r = false;
-		double ap = m.getAirPressure();
-		long d = m.getDate();
-		AirpressurePoint cap = new AirpressurePoint(d,ap);
+        AirpressurePoint min = getMin(cap);
+        AirpressurePoint max = getMax(cap);
+        double deltaAirpressure = max.airpressure - min.airpressure;
+        if (deltaAirpressure > 3.3) {
+            r = true;
+        } else if ((deltaAirpressure > 2) && (max.date < min.date)) {
+            r = true;
+        }
+        aplist.add(cap);
+        return r;
+    }
 
+    private AirpressurePoint getMin(AirpressurePoint current) {
+        AirpressurePoint min = current;
+        for (AirpressurePoint airpressurePoint : aplist) {
+            if (airpressurePoint.airpressure < min.airpressure) {
+                min = airpressurePoint;
+            }
+        }
+        return min;
+    }
 
-		AirpressurePoint min = getMin(cap);
-		AirpressurePoint max = getMax(cap);
-		if ((max.airpressure - min.airpressure) > 3.3) {
-			r = true;
-		} else if(((max.airpressure -min.airpressure) > 2) && (max.date < min.date) ) {
-			r = true;
-		}
-		aplist.add(cap);
-		return r;
-	}
+    private AirpressurePoint getMax(AirpressurePoint current) {
+        AirpressurePoint max = current;
+        for (AirpressurePoint airpressurePoint : aplist) {
+            if (airpressurePoint.airpressure > max.airpressure) {
+                max = airpressurePoint;
+            }
+        }
+        return max;
+    }
 
-	private AirpressurePoint getMin(AirpressurePoint current) {
-		AirpressurePoint min = current;
-		for (AirpressurePoint airpressurePoint : aplist) {
-			if (airpressurePoint.airpressure < min.airpressure) {
-				min = airpressurePoint;
-			}
-		}
-		return min;
-	}
+    private void removeOldData() {
+        long now = System.currentTimeMillis();
+        final long h1inMsec = 60 * 60 * 1000;
+        for (Iterator<AirpressurePoint> iterator = aplist.iterator(); iterator.hasNext();) {
+            AirpressurePoint airpressurePoint = iterator.next();
+            if ((now - airpressurePoint.date) > h1inMsec) {
+                iterator.remove();
+            }
+        }
+    }
 
-	private AirpressurePoint getMax(AirpressurePoint current) {
-		AirpressurePoint max = current;
-		for (AirpressurePoint airpressurePoint : aplist) {
-			if (airpressurePoint.airpressure > max.airpressure) {
-				max = airpressurePoint;
-			}
-		}
-		return max;
-	}
+    public String getForeCast() {
+        String r = "unverändert";
+        double ap = weatherModel.getAirPressure();
+        if (ap > 1019) {
+            r = r + " gut";
+        }
+        long d = weatherModel.getDate();
+        AirpressurePoint cap = new AirpressurePoint(d, ap);
 
-	private void removeOldData() {
-		long now = System.currentTimeMillis();
-		final long h1inMsec = 60 * 60 * 1000;
-		for (Iterator<AirpressurePoint> iterator = aplist.iterator(); iterator.hasNext();) {
-			AirpressurePoint airpressurePoint = iterator.next();
-			if( (now - airpressurePoint.date) > h1inMsec) {
-				iterator.remove();
-			}
-		}
-	}
+        AirpressurePoint min = getMin(cap);
+        AirpressurePoint max = getMax(cap);
+        double deltaAirpressure = max.airpressure - min.airpressure;
+        if (isFallend(min, max)) {
+            if (deltaAirpressure > 1) {
+                r = "6-7 Bft";
+                if (deltaAirpressure > 2) {
+                    r = "8-12 Bft";
+                }
+            }
+        } else {
+            if ((deltaAirpressure > 1.3) && (deltaAirpressure < 2)) {
+                r = "6-7 Bft";
+            } else if ((deltaAirpressure >= 2) && (deltaAirpressure < 3)) {
+                r = "8-9 Bft";
+            } else if (deltaAirpressure > 3) {
+                r = "10- Bft";
+            }
+        }
+        return r;
+    }
 
-	public String getForeCast() {
-		String r = "unverändert";
-		double ap = m.getAirPressure();
-		if(ap >1019) {
-			r = r + " gut";
-		}
-		long d = m.getDate();
-		AirpressurePoint cap = new AirpressurePoint(d,ap);
-
-
-		AirpressurePoint min = getMin(cap);
-		AirpressurePoint max = getMax(cap);
-		double delta = max.airpressure - min.airpressure;
-		if (isFallend(min, max)) {
-			if ((delta > 2)&&(delta>1)) { 
-				r="6-7 Bft";
-				if (delta > 2) {
-					r="8-12 Bft";
-				}
-			}
-		} else {
-			if((delta > 1.3)&&(delta < 2)) {
-				r = "6-7 Bft";
-			} else if((delta >=2)&& (delta < 3)) {
-				r = "8-9 Bft";
-			} else if (delta > 3) {
-				r = "10- Bft";
-			}
-		}
-		return r;
-	}
-
-	private boolean isFallend(AirpressurePoint min, AirpressurePoint max) {
-		return max.date < min.date;
-	}
-
+    private boolean isFallend(AirpressurePoint min, AirpressurePoint max) {
+        return max.date < min.date;
+    }
 
 }

@@ -1,85 +1,83 @@
 package com.ebertp;
 
-final public class WeatherModel {
+public final class WeatherModel {
 
-	double tempIn, tempOut;
-	long illumination;
-	long date;
-	double airPressure, humdidity;
-	private WeatherMonitor monitor;
+    double tempIn, tempOut;
+    long illumination;
+    long date;
+    double airPressure, humdidity;
+    private WeatherMonitor monitor;
 
-	
-	public WeatherModel() {
-		monitor = new WeatherMonitor(this);
-	}
-	public long getDate() {
-		return date;
-	}
+    public WeatherModel() {
+        monitor = new WeatherMonitor(this);
+    }
 
-	public void setDate(long date) {
-		this.date = date;
-	}
+    public long getDate() {
+        return date;
+    }
 
-	public long getIllumination() {
-		return illumination;
-	}
+    public void setDate(long date) {
+        this.date = date;
+    }
 
-	public void setIllumination(long illumination) {
-		this.illumination = illumination;
-	}
+    public long getIllumination() {
+        return illumination;
+    }
 
-	public double getTempIn() {
-		return tempIn;
-	}
+    public void setIllumination(long illumination) {
+        this.illumination = illumination;
+    }
 
-	public void setTempIn(double tempIn) {
-		this.tempIn = tempIn;
-	}
+    public double getTempIn() {
+        return tempIn;
+    }
 
-	public double getTempOut() {
-		return tempOut;
-	}
+    public void setTempIn(double tempIn) {
+        this.tempIn = tempIn;
+    }
 
-	public void setTempOut(float tempOut) {
-		this.tempOut = tempOut;
-	}
+    public double getTempOut() {
+        return tempOut;
+    }
 
-	public double getAirPressure() {
-		date = System.currentTimeMillis();
-		return airPressure;
-	}
+    public void setTempOut(float tempOut) {
+        this.tempOut = tempOut;
+    }
 
-	public void setAirPressure(double airPressure) {
-		this.airPressure = airPressure;
-	}
+    public double getAirPressure() {
+        date = System.currentTimeMillis();
+        return airPressure;
+    }
 
-	public double getHumdidity() {
-		return humdidity;
-	}
+    public void setAirPressure(double airPressure) {
+        this.airPressure = airPressure;
+    }
 
-	public void setHumdidity(double humdidity) {
-		this.humdidity = humdidity;
-	}
+    public double getHumdidity() {
+        return humdidity;
+    }
 
-	public String getForecast() {
-		return  monitor.getForeCast();
-	}
-	
-	public String getWarning() {
-		String r = "";
-		if (monitor.isHumidityAlarm()) {
-			r = "Luftfeuchtigkeit";
-		} else if (monitor.isFrostAlarm()) {
-			r = "Frostgefahr";
-		} else if (monitor.isStormAlarm()) {
-			r = "Sturm";
-		} else if (monitor.isFireAlarm()) {
-			r = "Feuer";
-		} 
-		return r;
+    public void setHumdidity(double humdidity) {
+        this.humdidity = humdidity;
+    }
 
-	}
+    public String getForecast() {
+        return monitor.getForeCast();
+    }
 
+    public String getWarning() {
+        String r = "";
+        if (monitor.isHumidityAlarm()) {
+            r = "Luftfeuchtigkeit";
+        } else if (monitor.isFrostAlarm()) {
+            r = "Frostgefahr";
+        } else if (monitor.isStormAlarm()) {
+            r = "Sturm";
+        } else if (monitor.isFireAlarm()) {
+            r = "Feuer";
+        }
+        return r;
 
+    }
 
 }

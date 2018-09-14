@@ -1,6 +1,5 @@
 package com.ebertp;
 
-
 import com.tinkerforge.BrickletAmbientLight.IlluminanceListener;
 
 /**
@@ -11,17 +10,17 @@ import com.tinkerforge.BrickletAmbientLight.IlluminanceListener;
  */
 final class IlluminanceListenerX implements IlluminanceListener {
 
-	private WeatherModel m;
+    private WeatherModel m;
 
-	public IlluminanceListenerX(WeatherModel m) {
-		this.m = m;
-	}
+    public IlluminanceListenerX(WeatherModel m) {
+        this.m = m;
+    }
 
-	@Override
-	public void illuminance(final int illuminance) {
-		final long ill = Math.round(illuminance / 10.0);
-		m.setIllumination(ill);
-		System.out.println("Illuminance: " + ill);
+    @Override
+    public void illuminance(final int illuminance) {
+        final long ill = Math.round(illuminance / 10.0);
+        m.setIllumination(ill);
+        System.out.println("Illuminance: " + ill);
 //		try {
 //			if (ill > 400) {
 //				lcd.backlightOff();
@@ -39,6 +38,6 @@ final class IlluminanceListenerX implements IlluminanceListener {
 //			e.printStackTrace();
 //		}
 
-	}
+    }
 
 }
