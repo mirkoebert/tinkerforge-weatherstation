@@ -58,7 +58,7 @@ public final class WeatherStation {
         ambientLightBrick.setIlluminanceCallbackPeriod(30001);
         ambientLightBrick.addIlluminanceListener(new IlluminanceListenerX(weatherModel));
 
-        new WeatherMonitor(weatherModel);
+        WeatherAnalyzer wm = new WeatherAnalyzer(weatherModel);
 
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             @Override

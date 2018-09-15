@@ -1,15 +1,18 @@
 package com.ebertp;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public final class WeatherModel {
 
     double tempIn, tempOut;
     long illumination;
     long date;
     double airPressure, humdidity;
-    private WeatherMonitor monitor;
+    private WeatherAnalyzer monitor;
 
     public WeatherModel() {
-        monitor = new WeatherMonitor(this);
+        monitor = new WeatherAnalyzer(this);
     }
 
     public long getDate() {

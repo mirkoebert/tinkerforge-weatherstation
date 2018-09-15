@@ -4,14 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class WeatherMonitor {
+/**
+ * 
+ * @author mirkoebert
+ *
+ */
+public class WeatherAnalyzer {
 
     private WeatherModel weatherModel;
     private boolean alarm = false;
     private List<AirpressurePoint> aplist = new ArrayList<AirpressurePoint>();
 
-    public WeatherMonitor(WeatherModel m) {
-        this.weatherModel = m;
+    public WeatherAnalyzer(WeatherModel weatherModel) {
+        this.weatherModel = weatherModel;
     }
 
     boolean isHumidityAlarm() {

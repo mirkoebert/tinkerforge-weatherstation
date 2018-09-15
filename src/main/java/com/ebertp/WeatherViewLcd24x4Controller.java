@@ -5,11 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
-public class WeatherViewLcd24x4 implements Runnable {
+@Component
+public class WeatherViewLcd24x4Controller implements Runnable {
 
     WeatherModel weatherModel;
     final BrickletLCD20x4 lcd;
@@ -19,7 +23,8 @@ public class WeatherViewLcd24x4 implements Runnable {
     private SimpleDateFormat sdf2 = new SimpleDateFormat("EE HH:mm:ss");
     private boolean timeOrdate = true;
 
-    public WeatherViewLcd24x4(WeatherModel weatherModel, BrickletLCD20x4 lcd) {
+    @Autowired
+    public WeatherViewLcd24x4Controller(WeatherModel weatherModel, BrickletLCD20x4 lcd) {
         this.weatherModel = weatherModel;
         this.lcd = lcd;
         final Thread t = new Thread(this);
@@ -46,6 +51,7 @@ public class WeatherViewLcd24x4 implements Runnable {
             } else {
                 message = sdf2.format(d);
             }
+            // FIXME Bug with long name of month's like September
             lcd.writeLine((short) 1, (short) 8, message);
 
             String w = weatherModel.getWarning();
@@ -232,7 +238,6 @@ public class WeatherViewLcd24x4 implements Runnable {
 
             ks0066u += c;
         }
-
         return ks0066u;
     }
 }
