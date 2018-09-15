@@ -1,48 +1,22 @@
 package com.ebertp;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class WeatherModel {
 
-	double tempIn, tempOut;
-	long illumination;
-	long date;
-	double airPressure, humdidity;
+  @Getter @Setter double tempIn, tempOut;
+	@Getter @Setter long illumination;
+	@Getter @Setter long date;
+	double airPressure;
+	@Getter @Setter double humdidity;
 	private WeatherMonitor monitor;
 
 	
 	public WeatherModel() {
 		monitor = new WeatherMonitor(this);
 	}
-	public long getDate() {
-		return date;
-	}
 
-	public void setDate(long date) {
-		this.date = date;
-	}
-
-	public long getIllumination() {
-		return illumination;
-	}
-
-	public void setIllumination(long illumination) {
-		this.illumination = illumination;
-	}
-
-	public double getTempIn() {
-		return tempIn;
-	}
-
-	public void setTempIn(double tempIn) {
-		this.tempIn = tempIn;
-	}
-
-	public double getTempOut() {
-		return tempOut;
-	}
-
-	public void setTempOut(float tempOut) {
-		this.tempOut = tempOut;
-	}
 
 	public double getAirPressure() {
 		date = System.currentTimeMillis();
@@ -53,13 +27,7 @@ public class WeatherModel {
 		this.airPressure = airPressure;
 	}
 
-	public double getHumdidity() {
-		return humdidity;
-	}
 
-	public void setHumdidity(double humdidity) {
-		this.humdidity = humdidity;
-	}
 
 	public String getForecast() {
 		String r = "";
