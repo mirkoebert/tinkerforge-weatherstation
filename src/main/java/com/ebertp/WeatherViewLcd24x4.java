@@ -5,11 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import lombok.extern.slf4j.Slf4j;
 
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
+@Slf4j
 public class WeatherViewLcd24x4 implements Runnable{
 
 	WeatherModel m;
@@ -47,6 +49,7 @@ public class WeatherViewLcd24x4 implements Runnable{
 			} else {
 				message = sdf2.format(d);
 			}
+			// FIXME bug with long month names like september
 			lcd.writeLine((short)1, (short)8, message );
 
 			
@@ -54,7 +57,7 @@ public class WeatherViewLcd24x4 implements Runnable{
 			timeOrdate = !timeOrdate;
 
 		} catch (TimeoutException | NotConnectedException e) {
-			e.printStackTrace();
+			log.error("paint",e);
 		}
 	}
 
@@ -68,7 +71,7 @@ public class WeatherViewLcd24x4 implements Runnable{
 				lcd.backlightOff();
 			}
 		} catch (TimeoutException | NotConnectedException e) {
-			e.printStackTrace();
+		  log.error("switchBacklightOffAtNight",e);
 		}
 	}
 
@@ -79,7 +82,7 @@ public class WeatherViewLcd24x4 implements Runnable{
 			try {
 				Thread.sleep(3500);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+			  log.error("run",e);
 			}
 			paint();
 		}

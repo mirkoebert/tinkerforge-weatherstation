@@ -52,6 +52,7 @@ public final class WeatherStation {
 		// start message
 		lcd.backlightOff();
 		lcd.clearDisplay();
+		// TODO display version
 		lcd.writeLine((short)0, (short)0, " Weather Station" );
 		lcd.backlightOn();
 		

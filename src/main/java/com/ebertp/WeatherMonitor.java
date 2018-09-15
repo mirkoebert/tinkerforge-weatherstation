@@ -9,7 +9,7 @@ public class WeatherMonitor {
 	private WeatherModel m;
 	private boolean alarm = false;
 	private List<AirpressurePoint> aplist = new ArrayList<AirpressurePoint>();
-
+	final long h1inMsec = 60 * 60 * 1000;
 
 	public  WeatherMonitor(WeatherModel m) {
 		this.m = m;
@@ -74,7 +74,7 @@ public class WeatherMonitor {
 
 	private void removeOldData() {
 		long now = System.currentTimeMillis();
-		final long h1inMsec = 60 * 60 * 1000;
+		
 		for (Iterator<AirpressurePoint> iterator = aplist.iterator(); iterator.hasNext();) {
 			AirpressurePoint airpressurePoint = iterator.next();
 			if( (now - airpressurePoint.date) > h1inMsec) {
@@ -97,7 +97,7 @@ public class WeatherMonitor {
 		AirpressurePoint max = getMax(cap);
 		double delta = max.airpressure - min.airpressure;
 		if (isFallend(min, max)) {
-			if ((delta > 2)&&(delta>1)) { 
+			if (delta > 1) { 
 				r="6-7 Bft";
 				if (delta > 2) {
 					r="8-12 Bft";

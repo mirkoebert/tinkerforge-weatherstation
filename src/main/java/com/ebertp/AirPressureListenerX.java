@@ -5,6 +5,8 @@ import com.tinkerforge.BrickletBarometer.AirPressureListener;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Air pressure listener implementing a Tinkerforge air pressure listener
  * (callback). Return the air pressure correct by temperature (from chip) and
@@ -13,6 +15,7 @@ import com.tinkerforge.TimeoutException;
  * @author mebert
  *
  */
+@Slf4j
 final class AirPressureListenerX implements AirPressureListener {
 
 	private final BrickletBarometer barometer;
@@ -36,7 +39,7 @@ final class AirPressureListenerX implements AirPressureListener {
 			m.setTempIn(Tfe);
 			//double QFF = QFE / Math.pow(1 - Tg * H / (273.15 + Tfe + Tg * H), 0.034163 / Tg);
 		} catch (TimeoutException | NotConnectedException e) {
-			e.printStackTrace();
+			log.error("Chip temp",e);
 		}
 	}
 
