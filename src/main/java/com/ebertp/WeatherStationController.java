@@ -8,19 +8,22 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 
 @Controller
-@EnableAutoConfiguration
-@SpringBootApplication
+//@EnableAutoConfiguration
+//@SpringBootApplication
+@Slf4j
 public class WeatherStationController {
 	
+  WeatherStation w = WeatherStation.getInstance();
+  WeatherModel m = w.getModell();
 	
 	@GetMapping("/")
 	String home(Map<String, Object> model) {
-		WeatherStation w = WeatherStation.getInstance();
-		WeatherModel m = w.getModell();
-		System.out.println("test");
+		log.info("HTTP Request");
 		model.put("airpressure", (int)Math.round(m.getAirPressure()) );
 		model.put("humidity", m.getHumdidity());
 		model.put("tempInn", m.getTempIn());
@@ -37,8 +40,8 @@ public class WeatherStationController {
 	}
 	
 
-	public static void main(String[] args) throws Exception {
-		WeatherStation w = WeatherStation.getInstance();
-        	SpringApplication.run(WeatherStationController.class, args);
-    }
+//	public static void main(String[] args) throws Exception {
+//		WeatherStation w = WeatherStation.getInstance();
+//        	SpringApplication.run(WeatherStationController.class, args);
+//    }
 }
