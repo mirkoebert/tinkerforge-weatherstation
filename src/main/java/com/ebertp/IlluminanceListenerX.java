@@ -14,16 +14,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 final class IlluminanceListenerX implements IlluminanceListener {
 
-	private WeatherModel m;
+	private final WeatherModel weaterModel;
 
-	public IlluminanceListenerX(WeatherModel m) {
-		this.m = m;
+	public IlluminanceListenerX(WeatherModel weaterModel) {
+		this.weaterModel = weaterModel;
 	}
 
 	@Override
 	public void illuminance(final int illuminance) {
 		final long ill = Math.round(illuminance / 10.0);
-		m.setIllumination(ill);
+		weaterModel.setIllumination(ill);
 		log.info("Illuminance: " + ill);
 	}
 

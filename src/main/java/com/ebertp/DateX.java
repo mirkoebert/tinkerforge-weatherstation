@@ -15,7 +15,7 @@ final class DateX {
     private boolean isOnline = false;
 
     private DateX() {
-        isOnline = checkOnline();
+        isOnline = isOnline();
     }
 
     String getDateString() {
@@ -23,7 +23,7 @@ final class DateX {
         if (isOnline) {
             r = sdf1.format(new Date());
         } else {
-            isOnline = checkOnline();
+            isOnline = isOnline();
             if (isOnline) {
                 r = sdf1.format(new Date());
             }
@@ -31,7 +31,7 @@ final class DateX {
         return r;
     }
 
-    private boolean checkOnline() {
+    private boolean isOnline() {
         boolean r = false;
         try {
             final URL url = new URL("http://www.otto.de");
