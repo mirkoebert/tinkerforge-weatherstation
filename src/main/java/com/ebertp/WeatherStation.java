@@ -25,7 +25,7 @@ public final class WeatherStation {
 	private static WeatherStation INSTANCE = null;
 
 	private final BrickletLCD20x4 lcd;
-	@Getter 	private WeatherModel m;
+	@Getter 	private WeatherModel weatherModel;
 	
 	private final IPConnection ipcon;
 
@@ -58,23 +58,23 @@ public final class WeatherStation {
 		lcd.writeLine((short)0, (short)0, " Weather Station" );
 		lcd.backlightOn();
 		
-		m = new WeatherModel();
+		weatherModel = new WeatherModel();
 		
 		
-		final HumidityListenerX humListener = new HumidityListenerX(m);
+		final HumidityListenerX humListener = new HumidityListenerX(weatherModel);
 
 		humBrick.setHumidityCallbackPeriod(30003);
 		humBrick.addHumidityListener(humListener);
 		
 		barBrick.setAirPressureCallbackPeriod(30002);
-		barBrick.addAirPressureListener(new AirPressureListenerX(m, barBrick));
+		barBrick.addAirPressureListener(new AirPressureListenerX(weatherModel, barBrick));
 		
 		ambientLightBrick.setIlluminanceCallbackPeriod(30001);
-		ambientLightBrick.addIlluminanceListener(new IlluminanceListenerX(m));
+		ambientLightBrick.addIlluminanceListener(new IlluminanceListenerX(weatherModel));
 
-		WeatherMonitor monitor = new WeatherMonitor(m);
+		WeatherMonitor monitor = new WeatherMonitor(weatherModel);
 		
-		WeatherViewLcd24x4 v = new WeatherViewLcd24x4(m, lcd);
+		WeatherViewLcd24x4 v = new WeatherViewLcd24x4(weatherModel, lcd);
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			@Override
 			public void run() {

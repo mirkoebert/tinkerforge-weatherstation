@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 final class AirPressureListenerX implements AirPressureListener {
 
 	private final BrickletBarometer barometer;
-	private WeatherModel m;
+	private final WeatherModel m;
 	final double Tg = 0.0065;
 	final double H = 23;
 
