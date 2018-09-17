@@ -8,10 +8,15 @@ import com.tinkerforge.IPConnection;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
+import lombok.Getter;
+
 public final class WeatherStation {
+
 
 	private static final String HOST = "localhost";
 	private static final int PORT = 4223;
+	
+  // TODO get UIDs from station
 	private static final String UIDamb = "mhH";
 	private static final String UIDbar = "k6y";
 	// private static final String UIDmas = "6Ka5bE";
@@ -20,7 +25,7 @@ public final class WeatherStation {
 	private static WeatherStation INSTANCE = null;
 
 	private final BrickletLCD20x4 lcd;
-	private WeatherModel m;
+	@Getter 	private WeatherModel m;
 	
 	private final IPConnection ipcon;
 
@@ -35,9 +40,6 @@ public final class WeatherStation {
 		return INSTANCE;
 	}
 	
-	public WeatherModel getModell() {
-		return m;
-	}
 	
 
 	public WeatherStation() throws Exception {
