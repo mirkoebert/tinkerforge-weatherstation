@@ -9,7 +9,7 @@ public class WeatherMonitor {
 	private WeatherModel m;
 	private boolean alarm = false;
 	private List<AirpressurePoint> aplist = new ArrayList<AirpressurePoint>();
-	final long h1inMsec = 60 * 60 * 1000;
+	final static long H1_IN_MSEC = 60 * 60 * 1000;
 
 	public  WeatherMonitor(WeatherModel m) {
 		this.m = m;
@@ -77,7 +77,7 @@ public class WeatherMonitor {
 		
 		for (Iterator<AirpressurePoint> iterator = aplist.iterator(); iterator.hasNext();) {
 			AirpressurePoint airpressurePoint = iterator.next();
-			if( (now - airpressurePoint.date) > h1inMsec) {
+			if( (now - airpressurePoint.date) > H1_IN_MSEC) {
 				iterator.remove();
 			}
 		}
@@ -98,18 +98,18 @@ public class WeatherMonitor {
 		double delta = max.airpressure - min.airpressure;
 		if (isFallend(min, max)) {
 			if (delta > 1) { 
-				r="Wind 6-7 Bft";
+				r = "Starker Wind 6-7 Bft";
 				if (delta > 2) {
-					r="Wind 8-12 Bft";
+					r = "Wind 8-12 Bft";
 				}
 			}
 		} else {
 			if((delta > 1.3)&&(delta < 2)) {
-				r = "Wind 6-7 Bft";
+				r = "Starker Wind 6-7 Bft";
 			} else if((delta >=2)&& (delta < 3)) {
 				r = "Wind 8-9 Bft";
 			} else if (delta > 3) {
-				r = "Wind 10- Bft";
+				r = "Sturm 10- Bft";
 			}
 		}
 		return r;

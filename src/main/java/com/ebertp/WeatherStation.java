@@ -53,10 +53,11 @@ public final class WeatherStation {
 		// start message
 		lcd.backlightOff();
 		lcd.clearDisplay();
-		// TODO display version
-		lcd.writeLine((short)0, (short)0, " Weather Station" );
-		log.info("XX "+applicationName+ " "+buildVersion);
-		lcd.backlightOn();
+    lcd.backlightOn();
+		lcd.writeLine((short)0, (short)0, applicationName );
+    lcd.writeLine((short)0, (short)0, buildVersion );
+		log.info(applicationName+ " "+buildVersion);
+
 		
 		weatherModel = new WeatherModel();
 		
