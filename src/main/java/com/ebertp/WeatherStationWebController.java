@@ -14,10 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WeatherStationWebController {
 	
-  //private WeatherStation w = WeatherStation.getInstance();
   
   @Autowired
-  private WeatherStation w ;
+  private WeatherStation w;
 	
   
 	@GetMapping("/")

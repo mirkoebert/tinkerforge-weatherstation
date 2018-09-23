@@ -8,6 +8,7 @@ import com.tinkerforge.IPConnection;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -39,8 +40,8 @@ public final class WeatherStation {
 	
 	private final IPConnection ipcon;	
 	
-
-	public WeatherStation() throws Exception {
+	@Autowired
+	public WeatherStation(@Value("${application.name}") String applicationName,@Value("${application.version}") String buildVersion) throws Exception {
 		ipcon = new IPConnection();
 
 		final BrickletHumidity humBrick = new BrickletHumidity(UIDhum, ipcon);
