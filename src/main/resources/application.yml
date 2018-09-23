@@ -1,0 +1,18 @@
+server:
+  port: 8888 
+  
+
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: "*"      
+
+application:
+  name: @project.artifactId@
+  version: @project.version@
+
+

@@ -84,7 +84,7 @@ public class WeatherMonitor {
 	}
 
 	public String getForeCast() {
-		String r = "Wetter: unverändert";
+		String r = "Wetter unverändert";
 		double ap = m.getAirPressure();
 		if(ap >1020) {
 			r = r + " gut";
@@ -98,18 +98,18 @@ public class WeatherMonitor {
 		double delta = max.airpressure - min.airpressure;
 		if (isFallend(min, max)) {
 			if (delta > 1) { 
-				r="6-7 Bft";
+				r="Wind 6-7 Bft";
 				if (delta > 2) {
-					r="8-12 Bft";
+					r="Wind 8-12 Bft";
 				}
 			}
 		} else {
 			if((delta > 1.3)&&(delta < 2)) {
-				r = "6-7 Bft";
+				r = "Wind 6-7 Bft";
 			} else if((delta >=2)&& (delta < 3)) {
-				r = "8-9 Bft";
+				r = "Wind 8-9 Bft";
 			} else if (delta > 3) {
-				r = "10- Bft";
+				r = "Wind 10- Bft";
 			}
 		}
 		return r;

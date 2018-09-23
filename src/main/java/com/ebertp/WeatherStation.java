@@ -8,10 +8,21 @@ import com.tinkerforge.IPConnection;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
-import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Component
 public final class WeatherStation {
 
+  @Value("${application.name}")
+  private String applicationName;
+
+  @Value("${application.version}")
+  private String buildVersion;
 
 	private static final String HOST = "localhost";
 	private static final int PORT = 4223;
@@ -22,24 +33,11 @@ public final class WeatherStation {
 	// private static final String UIDmas = "6Ka5bE";
 	private static final String UIDhum = "nBj";
 	private static final String UIDlcd = "odC";
-	private static WeatherStation INSTANCE = null;
 
 	private final BrickletLCD20x4 lcd;
 	@Getter 	private WeatherModel weatherModel;
 	
-	private final IPConnection ipcon;
-
-	public static WeatherStation getInstance(){
-		if (INSTANCE == null) {
-			try {
-				INSTANCE = new WeatherStation();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return INSTANCE;
-	}
-	
+	private final IPConnection ipcon;	
 	
 
 	public WeatherStation() throws Exception {
@@ -56,10 +54,10 @@ public final class WeatherStation {
 		lcd.clearDisplay();
 		// TODO display version
 		lcd.writeLine((short)0, (short)0, " Weather Station" );
+		log.info("XX "+applicationName+ " "+buildVersion);
 		lcd.backlightOn();
 		
 		weatherModel = new WeatherModel();
-		
 		
 		final HumidityListenerX humListener = new HumidityListenerX(weatherModel);
 
