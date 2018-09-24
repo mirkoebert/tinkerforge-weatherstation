@@ -11,9 +11,10 @@ management:
       exposure:
         include: "*"      
 
-
-application:
-  name: @project.artifactId@
-  version: @project.version@
+info:
+  app: 
+    name: @project.artifactId@
+    description: "TinkerForge Weather Station"
+    version: @project.version@
 
 

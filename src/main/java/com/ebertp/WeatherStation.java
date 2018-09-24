@@ -19,12 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public final class WeatherStation {
 
-//  @Value("${application.name}")
-//  private String applicationName;
-//
-//  @Value("${application.version}")
-//  private String buildVersion;
-
   private static final String HOST = "localhost";
   private static final int PORT = 4223;
 
@@ -42,8 +36,8 @@ public final class WeatherStation {
   private final IPConnection ipcon;
 
   @Autowired
-  public WeatherStation(@Value("${application.name}") String applicationName,
-      @Value("${application.version}") String buildVersion) throws Exception {
+  public WeatherStation(@Value("${info.app.name}") String applicationName,
+      @Value("${info.app.version}") String buildVersion) throws Exception {
     ipcon = new IPConnection();
 
     final BrickletHumidity humBrick = new BrickletHumidity(UIDhum, ipcon);

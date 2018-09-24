@@ -17,10 +17,10 @@ public class WeatherStationWebController {
   @Autowired
   private WeatherStation w;
   
-  @Value("${application.name}")
+  @Value("${info.app.name}")
   private String applicationName;
 
-  @Value("${application.version}")
+  @Value("${info.app.version}")
   private String buildVersion;
 
 
