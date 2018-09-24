@@ -3,6 +3,7 @@ package com.ebertp;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,6 +16,13 @@ public class WeatherStationWebController {
 
   @Autowired
   private WeatherStation w;
+  
+  @Value("${application.name}")
+  private String applicationName;
+
+  @Value("${application.version}")
+  private String buildVersion;
+
 
   @GetMapping("/")
   public ModelAndView home(Map<String, Object> model) {
@@ -36,4 +44,12 @@ public class WeatherStationWebController {
     return "webcams";
   }
 
+  @GetMapping("/info")
+  public String info(Map<String, Object> model) {
+    model.put("date", DateX.getInstance().getDateString());
+    model.put("applicationName", applicationName);
+    model.put("buildVersion", buildVersion);
+    return "info";
+  }
+  
 }

@@ -19,11 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public final class WeatherStation {
 
-  @Value("${application.name}")
-  private String applicationName;
-
-  @Value("${application.version}")
-  private String buildVersion;
+//  @Value("${application.name}")
+//  private String applicationName;
+//
+//  @Value("${application.version}")
+//  private String buildVersion;
 
   private static final String HOST = "localhost";
   private static final int PORT = 4223;

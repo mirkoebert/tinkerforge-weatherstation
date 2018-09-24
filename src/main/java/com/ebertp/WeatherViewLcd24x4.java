@@ -1,5 +1,9 @@
 package com.ebertp;
 
+import com.tinkerforge.BrickletLCD20x4;
+import com.tinkerforge.NotConnectedException;
+import com.tinkerforge.TimeoutException;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,23 +11,19 @@ import java.util.Date;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.tinkerforge.BrickletLCD20x4;
-import com.tinkerforge.NotConnectedException;
-import com.tinkerforge.TimeoutException;
-
 @Slf4j
 public class WeatherViewLcd24x4 implements Runnable {
 
-  WeatherModel m;
-  final BrickletLCD20x4 lcd;
+  private final WeatherModel weatherModell;
+  private final BrickletLCD20x4 lcd;
   private final DecimalFormat df1 = new DecimalFormat("#.0");
   private final DecimalFormat df0 = new DecimalFormat("#");
-  private SimpleDateFormat sdf1 = new SimpleDateFormat("d. MMMM");
+  private SimpleDateFormat sdf1 = new SimpleDateFormat("d.MMMM");
   private SimpleDateFormat sdf2 = new SimpleDateFormat("EE HH:mm:ss");
   private boolean timeOrdate = true;
 
-  public WeatherViewLcd24x4(WeatherModel m, BrickletLCD20x4 lcd) {
-    this.m = m;
+  public WeatherViewLcd24x4(WeatherModel weatherModell, BrickletLCD20x4 lcd) {
+    this.weatherModell = weatherModell;
     this.lcd = lcd;
     final Thread t = new Thread(this);
     t.start();
@@ -34,10 +34,10 @@ public class WeatherViewLcd24x4 implements Runnable {
       lcd.clearDisplay();
       switchBacklightOffAtNight();
 
-      lcd.writeLine((short) 0, (short) 12, (int) Math.round(m.getAirPressure()) + " hPa");
-      lcd.writeLine((short) 0, (short) 0, df1.format(m.getHumdidity()) + " %RH");
-      lcd.writeLine((short) 1, (short) 0, df1.format(m.getTempIn()) + " C");
-      lcd.writeLine((short) 2, (short) 0, df0.format(m.getIllumination()) + " lx  ");
+      lcd.writeLine((short) 0, (short) 12, (int) Math.round(weatherModell.getAirPressure()) + " hPa");
+      lcd.writeLine((short) 0, (short) 0, df1.format(weatherModell.getHumdidity()) + " %RH");
+      lcd.writeLine((short) 1, (short) 0, df1.format(weatherModell.getTempIn()) + " C");
+      lcd.writeLine((short) 2, (short) 0, df0.format(weatherModell.getIllumination()) + " lx  ");
 
       Date d = new Date();
       String message;
@@ -49,7 +49,7 @@ public class WeatherViewLcd24x4 implements Runnable {
       // FIXME bug with long month names like september
       lcd.writeLine((short) 1, (short) 8, message);
 
-      lcd.writeLine((short) 3, (short) 0, utf16ToKS0066U(m.getForecast()));
+      lcd.writeLine((short) 3, (short) 0, utf16ToKS0066U(weatherModell.getForecast()));
       timeOrdate = !timeOrdate;
 
     } catch (TimeoutException | NotConnectedException e) {
