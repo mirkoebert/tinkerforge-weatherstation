@@ -46,10 +46,16 @@ public class WeatherViewLcd24x4 implements Runnable {
       } else {
         message = sdf2.format(d);
       }
-      // FIXME bug with long month names like september
       lcd.writeLine((short) 1, (short) 8, message);
 
-      lcd.writeLine((short) 3, (short) 0, utf16ToKS0066U(weatherModell.getForecast()));
+      String forcast = utf16ToKS0066U(weatherModell.getForecast());
+      int l = forcast.length();
+      if(forcast.length()<24) {
+        for (int i = 0; i < (24 - l); i++) {
+          forcast = forcast + " ";
+        }
+      }
+      lcd.writeLine((short) 3, (short) 0, forcast);
       timeOrdate = !timeOrdate;
 
     } catch (TimeoutException | NotConnectedException e) {
