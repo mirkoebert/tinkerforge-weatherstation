@@ -30,7 +30,8 @@ public class WeatherMonitor {
   }
 
   /**
-   * @link http://www.bohlken.net/luftdruck2.htm
+   * Predict storm based on: 
+   * {@link http://www.bohlken.net/luftdruck2.htm}
    * @return
    */
   public boolean isStormAlarm() {
