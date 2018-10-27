@@ -5,6 +5,7 @@ import com.tinkerforge.BrickletBarometer.AirPressureListener;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -15,16 +16,12 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
+@AllArgsConstructor
 final class AirPressureListenerX implements AirPressureListener {
 
-    private final BrickletBarometer barometer;
     private final WeatherModel weatherModel;
-
-    public AirPressureListenerX(WeatherModel weatherModel, final BrickletBarometer barometer) {
-        this.weatherModel = weatherModel;
-        this.barometer = barometer;
-    }
-
+    private final BrickletBarometer barometer;
+    
     @Override
     public void airPressure(final int airPressure) {
         final float QFE = airPressure / 1000f;
