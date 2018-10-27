@@ -2,6 +2,7 @@ package com.ebertp;
 
 import com.tinkerforge.BrickletAmbientLight.IlluminanceListener;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -11,13 +12,10 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
+@AllArgsConstructor
 final class IlluminanceListenerX implements IlluminanceListener {
 
     private final WeatherModel weatherModel;
-
-    public IlluminanceListenerX(WeatherModel weaterModel) {
-        this.weatherModel = weaterModel;
-    }
 
     @Override
     public void illuminance(final int illuminance) {

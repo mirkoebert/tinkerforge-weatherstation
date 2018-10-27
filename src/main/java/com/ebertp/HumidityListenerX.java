@@ -2,6 +2,7 @@ package com.ebertp;
 
 import com.tinkerforge.BrickletHumidity.HumidityListener;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -12,13 +13,10 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
+@AllArgsConstructor
 class HumidityListenerX implements HumidityListener {
 
     private final WeatherModel weaterModel;
-
-    public HumidityListenerX(final WeatherModel weaterModel) {
-        this.weaterModel = weaterModel;
-    }
 
     @Override
     public void humidity(final int humidity) {
