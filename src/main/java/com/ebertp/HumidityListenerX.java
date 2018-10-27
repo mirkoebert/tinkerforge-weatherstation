@@ -14,17 +14,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class HumidityListenerX implements HumidityListener {
 
-  private final WeatherModel weaterModel;
+    private final WeatherModel weaterModel;
 
-  public HumidityListenerX(final WeatherModel weaterModel) {
-    this.weaterModel = weaterModel;
-  }
+    public HumidityListenerX(final WeatherModel weaterModel) {
+        this.weaterModel = weaterModel;
+    }
 
-  @Override
-  public void humidity(final int humidity) {
-    final double h = humidity / 10.0;
-    weaterModel.setHumdidity(h);
-    log.info("Relative Humidity: " + h + " %RH");
-  }
+    @Override
+    public void humidity(final int humidity) {
+        final double h = humidity / 10.0;
+        weaterModel.setHumdidity(h);
+        log.info("Relative Humidity: " + h + " %RH");
+    }
 
 }
