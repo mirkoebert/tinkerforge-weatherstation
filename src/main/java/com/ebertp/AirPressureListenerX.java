@@ -21,7 +21,7 @@ final class AirPressureListenerX implements AirPressureListener {
 
     private final WeatherModel weatherModel;
     private final BrickletBarometer barometer;
-    
+
     @Override
     public void airPressure(final int airPressure) {
         final float QFE = airPressure / 1000f;

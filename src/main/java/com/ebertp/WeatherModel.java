@@ -18,7 +18,7 @@ public class WeatherModel {
     @Getter
     @Setter
     double humdidity;
-    
+
     private WeatherMonitor monitor;
 
     public WeatherModel() {

@@ -5,9 +5,7 @@ import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TimeoutException;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,8 +16,6 @@ public class WeatherViewLcd24x4 implements Runnable {
     private final BrickletLCD20x4 lcd;
     private final DecimalFormat df1 = new DecimalFormat("#.0");
     private final DecimalFormat df0 = new DecimalFormat("#");
-    private SimpleDateFormat sdf1 = new SimpleDateFormat("d.MMMM");
-    private SimpleDateFormat sdf2 = new SimpleDateFormat("EE HH:mm:ss");
     private boolean timeOrdate = true;
 
     public WeatherViewLcd24x4(WeatherModel weatherModell, BrickletLCD20x4 lcd) {
@@ -39,12 +35,11 @@ public class WeatherViewLcd24x4 implements Runnable {
             lcd.writeLine((short) 1, (short) 0, df1.format(weatherModell.getTempIn()) + " C");
             lcd.writeLine((short) 2, (short) 0, df0.format(weatherModell.getIllumination()) + " lx  ");
 
-            Date d = new Date();
             String message;
             if (timeOrdate) {
-                message = sdf1.format(d);
+                message = DateX.getInstance().getDateOnlyString();
             } else {
-                message = sdf2.format(d);
+                message = DateX.getInstance().getTimeOnlyString();
             }
             lcd.writeLine((short) 1, (short) 8, message);
 

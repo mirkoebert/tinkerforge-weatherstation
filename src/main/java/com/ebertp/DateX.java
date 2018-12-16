@@ -8,24 +8,20 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 final class DateX {
 
     private static DateX instance = null;
-    private ZoneId zoneId = ZoneId.of( "Europe/Berlin" );
     private boolean isOnline = false;
+    private ZoneId zoneId;
 
     private DateX() {
         isOnline = isOnline();
+        zoneId = ZoneId.of("Europe/Berlin");
     }
 
     String getDateString() {
-        ZonedDateTime zdt = ZonedDateTime.now( zoneId ) ;
-        log.info("QQQ: "+zdt);
-        log.info("QQQ: "+zdt.format(DateTimeFormatter.ofPattern("EE HH:mm:ss d. MMMM YYYY")));
         String r = "";
+        ZonedDateTime zdt = ZonedDateTime.now(zoneId);
         if (isOnline) {
             r = zdt.format(DateTimeFormatter.ofPattern("EE HH:mm:ss d. MMMM YYYY"));
         } else {
@@ -63,5 +59,23 @@ final class DateX {
     public static void main(String[] args) throws Exception {
         String s = DateX.getInstance().getDateString();
         System.out.println("XXX: " + s);
+    }
+
+    public String getDateOnlyString() {
+        String r = "";
+        if (isOnline) {
+            ZonedDateTime zdt = ZonedDateTime.now(zoneId);
+            r = zdt.format(DateTimeFormatter.ofPattern("d. MMMM"));
+        }
+        return r;
+    }
+
+    public String getTimeOnlyString() {
+        String r = "";
+        if (isOnline) {
+            ZonedDateTime zdt = ZonedDateTime.now(zoneId);
+            r = zdt.format(DateTimeFormatter.ofPattern("EE HH:mm:ss"));
+        }
+        return r;
     }
 }

@@ -7,5 +7,5 @@ public class AirpressurePoint {
 
     final long date;
     final double airpressure;
-    
+
 }
