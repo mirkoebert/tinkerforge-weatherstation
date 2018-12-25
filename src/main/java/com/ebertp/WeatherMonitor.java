@@ -87,7 +87,7 @@ public class WeatherMonitor {
         String r = "Wetter unverändert";
         double ap = m.getAirPressure();
         if (ap > 1020) {
-            r = r + " gut";
+            r = "Gutes Wetter";
         }
         long d = m.getDate();
         AirpressurePoint cap = new AirpressurePoint(d, ap);
