@@ -54,6 +54,7 @@ Open web site http://XXX.XXX.XXX.XXX:8888/ to show all information in browser. T
   * Air pressure in hPa
   * Relative Humidity in %
   * Temperature (only as chip temperature) in degree Celsius.
+* Auto detection of weather station bricks and bricklets
 * Output to LCD and as Website
 * Integrate DWD (Deutscher Wetterdienst) Webcams
 * Date and Time
