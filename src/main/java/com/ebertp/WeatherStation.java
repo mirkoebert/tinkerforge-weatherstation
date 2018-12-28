@@ -1,5 +1,6 @@
 package com.ebertp;
 
+import com.tinkerforge.BrickMaster;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletHumidity;
@@ -62,12 +63,6 @@ public final class WeatherStation implements EnumerateListener {
     protected void finalize() throws Throwable {
         super.finalize();
         System.out.println("Shutdown");
-//        try {
-//            lcd.backlightOff();
-//            lcd.clearDisplay();
-//        } catch (TimeoutException | NotConnectedException e) {
-//            e.printStackTrace();
-//        }
         ipcon.disconnect();
     }
 
@@ -78,8 +73,13 @@ public final class WeatherStation implements EnumerateListener {
         switch (deviceIdentifier) {
         case 13:
             String UIDmaster = uid;
-            // IDEA set status LED
-            // IDEA get chip temp
+            BrickMaster master = new BrickMaster(UIDmaster, ipcon);
+            new TempPoller(master);
+            try {
+                master.disableStatusLED();
+            } catch (TimeoutException | NotConnectedException ex) {
+                log.error(ex.getLocalizedMessage());
+            }
             break;
         case 17:
             String UIDred = uid;
