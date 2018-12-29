@@ -3,6 +3,11 @@ package com.ebertp;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Model of the current weather, this mean the latest values of the weather station sensors.
+ * @author mirkoebert
+ *
+ */
 public class WeatherModel {
 
     @Getter
@@ -34,6 +39,10 @@ public class WeatherModel {
         this.airPressure = airPressure;
     }
 
+    /**
+     * Weather forcast. 
+     * @return Short forecast string to display on weather station's LSD.
+     */
     public String getForecast() {
         String r = "";
         if (monitor.isHumidityAlarm()) {

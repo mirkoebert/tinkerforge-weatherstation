@@ -22,6 +22,8 @@ public class WeatherStationWebController {
 
     @Value("${info.app.version}")
     private String buildVersion;
+    
+    
 
     @GetMapping("/")
     public ModelAndView home(Map<String, Object> model) {
@@ -48,7 +50,15 @@ public class WeatherStationWebController {
         model.put("date", DateX.getInstance().getDateString());
         model.put("applicationName", applicationName);
         model.put("buildVersion", buildVersion);
+        model.put("online", DateX.getInstance().isOnline());
+        model.put("latitude", "--");
+        model.put("longitude", "--");
         return "info";
+    }
+
+    @GetMapping("/setup")
+    public String setup(Map<String, Object> model) {
+        return "setup";
     }
 
 }

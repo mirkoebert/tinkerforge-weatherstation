@@ -33,7 +33,7 @@ final class DateX {
         return r;
     }
 
-    private boolean isOnline() {
+    public boolean isOnline() {
         boolean r = false;
         try {
             final URL url = new URL("http://www.otto.de");
@@ -56,6 +56,11 @@ final class DateX {
         return instance;
     }
 
+    /**
+     * Only for testing
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         String s = DateX.getInstance().getDateString();
         System.out.println("XXX: " + s);

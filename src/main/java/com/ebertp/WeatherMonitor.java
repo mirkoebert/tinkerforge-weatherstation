@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Monitor the weather data and predict weather.
+ * @author mirkoebert
+ *
+ */
 public class WeatherMonitor {
 
     private WeatherModel m;
@@ -74,7 +79,6 @@ public class WeatherMonitor {
 
     private void removeOldData() {
         long now = System.currentTimeMillis();
-
         for (Iterator<AirpressurePoint> iterator = aplist.iterator(); iterator.hasNext();) {
             AirpressurePoint airpressurePoint = iterator.next();
             if ((now - airpressurePoint.date) > H1_IN_MSEC) {
