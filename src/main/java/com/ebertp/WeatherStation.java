@@ -25,19 +25,20 @@ public final class WeatherStation implements EnumerateListener {
     private static final String HOST = "localhost";
     private static final int PORT = 4223;
 
-
     @Getter
     private WeatherModel weatherModel;
     private String applicationName;
     private String buildVersion;
     private final IPConnection ipcon;
+    private boolean nightmode;
 
     
     @Autowired
     public WeatherStation(@Value("${info.app.name}") String applicationName,
-            @Value("${info.app.version}") String buildVersion) throws Exception {
+            @Value("${info.app.version}") String buildVersion, @Value("${weatherstation.mode.nightmode}") boolean nightmode) throws Exception {
         this.applicationName = applicationName;
         this.buildVersion = buildVersion;
+        this.nightmode = nightmode;
         
         weatherModel = new WeatherModel();
 
@@ -103,7 +104,8 @@ public final class WeatherStation implements EnumerateListener {
                 lcd.backlightOn();
                 lcd.writeLine((short) 0, (short) 0, applicationName);
                 lcd.writeLine((short) 1, (short) 0, buildVersion);
-                new WeatherViewLcd24x4(weatherModel, lcd);
+                WeatherViewLcd24x4 lcdView = new WeatherViewLcd24x4(weatherModel, lcd);
+                lcdView.setNightMode(nightmode);
             } catch (TimeoutException | NotConnectedException ex) {
                 log.error(ex.getLocalizedMessage());
             }

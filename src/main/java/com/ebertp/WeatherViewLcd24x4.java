@@ -12,11 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WeatherViewLcd24x4 implements Runnable {
 
+    private final Calendar calendar = Calendar.getInstance();
     private final WeatherModel weatherModell;
     private final BrickletLCD20x4 lcd;
     private final DecimalFormat df1 = new DecimalFormat("#.0");
     private final DecimalFormat df0 = new DecimalFormat("#");
     private boolean timeOrdate = true;
+    private boolean nightmode;
 
     public WeatherViewLcd24x4(WeatherModel weatherModell, BrickletLCD20x4 lcd) {
         this.weatherModell = weatherModell;
@@ -28,48 +30,43 @@ public class WeatherViewLcd24x4 implements Runnable {
     public void paint() {
         try {
             lcd.clearDisplay();
-            switchBacklightOffAtNight();
-
-            lcd.writeLine((short) 0, (short) 12, (int) Math.round(weatherModell.getAirPressure()) + " hPa");
-            lcd.writeLine((short) 0, (short) 0, df1.format(weatherModell.getHumdidity()) + " %RH");
-            lcd.writeLine((short) 1, (short) 0, df1.format(weatherModell.getTempIn()) + " C");
-            lcd.writeLine((short) 2, (short) 0, df0.format(weatherModell.getIllumination()) + " lx  ");
-
-            String message;
-            if (timeOrdate) {
-                message = DateX.getInstance().getDateOnlyString();
+            if (nightmode && isNight()) {
+                lcd.backlightOff();
             } else {
-                message = DateX.getInstance().getTimeOnlyString();
-            }
-            lcd.writeLine((short) 1, (short) 8, message);
+                lcd.backlightOn();
+                lcd.writeLine((short) 0, (short) 12, (int) Math.round(weatherModell.getAirPressure()) + " hPa");
+                lcd.writeLine((short) 0, (short) 0, df1.format(weatherModell.getHumdidity()) + " %RH");
+                lcd.writeLine((short) 1, (short) 0, df1.format(weatherModell.getTempIn()) + " C");
+                lcd.writeLine((short) 2, (short) 0, df0.format(weatherModell.getIllumination()) + " lx  ");
 
-            StringBuilder forcast = new StringBuilder(utf16ToKS0066U(weatherModell.getForecast()));
-            int l = forcast.length();
-            if (forcast.length() < 24) {
-                for (int i = 0; i < (24 - l); i++) {
-                    forcast.append(" ");
+                String message;
+                if (timeOrdate) {
+                    message = DateX.getInstance().getDateOnlyString();
+                } else {
+                    message = DateX.getInstance().getTimeOnlyString();
                 }
-            }
-            lcd.writeLine((short) 3, (short) 0, forcast.toString());
-            timeOrdate = !timeOrdate;
+                lcd.writeLine((short) 1, (short) 8, message);
 
+                StringBuilder forcast = new StringBuilder(utf16ToKS0066U(weatherModell.getForecast()));
+                int l = forcast.length();
+                if (forcast.length() < 24) {
+                    for (int i = 0; i < (24 - l); i++) {
+                        forcast.append(" ");
+                    }
+                }
+                lcd.writeLine((short) 3, (short) 0, forcast.toString());
+                timeOrdate = !timeOrdate;
+            }
         } catch (TimeoutException | NotConnectedException e) {
             log.error("paint", e);
         }
     }
 
-    private void switchBacklightOffAtNight() {
-        int h = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        try {
-            if ((h > 5) && (h < 22)) {
-                lcd.backlightOn();
-            } else {
-                lcd.backlightOff();
-            }
-        } catch (TimeoutException | NotConnectedException e) {
-            log.error("switchBacklightOffAtNight", e);
-        }
+    private boolean isNight() {
+        int h = calendar.get(Calendar.HOUR_OF_DAY);
+        return (h <= 5) && (h >= 22);
     }
+    
 
     @Override
     public void run() {
@@ -230,5 +227,10 @@ public class WeatherViewLcd24x4 implements Runnable {
         }
 
         return ks0066u;
+    }
+
+    public void setNightMode(boolean nightmode) {
+        log.info("Night mode: "+nightmode);
+        this.nightmode = nightmode;
     }
 }
