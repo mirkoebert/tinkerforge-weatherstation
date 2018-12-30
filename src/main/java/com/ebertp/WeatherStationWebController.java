@@ -23,8 +23,16 @@ public class WeatherStationWebController {
     @Value("${info.app.version}")
     private String buildVersion;
     
+    @Value("${weatherstation.position.latitude}")
+    private String latitude;
     
+    @Value("${weatherstation.position.longitude}")
+    private String longitude;
 
+    @Value("${weatherstation.position.altitude}")
+    private String altitude;
+
+    
     @GetMapping("/")
     public ModelAndView home(Map<String, Object> model) {
         log.info("HTTP Request");
@@ -51,8 +59,9 @@ public class WeatherStationWebController {
         model.put("applicationName", applicationName);
         model.put("buildVersion", buildVersion);
         model.put("online", DateX.getInstance().isOnline());
-        model.put("latitude", "--");
-        model.put("longitude", "--");
+        model.put("altitude", altitude);
+        model.put("latitude", latitude);
+        model.put("longitude", longitude);
         return "info";
     }
 

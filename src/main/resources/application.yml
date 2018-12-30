@@ -17,4 +17,11 @@ info:
     description: "TinkerForge Weather Station"
     version: @project.version@
 
+weatherstation:
+  position:
+    altitude: 25
+    latitude: 53.98465878500624
+    longitude: 12.183633460018223
+  mode:
+    nightmode: true
 
