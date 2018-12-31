@@ -31,14 +31,16 @@ public final class WeatherStation implements EnumerateListener {
     private String buildVersion;
     private final IPConnection ipcon;
     private boolean nightmode;
+    private boolean alarmflashingmode;
 
     
     @Autowired
     public WeatherStation(@Value("${info.app.name}") String applicationName,
-            @Value("${info.app.version}") String buildVersion, @Value("${weatherstation.mode.nightmode}") boolean nightmode) throws Exception {
+            @Value("${info.app.version}") String buildVersion, @Value("${weatherstation.mode.nightmode}") boolean nightmode, @Value("${weatherstation.mode.alarmfashing}") boolean alarmflashingmode) throws Exception {
         this.applicationName = applicationName;
         this.buildVersion = buildVersion;
         this.nightmode = nightmode;
+        this.alarmflashingmode = alarmflashingmode;
         
         weatherModel = new WeatherModel();
 
@@ -105,7 +107,8 @@ public final class WeatherStation implements EnumerateListener {
                 lcd.writeLine((short) 0, (short) 0, applicationName);
                 lcd.writeLine((short) 1, (short) 0, buildVersion);
                 WeatherViewLcd24x4 lcdView = new WeatherViewLcd24x4(weatherModel, lcd);
-                lcdView.setNightMode(nightmode);
+                lcdView.setNightmode(nightmode);
+                lcdView.setAlarmflashingmode(alarmflashingmode);
             } catch (TimeoutException | NotConnectedException ex) {
                 log.error(ex.getLocalizedMessage());
             }

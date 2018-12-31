@@ -24,4 +24,5 @@ weatherstation:
     longitude: 12.183633460018223
   mode:
     nightmode: true
+    alarmfashing: true
 

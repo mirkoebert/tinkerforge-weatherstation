@@ -7,6 +7,7 @@ import com.tinkerforge.TimeoutException;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -17,7 +18,10 @@ public class WeatherViewLcd24x4 implements Runnable {
     private final DecimalFormat df1 = new DecimalFormat("#.0");
     private final DecimalFormat df0 = new DecimalFormat("#");
     private boolean timeOrdate = true;
+    @Setter
     private boolean nightmode;
+    @Setter
+    private boolean alarmflashingmode;
 
     public WeatherViewLcd24x4(WeatherModel weatherModell, BrickletLCD20x4 lcd) {
         this.weatherModell = weatherModell;
@@ -55,17 +59,35 @@ public class WeatherViewLcd24x4 implements Runnable {
                 }
                 lcd.writeLine((short) 3, (short) 0, forcast.toString());
                 timeOrdate = !timeOrdate;
+                if(weatherModell.isAlarm()&&alarmflashingmode) {
+                    flashBacklight();
+                }
             }
         } catch (TimeoutException | NotConnectedException e) {
             log.error("paint", e);
         }
     }
 
+    private void flashBacklight() {
+        try {
+            lcd.backlightOff();
+            Thread.sleep(400);
+            lcd.backlightOn();
+            Thread.sleep(400);
+            lcd.backlightOff();
+            Thread.sleep(400);
+            lcd.backlightOn();
+        } catch (TimeoutException | NotConnectedException | InterruptedException e) {
+            log.warn(e.getLocalizedMessage());        
+        } 
+
+    }
+
     private boolean isNight() {
         int h = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         return (h <= 5) || (h >= 22);
     }
-    
+
 
     @Override
     public void run() {
@@ -228,8 +250,4 @@ public class WeatherViewLcd24x4 implements Runnable {
         return ks0066u;
     }
 
-    public void setNightMode(boolean nightmode) {
-        log.info("Night mode: "+nightmode);
-        this.nightmode = nightmode;
-    }
 }

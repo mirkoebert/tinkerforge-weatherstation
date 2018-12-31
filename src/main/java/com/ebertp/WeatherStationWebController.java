@@ -34,7 +34,11 @@ public class WeatherStationWebController {
 
     @Value("${weatherstation.mode.nightmode}")
     private String nightmode;
+    
+    @Value("${weatherstation.mode.alarmfashing}")
+    private String alarmflashingmode;
 
+    
     @GetMapping("/")
     public ModelAndView home(Map<String, Object> model) {
         log.info("HTTP Request");
@@ -65,6 +69,7 @@ public class WeatherStationWebController {
         model.put("latitude", latitude);
         model.put("longitude", longitude);
         model.put("nightmode", nightmode);
+        model.put("alarmflashingmode", alarmflashingmode);
         return "info";
     }
 

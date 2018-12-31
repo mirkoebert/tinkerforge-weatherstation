@@ -23,6 +23,9 @@ public class WeatherModel {
     @Getter
     @Setter
     double humdidity;
+    
+    @Getter
+    private boolean alarm;
 
     private WeatherMonitor monitor;
 
@@ -45,6 +48,7 @@ public class WeatherModel {
      */
     public String getForecast() {
         String r = "";
+        alarm = true;
         if (monitor.isHumidityAlarm()) {
             r = "Warnung: Luftfeuchtigkeit";
         } else if (monitor.isFrostAlarm()) {
@@ -55,8 +59,10 @@ public class WeatherModel {
             r = "Warnung: Feuer";
         } else {
             r = monitor.getForeCast();
+            alarm = false;
         }
         return r;
     }
+    
 
 }
