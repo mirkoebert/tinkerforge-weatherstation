@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WeatherViewLcd24x4 implements Runnable {
 
-    private final Calendar calendar = Calendar.getInstance();
     private final WeatherModel weatherModell;
     private final BrickletLCD20x4 lcd;
     private final DecimalFormat df1 = new DecimalFormat("#.0");
@@ -63,8 +62,8 @@ public class WeatherViewLcd24x4 implements Runnable {
     }
 
     private boolean isNight() {
-        int h = calendar.get(Calendar.HOUR_OF_DAY);
-        return (h <= 5) && (h >= 22);
+        int h = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        return (h <= 5) || (h >= 22);
     }
     
 
