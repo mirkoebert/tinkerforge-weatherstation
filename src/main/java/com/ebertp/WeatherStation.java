@@ -27,7 +27,9 @@ public final class WeatherStation implements EnumerateListener {
 
     @Getter
     private WeatherModel weatherModel;
+    @Getter
     private String applicationName;
+    @Getter
     private String buildVersion;
     private final IPConnection ipcon;
     private boolean nightmode;
