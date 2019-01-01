@@ -26,8 +26,6 @@ public final class WeatherStation implements EnumerateListener {
     private static final int PORT = 4223;
 
     @Getter
-    private WeatherModel weatherModel;
-    @Getter
     private String applicationName;
     @Getter
     private String buildVersion;
@@ -35,6 +33,21 @@ public final class WeatherStation implements EnumerateListener {
     private boolean nightmode;
     private boolean alarmflashingmode;
 
+    @Getter
+    @Value("${weatherstation.position.latitude}")
+    private String latitude;
+    
+    @Getter
+    @Value("${weatherstation.position.longitude}")
+    private String longitude;
+
+    @Getter
+    @Value("${weatherstation.position.altitude}")
+    private String altitude;
+
+    @Getter
+    @Autowired
+    private WeatherModel weatherModel;
     
     @Autowired
     public WeatherStation(@Value("${info.app.name}") String applicationName,
@@ -44,7 +57,7 @@ public final class WeatherStation implements EnumerateListener {
         this.nightmode = nightmode;
         this.alarmflashingmode = alarmflashingmode;
         
-        weatherModel = new WeatherModel();
+        //weatherModel = new WeatherModel();
 
         ipcon = new IPConnection();
         ipcon.connect(HOST, PORT);
