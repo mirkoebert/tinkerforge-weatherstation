@@ -59,9 +59,6 @@ public class WeatherViewLcd24x4 implements Runnable {
                 }
                 lcd.writeLine((short) 3, (short) 0, forcast.toString());
                 timeOrdate = !timeOrdate;
-                if(weatherModell.isAlarm()&&alarmflashingmode) {
-                    flashBacklight();
-                }
             }
         } catch (TimeoutException | NotConnectedException e) {
             log.error("paint", e);
@@ -71,11 +68,11 @@ public class WeatherViewLcd24x4 implements Runnable {
     private void flashBacklight() {
         try {
             lcd.backlightOff();
-            Thread.sleep(400);
+            Thread.sleep(1000);
             lcd.backlightOn();
-            Thread.sleep(400);
+            Thread.sleep(1000);
             lcd.backlightOff();
-            Thread.sleep(400);
+            Thread.sleep(1000);
             lcd.backlightOn();
         } catch (TimeoutException | NotConnectedException | InterruptedException e) {
             log.warn(e.getLocalizedMessage());        
@@ -93,11 +90,17 @@ public class WeatherViewLcd24x4 implements Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(3500);
+                paint();
+                if(weatherModell.isAlarm()&&alarmflashingmode) {
+                    flashBacklight();
+                    Thread.sleep(500);
+                } else {
+                    Thread.sleep(3500);
+                }
             } catch (InterruptedException e) {
                 log.error("run", e);
             }
-            paint();
+
         }
     }
 

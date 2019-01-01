@@ -12,7 +12,7 @@ public class WeatherModel {
 
     @Getter
     @Setter
-    double tempIn, tempOut;
+    double tempIn;
     @Getter
     @Setter
     long illumination;
