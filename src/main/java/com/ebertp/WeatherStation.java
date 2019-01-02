@@ -57,8 +57,6 @@ public final class WeatherStation implements EnumerateListener {
         this.nightmode = nightmode;
         this.alarmflashingmode = alarmflashingmode;
         
-        //weatherModel = new WeatherModel();
-
         ipcon = new IPConnection();
         ipcon.connect(HOST, PORT);
         ipcon.addEnumerateListener(this);

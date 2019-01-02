@@ -92,7 +92,9 @@ public class WeatherMonitor {
         double ap = m.getAirPressure();
         if (ap > 1020) {
             r = "Gutes Wetter";
-        }
+        } else if (ap < 950) {
+            r = "Unfreundliches Wetter";
+        } 
         long d = m.getDate();
         AirpressurePoint cap = new AirpressurePoint(d, ap);
 
@@ -120,6 +122,24 @@ public class WeatherMonitor {
 
     private boolean isFallend(AirpressurePoint min, AirpressurePoint max) {
         return max.date < min.date;
+    }
+    
+    public AirPressureTrend getAirPressureTrend() {
+        double ap = m.getAirPressure();
+        long d = m.getDate();
+        AirpressurePoint cap = new AirpressurePoint(d, ap);
+
+        AirpressurePoint min = getMin(cap);
+        AirpressurePoint max = getMax(cap);
+        double delta = max.airpressure - min.airpressure;
+        // TODO check value
+        if (Math.abs(delta) < 0.6) {
+            return AirPressureTrend.stable;
+        } else if (isFallend(min, max)) {
+            return AirPressureTrend.falling;
+        } else {
+            return AirPressureTrend.rising;
+        }
     }
 
 }

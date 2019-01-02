@@ -67,5 +67,15 @@ public class WeatherModel {
         return r;
     }
     
+    public String getAirpPressureTrend() {
+        AirPressureTrend trend = monitor.getAirPressureTrend();
+        if(trend == AirPressureTrend.falling) {
+            return "fallend";
+        } else if(trend == AirPressureTrend.stable) {
+            return "gleichbleibend";
+        } else {
+            return "steigend";
+        }
+    }
 
 }

@@ -44,6 +44,7 @@ public class WeatherStationWebController {
         log.info("HTTP Request");
         WeatherModel m = w.getWeatherModel();
         model.put("airpressure", (int) Math.round(m.getAirPressure()));
+        model.put("airpressuretrend", m.getAirpPressureTrend());
         model.put("humidity", m.getHumdidity());
         model.put("tempInn", m.getTempIn());
         model.put("lum", m.getIllumination());
