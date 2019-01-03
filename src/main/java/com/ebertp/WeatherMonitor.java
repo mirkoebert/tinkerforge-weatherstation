@@ -1,9 +1,5 @@
 package com.ebertp;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * Monitor the weather data and predict weather.
  * @author mirkoebert
@@ -13,8 +9,6 @@ public class WeatherMonitor {
 
     private WeatherModel m;
     private boolean alarm = false;
-    private List<AirpressurePoint> aplist = new ArrayList<AirpressurePoint>();
-    static final long H1_IN_MSEC = 60 * 60 * 1000;
 
     public WeatherMonitor(WeatherModel m) {
         this.m = m;
@@ -40,53 +34,29 @@ public class WeatherMonitor {
      * @return true if storm is predicted.
      */
     public boolean isStormAlarm() {
-        removeOldData();
         boolean r = false;
         double ap = m.getAirPressure();
         long d = m.getDate();
         AirpressurePoint cap = new AirpressurePoint(d, ap);
 
-        AirpressurePoint min = getMin(cap);
-        AirpressurePoint max = getMax(cap);
+        AirPressurePointRepository repo = AirPressurePointRepository.getINSTANCE();
+        AirpressurePoint min = repo.getMin(cap);
+        AirpressurePoint max = repo.getMax(cap);
         if ((max.airpressure - min.airpressure) > 3.3) {
             r = true;
         } else if (((max.airpressure - min.airpressure) > 2) && (max.date < min.date)) {
             r = true;
         }
-        aplist.add(cap);
+        repo.add(cap);
         return r;
     }
 
-    private AirpressurePoint getMin(AirpressurePoint current) {
-        AirpressurePoint min = current;
-        for (AirpressurePoint airpressurePoint : aplist) {
-            if (airpressurePoint.airpressure < min.airpressure) {
-                min = airpressurePoint;
-            }
-        }
-        return min;
-    }
 
-    private AirpressurePoint getMax(AirpressurePoint current) {
-        AirpressurePoint max = current;
-        for (AirpressurePoint airpressurePoint : aplist) {
-            if (airpressurePoint.airpressure > max.airpressure) {
-                max = airpressurePoint;
-            }
-        }
-        return max;
-    }
 
-    private void removeOldData() {
-        long now = System.currentTimeMillis();
-        for (Iterator<AirpressurePoint> iterator = aplist.iterator(); iterator.hasNext();) {
-            AirpressurePoint airpressurePoint = iterator.next();
-            if ((now - airpressurePoint.date) > H1_IN_MSEC) {
-                iterator.remove();
-            }
-        }
-    }
-
+    /**
+     * 
+     * @return Weather forecast for the next 1-2 hours.
+     */
     public String getForeCast() {
         String r = "Wetter unverändert";
         double ap = m.getAirPressure();
@@ -98,8 +68,9 @@ public class WeatherMonitor {
         long d = m.getDate();
         AirpressurePoint cap = new AirpressurePoint(d, ap);
 
-        AirpressurePoint min = getMin(cap);
-        AirpressurePoint max = getMax(cap);
+        AirPressurePointRepository repo = AirPressurePointRepository.getINSTANCE();
+        AirpressurePoint min = repo.getMin(cap);
+        AirpressurePoint max = repo.getMax(cap);
         double delta = max.airpressure - min.airpressure;
         if (isFallend(min, max)) {
             if (delta > 1) {
@@ -129,8 +100,9 @@ public class WeatherMonitor {
         long d = m.getDate();
         AirpressurePoint cap = new AirpressurePoint(d, ap);
 
-        AirpressurePoint min = getMin(cap);
-        AirpressurePoint max = getMax(cap);
+        AirPressurePointRepository repo = AirPressurePointRepository.getINSTANCE();
+        AirpressurePoint min = repo.getMin(cap);
+        AirpressurePoint max = repo.getMax(cap);
         double delta = max.airpressure - min.airpressure;
         // TODO check value
         if (Math.abs(delta) < 0.6) {

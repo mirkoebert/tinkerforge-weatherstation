@@ -1,15 +1,14 @@
 package com.ebertp;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.slf4j.Slf4j;
-
 @RestController
-@Slf4j
 public class WeatherStationRestController {
 
     @Autowired
@@ -40,7 +39,6 @@ public class WeatherStationRestController {
     @GetMapping("/v1/weatherdata")
     @ResponseBody
     public WeatherModel weatherdata() {
-        log.info("HTTP REST Request");
         WeatherModel m = w.getWeatherModel();
         return m;
     }
@@ -48,8 +46,13 @@ public class WeatherStationRestController {
     @GetMapping("/v1/weatherstation")
     @ResponseBody
     public WeatherStation weatherstation() {
-        log.info("HTTP REST Request");
         return w;
+    }
+
+    @GetMapping("/v1/airpressure")
+    @ResponseBody
+    public List<AirpressurePoint> airpressure() {
+        return AirPressurePointRepository.getINSTANCE().getAplist();
     }
 
 }
