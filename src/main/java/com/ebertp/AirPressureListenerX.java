@@ -24,8 +24,8 @@ final class AirPressureListenerX implements AirPressureListener {
 
     @Override
     public void airPressure(final int airPressure) {
-        final float QFE = airPressure / 1000f;
-        weatherModel.setAirPressure(QFE);
+        final double QFE = airPressure / 1000f;
+        weatherModel.setAirPressureQFE(QFE);
         try {
             double Tfe = barometer.getChipTemperature() / 100.0;
             weatherModel.setTempIn(Tfe);

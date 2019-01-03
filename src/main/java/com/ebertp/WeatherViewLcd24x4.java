@@ -37,7 +37,7 @@ public class WeatherViewLcd24x4 implements Runnable {
                 lcd.backlightOff();
             } else {
                 lcd.backlightOn();
-                lcd.writeLine((short) 0, (short) 12, (int) Math.round(weatherModell.getAirPressure()) + " hPa");
+                lcd.writeLine((short) 0, (short) 12, (int) Math.round(weatherModell.getAirPressureQFE()) + " hPa");
                 lcd.writeLine((short) 0, (short) 0, df1.format(weatherModell.getHumdidity()) + " %RH");
                 lcd.writeLine((short) 1, (short) 0, df1.format(weatherModell.getTempIn()) + " C");
                 lcd.writeLine((short) 2, (short) 0, df0.format(weatherModell.getIllumination()) + " lx  ");

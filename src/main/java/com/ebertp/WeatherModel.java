@@ -22,7 +22,8 @@ public class WeatherModel {
     @Getter
     @Setter
     long date;
-    double airPressure;
+    @Getter
+    double airPressureQFE;
     @Getter
     @Setter
     double humdidity;
@@ -36,14 +37,13 @@ public class WeatherModel {
         monitor = new WeatherMonitor(this);
     }
 
-    public double getAirPressure() {
+    public void setAirPressureQFE(double airPressureQFE) {
         date = System.currentTimeMillis();
-        return airPressure;
+        this.airPressureQFE = airPressureQFE;
+        AirPressurePointRepository.getINSTANCE().add(new AirpressurePoint(date, airPressureQFE));
     }
 
-    public void setAirPressure(double airPressure) {
-        this.airPressure = airPressure;
-    }
+    
 
     /**
      * Weather forcast. 

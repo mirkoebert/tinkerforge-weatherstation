@@ -8,6 +8,6 @@ import lombok.Getter;
 public class AirpressurePoint {
 
     final long date;
-    final double airpressure;
+    final double airpressureQFE;
 
 }

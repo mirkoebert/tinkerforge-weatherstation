@@ -43,7 +43,7 @@ public class WeatherStationWebController {
     public ModelAndView home(Map<String, Object> model) {
         log.info("HTTP Request");
         WeatherModel m = w.getWeatherModel();
-        model.put("airpressure", (int) Math.round(m.getAirPressure()));
+        model.put("airpressure", (int) Math.round(m.getAirPressureQFE()));
         model.put("airpressuretrend", m.getAirpPressureTrend());
         model.put("humidity", m.getHumdidity());
         model.put("tempInn", m.getTempIn());

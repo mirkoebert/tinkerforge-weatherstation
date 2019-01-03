@@ -35,16 +35,16 @@ public class WeatherMonitor {
      */
     public boolean isStormAlarm() {
         boolean r = false;
-        double ap = m.getAirPressure();
+        double ap = m.getAirPressureQFE();
         long d = m.getDate();
         AirpressurePoint cap = new AirpressurePoint(d, ap);
 
         AirPressurePointRepository repo = AirPressurePointRepository.getINSTANCE();
         AirpressurePoint min = repo.getMin(cap);
         AirpressurePoint max = repo.getMax(cap);
-        if ((max.airpressure - min.airpressure) > 3.3) {
+        if ((max.airpressureQFE - min.airpressureQFE) > 3.3) {
             r = true;
-        } else if (((max.airpressure - min.airpressure) > 2) && (max.date < min.date)) {
+        } else if (((max.airpressureQFE - min.airpressureQFE) > 2) && (max.date < min.date)) {
             r = true;
         }
         repo.add(cap);
@@ -59,7 +59,7 @@ public class WeatherMonitor {
      */
     public String getForeCast() {
         String r = "Wetter unverändert";
-        double ap = m.getAirPressure();
+        double ap = m.getAirPressureQFE();
         if (ap > 1020) {
             r = "Gutes Wetter";
         } else if (ap < 950) {
@@ -71,7 +71,7 @@ public class WeatherMonitor {
         AirPressurePointRepository repo = AirPressurePointRepository.getINSTANCE();
         AirpressurePoint min = repo.getMin(cap);
         AirpressurePoint max = repo.getMax(cap);
-        double delta = max.airpressure - min.airpressure;
+        double delta = max.airpressureQFE - min.airpressureQFE;
         if (isFallend(min, max)) {
             if (delta > 1) {
                 r = "Starker Wind 6-7 Bft";
@@ -96,14 +96,14 @@ public class WeatherMonitor {
     }
     
     public AirPressureTrend getAirPressureTrend() {
-        double ap = m.getAirPressure();
+        double ap = m.getAirPressureQFE();
         long d = m.getDate();
         AirpressurePoint cap = new AirpressurePoint(d, ap);
 
         AirPressurePointRepository repo = AirPressurePointRepository.getINSTANCE();
         AirpressurePoint min = repo.getMin(cap);
         AirpressurePoint max = repo.getMax(cap);
-        double delta = max.airpressure - min.airpressure;
+        double delta = max.airpressureQFE - min.airpressureQFE;
         // TODO check value
         if (Math.abs(delta) < 0.6) {
             return AirPressureTrend.stable;

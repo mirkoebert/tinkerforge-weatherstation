@@ -27,7 +27,7 @@ public class AirPressurePointRepository {
     AirpressurePoint getMin(AirpressurePoint current) {
         AirpressurePoint min = current;
         for (AirpressurePoint airpressurePoint : aplist) {
-            if (airpressurePoint.airpressure < min.airpressure) {
+            if (airpressurePoint.airpressureQFE < min.airpressureQFE) {
                 min = airpressurePoint;
             }
         }
@@ -37,7 +37,7 @@ public class AirPressurePointRepository {
     AirpressurePoint getMax(AirpressurePoint current) {
         AirpressurePoint max = current;
         for (AirpressurePoint airpressurePoint : aplist) {
-            if (airpressurePoint.airpressure > max.airpressure) {
+            if (airpressurePoint.airpressureQFE > max.airpressureQFE) {
                 max = airpressurePoint;
             }
         }
