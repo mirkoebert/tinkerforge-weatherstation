@@ -72,3 +72,8 @@ Stop the program with `<crtl><c>`
 * Display weather station location on Google Maps
 * Integrate DWD (Deutscher Wetterdienst) Webcams
 * Rest API to all data
+
+## Rest API
+* GET /v1/weatherstation
+* GET /v1/weatherdata
+* GET /v1/airpressure

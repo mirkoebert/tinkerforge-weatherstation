@@ -56,16 +56,6 @@ final class DateX {
         return instance;
     }
 
-    /**
-     * Only for testing
-     * @param args
-     * @throws Exception
-     */
-    public static void main(String[] args) throws Exception {
-        String s = DateX.getInstance().getDateString();
-        System.out.println("XXX: " + s);
-    }
-
     public String getDateOnlyString() {
         String r = "";
         if (isOnline) {

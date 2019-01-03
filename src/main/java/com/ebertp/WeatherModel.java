@@ -1,9 +1,10 @@
 package com.ebertp;
 
-import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import org.springframework.stereotype.Component;
 
 /**
  * Model of the current weather, this mean the latest values of the weather station sensors.
@@ -27,7 +28,7 @@ public class WeatherModel {
     @Getter
     @Setter
     double humdidity;
-    
+
     @Getter
     private boolean alarm;
 
@@ -43,7 +44,7 @@ public class WeatherModel {
         AirPressurePointRepository.getINSTANCE().add(new AirpressurePoint(date, airPressureQFE));
     }
 
-    
+
 
     /**
      * Weather forcast. 
@@ -66,12 +67,12 @@ public class WeatherModel {
         }
         return r;
     }
-    
+
     public String getAirpPressureTrend() {
         AirPressureTrend trend = monitor.getAirPressureTrend();
-        if(trend == AirPressureTrend.falling) {
+        if (trend == AirPressureTrend.falling) {
             return "fallend";
-        } else if(trend == AirPressureTrend.stable) {
+        } else if (trend == AirPressureTrend.stable) {
             return "gleichbleibend";
         } else {
             return "steigend";

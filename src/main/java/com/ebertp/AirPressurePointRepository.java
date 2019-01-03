@@ -24,6 +24,7 @@ public class AirPressurePointRepository {
             }
         }
     }
+    
     AirpressurePoint getMin(AirpressurePoint current) {
         AirpressurePoint min = current;
         for (AirpressurePoint airpressurePoint : aplist) {
@@ -43,7 +44,8 @@ public class AirPressurePointRepository {
         }
         return max;
     }
-    public void add(AirpressurePoint cap) {
+    
+    void add(AirpressurePoint cap) {
         removeOldData();
         aplist.add(cap);
     }
