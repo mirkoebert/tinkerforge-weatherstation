@@ -33,6 +33,11 @@ final class DateX {
         return r;
     }
 
+    /**
+     * Check if weather station is online. Try to reach an internet server.
+     * If station is online, the date and time are correct.
+     * @return 
+     */
     public boolean isOnline() {
         boolean r = false;
         try {

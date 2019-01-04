@@ -13,6 +13,8 @@ import com.tinkerforge.TimeoutException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -25,13 +27,23 @@ public final class WeatherStation implements EnumerateListener {
     private static final int callbackPeriodMsec = 30002;
     private static final String HOST = "localhost";
     private static final int PORT = 4223;
+    private final IPConnection ipcon;
 
     @Getter
+    @Value("${info.app.name}")
     private String applicationName;
+    
     @Getter
+    @Value("${info.app.version}")
     private String buildVersion;
-    private final IPConnection ipcon;
+    
+    @Getter
+    private final Date startDate = new Date();
+    
+    @Value("${weatherstation.mode.nightmode}")
     private boolean nightmode;
+    
+    @Value("${weatherstation.mode.alarmfashing}")
     private boolean alarmflashingmode;
 
     @Getter
@@ -51,13 +63,7 @@ public final class WeatherStation implements EnumerateListener {
     private WeatherModel weatherModel;
 
     @Autowired
-    public WeatherStation(@Value("${info.app.name}") String applicationName,
-            @Value("${info.app.version}") String buildVersion, @Value("${weatherstation.mode.nightmode}") boolean nightmode, @Value("${weatherstation.mode.alarmfashing}") boolean alarmflashingmode) throws Exception {
-        this.applicationName = applicationName;
-        this.buildVersion = buildVersion;
-        this.nightmode = nightmode;
-        this.alarmflashingmode = alarmflashingmode;
-
+    public WeatherStation() throws Exception {
         ipcon = new IPConnection();
         ipcon.connect(HOST, PORT);
         ipcon.addEnumerateListener(this);

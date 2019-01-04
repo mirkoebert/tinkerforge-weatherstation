@@ -50,6 +50,7 @@ public class WeatherStationWebController {
         model.put("lum", m.getIllumination());
         model.put("forecast", m.getForecast());
         model.put("date", DateX.getInstance().getDateString());
+        model.put("startDate", w.getStartDate());
         log.info("HTTP Request done: " + model.toString());
         return new ModelAndView("index", model);
     }
