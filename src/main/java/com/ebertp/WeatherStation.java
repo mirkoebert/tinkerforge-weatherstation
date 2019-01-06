@@ -62,7 +62,6 @@ public final class WeatherStation implements EnumerateListener {
     @Autowired
     private WeatherModel weatherModel;
 
-    @Autowired
     public WeatherStation() throws Exception {
         ipcon = new IPConnection();
         ipcon.connect(HOST, PORT);
@@ -156,7 +155,9 @@ public final class WeatherStation implements EnumerateListener {
                 humBrick.addHumidityListener(humListener);
                 break;
             default:
-                log.warn("Unsupported Brick or Bricklet. Uid: " + uid + "  " + connectedUid + " " + position+ " " + hardwareVersion + " " + firmwareVersion + " " + deviceIdentifier+ " " + enumerationType);
+                String hardwareVersionString = hardwareVersion[0] +"."+ hardwareVersion[1];
+                String firmwareVersionString = firmwareVersion[0] +"."+ firmwareVersion[1];
+                log.warn("Unsupported Brick or Bricklet. Uid: " + uid + "  " + connectedUid + " " + position+ " " + hardwareVersionString + " " + firmwareVersionString + " " + deviceIdentifier+ " " + enumerationType);
                 //              2GewbC       0                   0           [S@150d707          [S@197219d                      17                    1
                 break;
         }
