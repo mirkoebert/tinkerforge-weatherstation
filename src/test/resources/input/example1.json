@@ -1,0 +1,11 @@
+{  
+   "date":"2017-12-04",
+   "positionCoordsLatitude":1,
+   "positionCoordsLongitude":2,
+   "height":24,
+   "datatype":"qff",
+   "dataunit":"hPa",
+   "datavalue":1023.23,
+   "sensorName":"tinkerforge-example-sensor",
+   "token":"qwertzu1234"
+}
