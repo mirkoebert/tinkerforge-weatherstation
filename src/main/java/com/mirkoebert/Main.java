@@ -1,4 +1,4 @@
-package com.ebertp;
+package com.mirkoebert;
 
 import lombok.extern.slf4j.Slf4j;
 

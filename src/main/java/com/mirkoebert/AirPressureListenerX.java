@@ -1,4 +1,4 @@
-package com.ebertp;
+package com.mirkoebert;
 
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletBarometer.AirPressureListener;

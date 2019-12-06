@@ -1,4 +1,4 @@
-package com.ebertp;
+package com.mirkoebert;
 
 /**
  * Monitor the weather data and predict weather.

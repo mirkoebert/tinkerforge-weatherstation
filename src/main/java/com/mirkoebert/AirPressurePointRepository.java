@@ -1,4 +1,4 @@
-package com.ebertp;
+package com.mirkoebert;
 
 import java.util.ArrayList;
 import java.util.Iterator;

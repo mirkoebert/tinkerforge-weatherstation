@@ -1,4 +1,4 @@
-package com.ebertp;
+package com.mirkoebert;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

@@ -1,4 +1,4 @@
-package com.ebertp;
+package com.mirkoebert;
 
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.NotConnectedException;
