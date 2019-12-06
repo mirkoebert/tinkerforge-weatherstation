@@ -2,8 +2,7 @@ package com.mirkoebert;
 
 
 import com.tinkerforge.BrickMaster;
-import com.tinkerforge.NotConnectedException;
-import com.tinkerforge.TimeoutException;
+import com.tinkerforge.TinkerforgeException;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,7 +29,7 @@ public class TempPoller extends TimerTask {
         try {
             short temp = master.getChipTemperature();
             log.info("Temp chip master: " + temp);
-        } catch (TimeoutException | NotConnectedException e) {
+        } catch (TinkerforgeException e) {
             log.error(e.getLocalizedMessage());
         }
 

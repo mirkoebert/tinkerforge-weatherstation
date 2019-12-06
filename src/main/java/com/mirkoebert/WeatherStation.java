@@ -7,17 +7,16 @@ import com.tinkerforge.BrickletHumidity;
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.IPConnection;
 import com.tinkerforge.IPConnection.EnumerateListener;
-import com.tinkerforge.NotConnectedException;
-import com.tinkerforge.TimeoutException;
-
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import com.tinkerforge.TinkerforgeException;
 
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
@@ -99,7 +98,7 @@ public final class WeatherStation implements EnumerateListener {
                 new TempPoller(master);
                 try {
                     master.disableStatusLED();
-                } catch (TimeoutException | NotConnectedException ex) {
+                } catch (TinkerforgeException ex) {
                     log.error(ex.getLocalizedMessage());
                 }
                 break;
@@ -128,7 +127,7 @@ public final class WeatherStation implements EnumerateListener {
                     WeatherViewLcd24x4 lcdView = new WeatherViewLcd24x4(weatherModel, lcd);
                     lcdView.setNightmode(nightmode);
                     lcdView.setAlarmflashingmode(alarmflashingmode);
-                } catch (TimeoutException | NotConnectedException ex) {
+                } catch (TinkerforgeException ex) {
                     log.error(ex.getLocalizedMessage());
                 }
 

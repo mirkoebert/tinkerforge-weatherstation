@@ -1,8 +1,7 @@
 package com.mirkoebert;
 
 import com.tinkerforge.BrickletLCD20x4;
-import com.tinkerforge.NotConnectedException;
-import com.tinkerforge.TimeoutException;
+import com.tinkerforge.TinkerforgeException;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -60,7 +59,7 @@ public class WeatherViewLcd24x4 implements Runnable {
                 lcd.writeLine((short) 3, (short) 0, forcast.toString());
                 timeOrdate = !timeOrdate;
             }
-        } catch (TimeoutException | NotConnectedException e) {
+        } catch (TinkerforgeException e) {
             log.error("paint", e);
         }
     }
@@ -74,7 +73,7 @@ public class WeatherViewLcd24x4 implements Runnable {
             lcd.backlightOff();
             Thread.sleep(1000);
             lcd.backlightOn();
-        } catch (TimeoutException | NotConnectedException | InterruptedException e) {
+        } catch (TinkerforgeException | InterruptedException e) {
             log.warn(e.getLocalizedMessage());        
         } 
 

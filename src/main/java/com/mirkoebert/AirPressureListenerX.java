@@ -2,8 +2,7 @@ package com.mirkoebert;
 
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletBarometer.AirPressureListener;
-import com.tinkerforge.NotConnectedException;
-import com.tinkerforge.TimeoutException;
+import com.tinkerforge.TinkerforgeException;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,7 @@ final class AirPressureListenerX implements AirPressureListener {
         try {
             double Tfe = barometer.getChipTemperature() / 100.0;
             weatherModel.setTempIn(Tfe);
-        } catch (TimeoutException | NotConnectedException e) {
+        } catch (TinkerforgeException e) {
             log.error("Chip temp", e);
         }
     }
