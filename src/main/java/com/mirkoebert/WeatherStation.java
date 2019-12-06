@@ -110,10 +110,10 @@ public final class WeatherStation implements EnumerateListener {
                 final BrickletAmbientLight ambientLightBrick = new BrickletAmbientLight(UIDamb, ipcon);
                 try {
                     ambientLightBrick.setIlluminanceCallbackPeriod(callbackPeriodMsec);
+                    ambientLightBrick.addIlluminanceListener(new IlluminanceListenerX(weatherModel));
                 } catch (Exception ex) {
                     log.error(ex.getLocalizedMessage());
                 }
-                ambientLightBrick.addIlluminanceListener(new IlluminanceListenerX(weatherModel));
                 break;
             case 212:
                 String UIDlcd = uid;

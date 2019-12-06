@@ -64,6 +64,7 @@ public class WeatherStationWebController {
     @GetMapping("/info")
     public String info(Map<String, Object> model) {
         model.put("date", DateX.getInstance().getDateString());
+        model.put("startDate", w.getStartDate());
         model.put("applicationName", applicationName);
         model.put("buildVersion", buildVersion);
         model.put("online", DateX.getInstance().isOnline());
