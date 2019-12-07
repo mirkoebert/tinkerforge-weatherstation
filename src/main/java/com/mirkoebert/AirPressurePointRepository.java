@@ -1,7 +1,6 @@
 package com.mirkoebert;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import lombok.Getter;
@@ -10,19 +9,14 @@ public class AirPressurePointRepository {
 
     @Getter
     private List<AirpressurePoint> aplist = new ArrayList<AirpressurePoint>();
-    static final long H1_IN_MSEC = 60 * 60 * 1000;
+    private static final long H1_IN_MSEC = 60 * 60 * 1000;
 
     @Getter
     private static final AirPressurePointRepository INSTANCE = new AirPressurePointRepository();
     
     private void removeOldData() {
-        long now = System.currentTimeMillis();
-        for (Iterator<AirpressurePoint> iterator = aplist.iterator(); iterator.hasNext();) {
-            AirpressurePoint airpressurePoint = iterator.next();
-            if ((now - airpressurePoint.date) > H1_IN_MSEC) {
-                iterator.remove();
-            }
-        }
+        final long now = System.currentTimeMillis();
+        aplist.removeIf((airpressurePoint) -> (now - airpressurePoint.date) > H1_IN_MSEC);
     }
     
     AirpressurePoint getMin(AirpressurePoint current) {
