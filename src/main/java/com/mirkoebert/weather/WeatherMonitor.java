@@ -35,19 +35,15 @@ public class WeatherMonitor {
      */
     public boolean isStormAlarm() {
         boolean r = false;
-        double ap = m.getAirPressureQFE();
-        long d = m.getDate();
-        AirpressurePoint cap = new AirpressurePoint(d, ap);
 
         AirPressurePointRepository repo = AirPressurePointRepository.getINSTANCE();
-        AirpressurePoint min = repo.getMin(cap);
-        AirpressurePoint max = repo.getMax(cap);
+        AirpressurePoint min = repo.getMin();
+        AirpressurePoint max = repo.getMax();
         if ((max.airpressureQFE - min.airpressureQFE) > 3.3) {
             r = true;
         } else if (((max.airpressureQFE - min.airpressureQFE) > 2) && (max.date < min.date)) {
             r = true;
         }
-        repo.add(cap);
         return r;
     }
 
@@ -65,12 +61,10 @@ public class WeatherMonitor {
         } else if (ap < 950) {
             r = "Unfreundliches Wetter";
         } 
-        long d = m.getDate();
-        AirpressurePoint cap = new AirpressurePoint(d, ap);
 
         AirPressurePointRepository repo = AirPressurePointRepository.getINSTANCE();
-        AirpressurePoint min = repo.getMin(cap);
-        AirpressurePoint max = repo.getMax(cap);
+        AirpressurePoint min = repo.getMin();
+        AirpressurePoint max = repo.getMax();
         double delta = max.airpressureQFE - min.airpressureQFE;
         if (isAirpressureDecreasing(min, max)) {
             if (delta > 1) {
@@ -96,11 +90,9 @@ public class WeatherMonitor {
     }
     
     public AirPressureTrend getAirPressureTrend() {
-        AirpressurePoint currentAirPressurePoint = new AirpressurePoint(m.getDate(), m.getAirPressureQFE());
-
         AirPressurePointRepository repo = AirPressurePointRepository.getINSTANCE();
-        AirpressurePoint min = repo.getMin(currentAirPressurePoint);
-        AirpressurePoint max = repo.getMax(currentAirPressurePoint);
+        AirpressurePoint min = repo.getMin();
+        AirpressurePoint max = repo.getMax();
         double delta = max.airpressureQFE - min.airpressureQFE;
         // TODO check value
         if (Math.abs(delta) < 0.6) {

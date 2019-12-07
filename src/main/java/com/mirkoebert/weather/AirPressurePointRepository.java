@@ -1,6 +1,7 @@
 package com.mirkoebert.weather;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import lombok.Getter;
@@ -19,29 +20,19 @@ public class AirPressurePointRepository {
         aplist.removeIf((airpressurePoint) -> (now - airpressurePoint.date) > H1_IN_MSEC);
     }
     
-    AirpressurePoint getMin(AirpressurePoint current) {
-        AirpressurePoint min = current;
-        for (AirpressurePoint airpressurePoint : aplist) {
-            if (airpressurePoint.airpressureQFE < min.airpressureQFE) {
-                min = airpressurePoint;
-            }
-        }
-        return min;
-    }
-
-    AirpressurePoint getMax(AirpressurePoint current) {
-        AirpressurePoint max = current;
-        for (AirpressurePoint airpressurePoint : aplist) {
-            if (airpressurePoint.airpressureQFE > max.airpressureQFE) {
-                max = airpressurePoint;
-            }
-        }
-        return max;
-    }
-    
     void add(AirpressurePoint cap) {
         removeOldData();
         aplist.add(cap);
+    }
+
+    public AirpressurePoint getMin() {
+        Comparator<AirpressurePoint> comparator = Comparator.comparing( AirpressurePoint::getAirpressureQFE );
+        return aplist.stream().min(comparator).get();
+    }
+
+    public AirpressurePoint getMax() {
+        Comparator<AirpressurePoint> comparator = Comparator.comparing( AirpressurePoint::getAirpressureQFE );
+        return aplist.stream().max(comparator).get();
     }
 
 }
