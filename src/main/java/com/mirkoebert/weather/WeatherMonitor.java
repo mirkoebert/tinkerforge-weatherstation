@@ -1,4 +1,4 @@
-package com.mirkoebert;
+package com.mirkoebert.weather;
 
 /**
  * Monitor the weather data and predict weather.
@@ -72,7 +72,7 @@ public class WeatherMonitor {
         AirpressurePoint min = repo.getMin(cap);
         AirpressurePoint max = repo.getMax(cap);
         double delta = max.airpressureQFE - min.airpressureQFE;
-        if (isFallend(min, max)) {
+        if (isAirpressureDecreasing(min, max)) {
             if (delta > 1) {
                 r = "Starker Wind 6-7 Bft";
                 if (delta > 2) {
@@ -91,23 +91,21 @@ public class WeatherMonitor {
         return r;
     }
 
-    private boolean isFallend(AirpressurePoint min, AirpressurePoint max) {
+    private boolean isAirpressureDecreasing(AirpressurePoint min, AirpressurePoint max) {
         return max.date < min.date;
     }
     
     public AirPressureTrend getAirPressureTrend() {
-        double ap = m.getAirPressureQFE();
-        long d = m.getDate();
-        AirpressurePoint cap = new AirpressurePoint(d, ap);
+        AirpressurePoint currentAirPressurePoint = new AirpressurePoint(m.getDate(), m.getAirPressureQFE());
 
         AirPressurePointRepository repo = AirPressurePointRepository.getINSTANCE();
-        AirpressurePoint min = repo.getMin(cap);
-        AirpressurePoint max = repo.getMax(cap);
+        AirpressurePoint min = repo.getMin(currentAirPressurePoint);
+        AirpressurePoint max = repo.getMax(currentAirPressurePoint);
         double delta = max.airpressureQFE - min.airpressureQFE;
         // TODO check value
         if (Math.abs(delta) < 0.6) {
             return AirPressureTrend.stable;
-        } else if (isFallend(min, max)) {
+        } else if (isAirpressureDecreasing(min, max)) {
             return AirPressureTrend.falling;
         } else {
             return AirPressureTrend.rising;

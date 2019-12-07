@@ -1,4 +1,4 @@
-package com.mirkoebert;
+package com.mirkoebert.weather;
 
 
 import lombok.Getter;

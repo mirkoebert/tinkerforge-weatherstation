@@ -1,5 +1,9 @@
 package com.mirkoebert;
 
+import com.mirkoebert.weather.AirPressurePointRepository;
+import com.mirkoebert.weather.AirpressurePoint;
+import com.mirkoebert.weather.WeatherModel;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

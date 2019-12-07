@@ -1,5 +1,6 @@
 package com.mirkoebert;
 
+import com.mirkoebert.weather.WeatherModel;
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletBarometer.AirPressureListener;
 import com.tinkerforge.TinkerforgeException;
@@ -26,10 +27,10 @@ final class AirPressureListenerX implements AirPressureListener {
         final double QFE = airPressure / 1000f;
         weatherModel.setAirPressureQFE(QFE);
         try {
-            double Tfe = barometer.getChipTemperature() / 100.0;
+            final double Tfe = barometer.getChipTemperature() / 100.0;
             weatherModel.setTempIn(Tfe);
         } catch (TinkerforgeException e) {
-            log.error("Chip temp", e);
+            log.error("Can't get chip temp.", e);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.mirkoebert;
 
+import com.mirkoebert.weather.WeatherModel;
 import com.tinkerforge.BrickletAmbientLight.IlluminanceListener;
 
 import lombok.AllArgsConstructor;

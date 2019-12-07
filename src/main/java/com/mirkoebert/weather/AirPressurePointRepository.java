@@ -1,4 +1,4 @@
-package com.mirkoebert;
+package com.mirkoebert.weather;
 
 import java.util.ArrayList;
 import java.util.List;

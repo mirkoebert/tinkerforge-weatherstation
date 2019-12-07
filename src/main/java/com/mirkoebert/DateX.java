@@ -41,7 +41,7 @@ final class DateX {
     public boolean isOnline() {
         boolean r = false;
         try {
-            final URL url = new URL("http://www.otto.de");
+            final URL url = new URL("http://www.ebert-p.com");
             final URLConnection conn = url.openConnection();
             conn.connect();
             r = true;

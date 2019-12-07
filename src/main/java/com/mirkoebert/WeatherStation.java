@@ -1,5 +1,7 @@
 package com.mirkoebert;
 
+import com.mirkoebert.weather.WeatherModel;
+import com.mirkoebert.weather.WeatherMonitor;
 import com.tinkerforge.BrickMaster;
 import com.tinkerforge.BrickletAmbientLight;
 import com.tinkerforge.BrickletBarometer;

@@ -1,5 +1,7 @@
 package com.mirkoebert;
 
+import com.mirkoebert.weather.WeatherModel;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;

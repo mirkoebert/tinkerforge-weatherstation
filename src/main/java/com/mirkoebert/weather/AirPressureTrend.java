@@ -1,4 +1,4 @@
-package com.mirkoebert;
+package com.mirkoebert.weather;
 
 public enum AirPressureTrend {
 
