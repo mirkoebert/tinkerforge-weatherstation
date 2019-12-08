@@ -74,6 +74,8 @@ public class WeatherModel {
             return "fallend";
         } else if (trend == AirPressureTrend.stable) {
             return "gleichbleibend";
+        } else if (trend == AirPressureTrend.unknown) {
+            return "unknown";
         } else {
             return "steigend";
         }

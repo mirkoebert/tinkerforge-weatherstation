@@ -90,6 +90,10 @@ public class WeatherMonitor {
     
     public AirPressureTrend getAirPressureTrend() {
         AirPressurePointRepository repo = AirPressurePointRepository.getINSTANCE();
+        final int appcount =  repo.getSize();
+        if (appcount < 5) {
+            return AirPressureTrend.unknown;
+        }
         AirpressurePoint min = repo.getMin();
         AirpressurePoint max = repo.getMax();
         double delta = max.airpressureQFE - min.airpressureQFE;

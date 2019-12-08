@@ -35,4 +35,8 @@ public class AirPressurePointRepository {
         return aplist.stream().max(comparator).get();
     }
 
+    public int getSize() {
+        return aplist.size();
+    }
+
 }
