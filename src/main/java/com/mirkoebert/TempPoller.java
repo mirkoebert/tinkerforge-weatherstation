@@ -21,7 +21,7 @@ public class TempPoller extends TimerTask {
 
     public TempPoller(BrickMaster master) {
         this.master = master;
-        new Timer().schedule(this, 10, 60000);
+        //new Timer().schedule(this, 10, 60000);
     }
 
     @Override

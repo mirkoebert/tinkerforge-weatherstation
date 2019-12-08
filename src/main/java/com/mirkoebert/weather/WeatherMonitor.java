@@ -8,20 +8,19 @@ package com.mirkoebert.weather;
 public class WeatherMonitor {
 
     private WeatherModel m;
-    private boolean alarm = false;
 
     public WeatherMonitor(WeatherModel m) {
         this.m = m;
     }
 
     boolean isHumidityAlarm() {
-        double h = m.getHumdidity();
-        alarm = (h > 60 || h < 40);
-        return alarm;
+        final double h = m.getHumdidity();
+        return (h > 0) && (h > 60 || h < 40);
     }
 
     public boolean isFrostAlarm() {
-        return (m.getTempIn() < 5);
+        final double t = m.getTempIn();
+        return (t < 5) && (t > -273);
     }
 
     public boolean isFireAlarm() {

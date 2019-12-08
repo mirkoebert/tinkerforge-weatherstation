@@ -16,18 +16,18 @@ public class WeatherModel {
 
     @Getter
     @Setter
-    double tempIn;
+    double tempIn = -273;
     @Getter
     @Setter
-    long illumination;
+    long illumination = -1;
     @Getter
     @Setter
-    long date;
+    long date = System.currentTimeMillis();
     @Getter
-    double airPressureQFE;
+    double airPressureQFE = -1;
     @Getter
     @Setter
-    double humdidity;
+    double humdidity = -1;
 
     @Getter
     private boolean alarm;
