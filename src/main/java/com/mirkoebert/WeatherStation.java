@@ -97,7 +97,7 @@ public final class WeatherStation implements EnumerateListener {
             case 13:
                 String UIDmaster = uid;
                 BrickMaster master = new BrickMaster(UIDmaster, ipcon);
-                new TempPoller(master);
+                //(new TempPoller(master);
                 try {
                     master.disableStatusLED();
                 } catch (TinkerforgeException ex) {
