@@ -8,7 +8,7 @@ More Information, see
 * WIFI (WLAN) USB stick Edimax EW-7811Un http://amzn.to/2httW5O
 
 ## Requirements
-* Java 8 JDK
+* Java 11 JDK
 * Maven 
 
 ## Build
@@ -30,14 +30,14 @@ Exception in thread "main" com.tinkerforge.TimeoutException: Did not receive res
 ### Local execution
 
 ```bash
-mvn exec:java -Dexec.mainClass="com.ebertp.WeatherStation"
+mvn exec:java -Dexec.mainClass="com.mirkoebert.Main"
 ```
 
 **or**
 
 
 ```bash
-java -jar target/tinkerforge-weatherstation-0.0.2-SNAPSHOT-jar-with-dependencies.jar 
+java -jar target/tinkerforge-weatherstation-0.4.5-SNAPSHOT-jar-with-dependencies.jar 
 ```
 If a sensor value has changed, the new value is printed out to console and the display of the weather station is updated.
 
