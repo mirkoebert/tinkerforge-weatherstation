@@ -1,3 +1,6 @@
+[![Maven Central](https://img.shields.io/maven-central/v/org.owasp/dependency-check-maven.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22org.owasp%22%20AND%20a:%22dependency-check-maven%22)
+
+
 # tinkerforge-weatherstation
 Simple weather station software for Tinkerforge weather station kit plus RED plus WIFI (WLAN) USB stick.
 More Information, see 
