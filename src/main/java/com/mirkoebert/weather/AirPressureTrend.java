@@ -1,6 +1,6 @@
 package com.mirkoebert.weather;
 
-public enum AirPressureTrend {
+enum AirPressureTrend {
 
     falling, stable, rising, unknown
     

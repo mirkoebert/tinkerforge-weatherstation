@@ -47,16 +47,15 @@ public class WeatherMonitor {
      * 
      * @return true if storm is predicted.
      */
-    public boolean isStormAlarm() {
+    private boolean isStormAlarm() {
         boolean r = false;
-
-        final int appcount =  repo.getSize();
-        if (appcount > 5) {
-            AirpressurePoint min = repo.getMin();
-            AirpressurePoint max = repo.getMax();
-            if ((max.airpressureQFE - min.airpressureQFE) > 3.3) {
+        if (repo.getSize() > 5) {
+            final AirpressurePoint min = repo.getMin();
+            final AirpressurePoint max = repo.getMax();
+            final double deltaMaxMin = max.airpressureQFE - min.airpressureQFE;
+            if (deltaMaxMin > 3.3) {
                 r = true;
-            } else if (((max.airpressureQFE - min.airpressureQFE) > 2) && (max.date < min.date)) {
+            } else if ((deltaMaxMin > 2) && (max.date < min.date)) {
                 r = true;
             }
         }
@@ -115,11 +114,10 @@ public class WeatherMonitor {
             r = "Keine Vorhersage möglich";
         } 
 
-        final int appcount =  repo.getSize();
-        if (appcount > 5) {
-            AirpressurePoint min = repo.getMin();
-            AirpressurePoint max = repo.getMax();
-            double delta = max.airpressureQFE - min.airpressureQFE;
+        if (repo.getSize() > 5) {
+            final AirpressurePoint min = repo.getMin();
+            final AirpressurePoint max = repo.getMax();
+            final double delta = max.airpressureQFE - min.airpressureQFE;
             if (isAirpressureDecreasing(min, max)) {
                 if (delta > 1) {
                     r = "Starker Wind 6-7 Bft";
@@ -143,15 +141,13 @@ public class WeatherMonitor {
         return max.date < min.date;
     }
 
-    public AirPressureTrend getAirPressureTrend() {
-        final int appcount =  repo.getSize();
-        if (appcount < 5) {
+    private AirPressureTrend getAirPressureTrend() {
+        if (repo.getSize() < 5) {
             return AirPressureTrend.unknown;
         }
-        AirpressurePoint min = repo.getMin();
-        AirpressurePoint max = repo.getMax();
-        double delta = max.airpressureQFE - min.airpressureQFE;
-        // TODO check value
+        final AirpressurePoint min = repo.getMin();
+        final AirpressurePoint max = repo.getMax();
+        final double delta = max.airpressureQFE - min.airpressureQFE;
         if (Math.abs(delta) < 0.6) {
             return AirPressureTrend.stable;
         } else if (isAirpressureDecreasing(min, max)) {

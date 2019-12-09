@@ -16,6 +16,7 @@ public class AirPressurePointRepository {
     @Getter
     private List<AirpressurePoint> aplist = new ArrayList<AirpressurePoint>();
     private static final long H1_IN_MSEC = 60 * 60 * 1000;
+    private Comparator<AirpressurePoint> comparator = Comparator.comparing( AirpressurePoint::getAirpressureQFE );
     
     private void removeOldData() {
         final long now = System.currentTimeMillis();
@@ -28,12 +29,10 @@ public class AirPressurePointRepository {
     }
 
     public AirpressurePoint getMin() {
-        Comparator<AirpressurePoint> comparator = Comparator.comparing( AirpressurePoint::getAirpressureQFE );
         return aplist.stream().min(comparator).get();
     }
 
     public AirpressurePoint getMax() {
-        Comparator<AirpressurePoint> comparator = Comparator.comparing( AirpressurePoint::getAirpressureQFE );
         return aplist.stream().max(comparator).get();
     }
 
