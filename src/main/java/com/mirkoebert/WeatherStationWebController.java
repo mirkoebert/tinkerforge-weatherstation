@@ -1,6 +1,7 @@
 package com.mirkoebert;
 
 import com.mirkoebert.weather.WeatherModel;
+import com.mirkoebert.weather.WeatherMonitor;
 
 import java.util.Map;
 
@@ -18,6 +19,10 @@ public class WeatherStationWebController {
 
     @Autowired
     private WeatherStation w;
+    @Autowired
+    private WeatherModel m;
+    @Autowired
+    private WeatherMonitor monitor;
 
     @Value("${info.app.name}")
     private String applicationName;
@@ -44,13 +49,12 @@ public class WeatherStationWebController {
     @GetMapping("/")
     public ModelAndView home(Map<String, Object> model) {
         log.info("HTTP Request");
-        WeatherModel m = w.getWeatherModel();
         model.put("airpressure", (int) Math.round(m.getAirPressureQFE()));
-        model.put("airpressuretrend", m.getAirpPressureTrend());
+        model.put("airpressuretrend", monitor.getAirpPressureTrend());
         model.put("humidity", m.getHumdidity());
         model.put("tempInn", m.getTempIn());
         model.put("lum", m.getIllumination());
-        model.put("forecast", m.getForecast());
+        model.put("forecast", monitor.getMessage());
         model.put("date", DateX.getInstance().getDateString());
         model.put("startDate", w.getStartDate());
         log.info("HTTP Request done: " + model.toString());

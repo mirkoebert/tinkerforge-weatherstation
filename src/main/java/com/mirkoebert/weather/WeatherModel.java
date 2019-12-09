@@ -1,10 +1,12 @@
 package com.mirkoebert.weather;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import org.springframework.stereotype.Component;
 
 /**
  * Model of the current weather, this mean the latest values of the weather station sensors.
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@Order(11)
 public class WeatherModel {
 
     @Getter
@@ -29,56 +32,13 @@ public class WeatherModel {
     @Setter
     double humdidity = -1;
 
-    @Getter
-    private boolean alarm;
-
-    private WeatherMonitor monitor;
-
-    public WeatherModel() {
-        monitor = new WeatherMonitor(this);
-    }
+    @Autowired
+    private AirPressurePointRepository apr;
 
     public void setAirPressureQFE(double airPressureQFE) {
         date = System.currentTimeMillis();
         this.airPressureQFE = airPressureQFE;
-        AirPressurePointRepository.getINSTANCE().add(new AirpressurePoint(date, airPressureQFE));
-    }
-
-
-
-    /**
-     * Weather forcast. 
-     * @return Short forecast string to display on weather station's LSD.
-     */
-    public String getForecast() {
-        String r = "";
-        alarm = true;
-        if (monitor.isHumidityAlarm()) {
-            r = "Warnung: Luftfeuchtigkeit";
-        } else if (monitor.isFrostAlarm()) {
-            r = "Warnung: Frostgefahr";
-        } else if (monitor.isStormAlarm()) {
-            r = "Warnung: Sturm";
-        } else if (monitor.isFireAlarm()) {
-            r = "Warnung: Feuer";
-        } else {
-            r = monitor.getForeCast();
-            alarm = false;
-        }
-        return r;
-    }
-
-    public String getAirpPressureTrend() {
-        AirPressureTrend trend = monitor.getAirPressureTrend();
-        if (trend == AirPressureTrend.falling) {
-            return "fallend";
-        } else if (trend == AirPressureTrend.stable) {
-            return "gleichbleibend";
-        } else if (trend == AirPressureTrend.unknown) {
-            return "unknown";
-        } else {
-            return "steigend";
-        }
+        apr.add(new AirpressurePoint(date, airPressureQFE));
     }
 
 }

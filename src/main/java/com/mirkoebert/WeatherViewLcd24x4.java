@@ -1,6 +1,7 @@
 package com.mirkoebert;
 
 import com.mirkoebert.weather.WeatherModel;
+import com.mirkoebert.weather.WeatherMonitor;
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.TinkerforgeException;
 
@@ -13,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WeatherViewLcd24x4 implements Runnable {
 
-    private final WeatherModel weatherModell;
     private final BrickletLCD20x4 lcd;
     private final DecimalFormat df1 = new DecimalFormat("#.0");
     private final DecimalFormat df0 = new DecimalFormat("#");
@@ -22,10 +22,14 @@ public class WeatherViewLcd24x4 implements Runnable {
     private boolean nightmode;
     @Setter
     private boolean alarmflashingmode;
+    
+    private final WeatherModel weatherModell;
+    private final WeatherMonitor weatherMonitor;
 
-    public WeatherViewLcd24x4(WeatherModel weatherModell, BrickletLCD20x4 lcd) {
-        this.weatherModell = weatherModell;
+    public WeatherViewLcd24x4(BrickletLCD20x4 lcd, WeatherModel weatherModell, WeatherMonitor weatherMonitor) {
         this.lcd = lcd;
+        this.weatherModell = weatherModell;
+        this.weatherMonitor = weatherMonitor;
         final Thread t = new Thread(this);
         t.start();
     }
@@ -50,7 +54,7 @@ public class WeatherViewLcd24x4 implements Runnable {
                 }
                 lcd.writeLine((short) 1, (short) 8, message);
 
-                StringBuilder forcast = new StringBuilder(utf16ToKS0066U(weatherModell.getForecast()));
+                StringBuilder forcast = new StringBuilder(utf16ToKS0066U(weatherMonitor.getMessage()));
                 int l = forcast.length();
                 if (forcast.length() < 24) {
                     for (int i = 0; i < (24 - l); i++) {
@@ -91,7 +95,7 @@ public class WeatherViewLcd24x4 implements Runnable {
         while (true) {
             try {
                 paint();
-                if(weatherModell.isAlarm()&&alarmflashingmode) {
+                if(weatherMonitor.isAlarm() && alarmflashingmode) {
                     flashBacklight();
                     Thread.sleep(500);
                 } else {

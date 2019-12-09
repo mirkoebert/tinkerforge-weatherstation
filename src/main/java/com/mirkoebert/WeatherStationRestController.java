@@ -7,20 +7,25 @@ import com.mirkoebert.weather.WeatherModel;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Order(100)
 public class WeatherStationRestController {
 
     @Autowired
     private WeatherStation w;
+    @Autowired
+    private AirPressurePointRepository apr;
+    @Autowired
+    private WeatherModel m;
 
     @GetMapping("/v1/weatherdata")
     @ResponseBody
     public WeatherModel weatherdata() {
-        WeatherModel m = w.getWeatherModel();
         return m;
     }
 
@@ -33,7 +38,7 @@ public class WeatherStationRestController {
     @GetMapping("/v1/airpressure")
     @ResponseBody
     public List<AirpressurePoint> airpressure() {
-        return AirPressurePointRepository.getINSTANCE().getAplist();
+        return apr.getAplist();
     }
 
 }
