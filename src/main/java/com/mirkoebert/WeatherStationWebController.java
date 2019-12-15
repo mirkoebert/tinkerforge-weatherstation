@@ -1,5 +1,6 @@
 package com.mirkoebert;
 
+import com.mirkoebert.openweather.send.Sender;
 import com.mirkoebert.weather.WeatherModel;
 import com.mirkoebert.weather.WeatherMonitor;
 
@@ -16,23 +17,25 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class WeatherStationWebController {
-
+    
     @Autowired
     private WeatherStation w;
     @Autowired
     private WeatherModel m;
     @Autowired
     private WeatherMonitor monitor;
+    @Autowired 
+    private Sender sender;
 
     @Value("${info.app.name}")
     private String applicationName;
 
     @Value("${info.app.version}")
     private String buildVersion;
-    
+
     @Value("${weatherstation.position.latitude}")
     private String latitude;
-    
+
     @Value("${weatherstation.position.longitude}")
     private String longitude;
 
@@ -41,9 +44,15 @@ public class WeatherStationWebController {
 
     @Value("${weatherstation.mode.nightmode}")
     private String nightmode;
-    
+
     @Value("${weatherstation.mode.alarmfashing}")
     private String alarmflashingmode;
+
+    @Value("${openweather.enable}")
+    private String openweather_enable;
+
+    @Value("${openweather.station_id}")
+    private String openweather_stationid;
 
     
     @GetMapping("/")
@@ -79,6 +88,14 @@ public class WeatherStationWebController {
         model.put("longitude", longitude);
         model.put("nightmode", nightmode);
         model.put("alarmflashingmode", alarmflashingmode);
+
+        model.put("openweather_enable" , openweather_enable);
+        model.put("openweather_stationid", openweather_stationid);
+        model.put("openweather_name", "");
+        model.put("openweather_latitude", "");
+        model.put("openweather_longitude", "");
+
+        model.put("openweather_sendcount", sender.getSendCount());
         return "info";
     }
 

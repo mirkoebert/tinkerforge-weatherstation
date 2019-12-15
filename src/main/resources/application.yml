@@ -26,3 +26,7 @@ weatherstation:
     nightmode: true
     alarmfashing: true
 
+openweather:
+  enable: true
+  station_id: 5df37e046c634e00011dff22
+  #APPID: XXXX write openweateher appid int ENV
