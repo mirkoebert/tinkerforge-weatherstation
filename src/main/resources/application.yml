@@ -30,3 +30,5 @@ openweather:
   enable: true
   station_id: 5df37e046c634e00011dff22
   #APPID: XXXX write openweateher appid int ENV
+  # Spring Boot will read the ENV  
+  #export OPENWEATHER_APPID=cacsscgsvgdv

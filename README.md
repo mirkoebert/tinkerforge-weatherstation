@@ -2,6 +2,8 @@
 
 
 # tinkerforge-weatherstation
+
+## Hardware
 Simple weather station software for Tinkerforge weather station kit plus RED plus WIFI (WLAN) USB stick.
 More Information, see 
 * http://programming-2.blogspot.de/2016/07/tinkerforge-weather-station-published.html
@@ -11,7 +13,7 @@ More Information, see
 * WIFI (WLAN) USB stick Edimax EW-7811Un http://amzn.to/2httW5O
 
 ## Requirements
-* Java 11 JDK
+* Java 8 JDK
 * Maven 
 
 ## Build
@@ -68,6 +70,8 @@ Stop the program with `<crtl><c>`
   * Storm
   * Fire
 * Flashing display on warning
+* Open Weather integration
+  * Sending  air pressure data
 
 ### Features Website
 * Display all data incl. forecast
