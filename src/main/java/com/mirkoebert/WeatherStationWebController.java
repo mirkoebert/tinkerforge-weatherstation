@@ -1,5 +1,6 @@
 package com.mirkoebert;
 
+import com.mirkoebert.openweather.OpenWeatherService;
 import com.mirkoebert.openweather.send.Sender;
 import com.mirkoebert.weather.WeatherModel;
 import com.mirkoebert.weather.WeatherMonitor;
@@ -54,6 +55,8 @@ public class WeatherStationWebController {
     @Value("${openweather.station_id}")
     private String openweather_stationid;
 
+    @Autowired
+    private OpenWeatherService ows;
     
     @GetMapping("/")
     public ModelAndView home(Map<String, Object> model) {
@@ -91,6 +94,7 @@ public class WeatherStationWebController {
 
         model.put("openweather_enable" , openweather_enable);
         model.put("openweather_stationid", openweather_stationid);
+        
         model.put("openweather_name", "");
         model.put("openweather_latitude", "");
         model.put("openweather_longitude", "");

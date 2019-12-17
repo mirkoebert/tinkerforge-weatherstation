@@ -2,11 +2,15 @@ package com.mirkoebert.openweather.send;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mirkoebert.openweather.WeatherStation;
 import com.mirkoebert.weather.WeatherModel;
 
 import java.io.IOException;
+import java.io.InputStream;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -67,8 +71,24 @@ public class Sender {
     }
 
 
+    private HttpEntity sendGET() throws IOException, InterruptedException {
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpGet httpGet = new HttpGet("http://api.openweathermap.org/data/3.0/stations/" + station_id + "?APPID=" + APPID);
+
+        CloseableHttpResponse response = client.execute(httpGet);
+        int rc = response.getStatusLine().getStatusCode();
+        if (rc > 299) {
+            log.warn("Can't getstation info from OpenWeather error. Http status error code: " + rc );
+        }
+        HttpEntity entity = response.getEntity();
+        client.close();
+        return entity;
+    }
+    
+    
+    
     @Scheduled(initialDelay = 15000, fixedDelay = 300000)
-    public void sendLastMesurment() {
+    public void sendCurrentWeatherToOpenWeather() {
         if (enable) {
             log.info("Send data to OpenWeather.");
             Measurement me = new Measurement(station_id);
@@ -81,6 +101,29 @@ public class Sender {
             }
         }
     }
+
+    
+    public WeatherStation getWeatherStationFromOpenWeather() {
+        if (enable) {
+            log.info("Gaet station info from OpenWeather.");
+            try {
+                HttpEntity resp = sendGET();
+                //String retSrc = EntityUtils.toString(resp);
+                ObjectMapper mapper = new ObjectMapper();
+
+                // Read JSON file and convert to java object
+                InputStream fileInputStream = resp.getContent();
+                WeatherStation wsow = mapper.readValue(fileInputStream, WeatherStation.class);
+                fileInputStream.close();
+                return wsow;
+            } catch (IOException | InterruptedException e) {
+                log.error("Can't send data to OpenWeather server.",e);
+                
+            }
+        }
+        return null;
+    }
+
 
 
 }
