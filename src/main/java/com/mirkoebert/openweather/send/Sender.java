@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mirkoebert.openweather.WeatherStation;
 import com.mirkoebert.weather.WeatherModel;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -15,6 +17,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
@@ -71,23 +74,29 @@ public class Sender {
     }
 
 
-    private HttpEntity sendGET() throws IOException, InterruptedException {
+    private String sendGET() throws IOException, InterruptedException {
+        String retSrc = null;
+        
         CloseableHttpClient client = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet("http://api.openweathermap.org/data/3.0/stations/" + station_id + "?APPID=" + APPID);
-
+        log.info("uri: " + httpGet.getURI());
+        
         CloseableHttpResponse response = client.execute(httpGet);
         int rc = response.getStatusLine().getStatusCode();
         if (rc > 299) {
-            log.warn("Can't getstation info from OpenWeather error. Http status error code: " + rc );
+            log.warn("Can't get station info from OpenWeather error. Http status error code: " + rc );
+        } else {
+            log.info("Http status code: " + rc );
+            HttpEntity entity = response.getEntity();
+            retSrc =  EntityUtils.toString(entity);
         }
-        HttpEntity entity = response.getEntity();
         client.close();
-        return entity;
+        return retSrc;
     }
     
     
     
-    @Scheduled(initialDelay = 15000, fixedDelay = 300000)
+    @Scheduled(initialDelay = 120000, fixedDelay = 300000)
     public void sendCurrentWeatherToOpenWeather() {
         if (enable) {
             log.info("Send data to OpenWeather.");
@@ -105,16 +114,15 @@ public class Sender {
     
     public WeatherStation getWeatherStationFromOpenWeather() {
         if (enable) {
-            log.info("Gaet station info from OpenWeather.");
+            log.info("Get station info from OpenWeather.");
             try {
-                HttpEntity resp = sendGET();
-                //String retSrc = EntityUtils.toString(resp);
                 ObjectMapper mapper = new ObjectMapper();
 
-                // Read JSON file and convert to java object
-                InputStream fileInputStream = resp.getContent();
+                String retSrc = sendGET();
+                InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
                 WeatherStation wsow = mapper.readValue(fileInputStream, WeatherStation.class);
-                fileInputStream.close();
+                fileInputStream.close();            
+
                 return wsow;
             } catch (IOException | InterruptedException e) {
                 log.error("Can't send data to OpenWeather server.",e);

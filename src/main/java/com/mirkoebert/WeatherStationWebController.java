@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class WeatherStationWebController {
-    
+
     @Autowired
     private WeatherStation w;
     @Autowired
@@ -50,14 +50,14 @@ public class WeatherStationWebController {
     private String alarmflashingmode;
 
     @Value("${openweather.enable}")
-    private String openweather_enable;
+    private boolean openweather_enable;
 
     @Value("${openweather.station_id}")
     private String openweather_stationid;
 
     @Autowired
-    private OpenWeatherService ows;
-    
+    private OpenWeatherService owss;
+
     @GetMapping("/")
     public ModelAndView home(Map<String, Object> model) {
         log.info("HTTP Request");
@@ -93,13 +93,18 @@ public class WeatherStationWebController {
         model.put("alarmflashingmode", alarmflashingmode);
 
         model.put("openweather_enable" , openweather_enable);
-        model.put("openweather_stationid", openweather_stationid);
-        
-        model.put("openweather_name", "");
-        model.put("openweather_latitude", "");
-        model.put("openweather_longitude", "");
+        if(openweather_enable) {
+            model.put("openweather_stationid", openweather_stationid);
 
-        model.put("openweather_sendcount", sender.getSendCount());
+            com.mirkoebert.openweather.WeatherStation ows = owss.getStation();
+            if (ows != null) {
+                model.put("openweather_name", ows.getName());
+                model.put("openweather_latitude", ows.getLatitude());
+                model.put("openweather_longitude", ows.getLatitude());
+            }
+
+            model.put("openweather_sendcount", sender.getSendCount());
+        }
         return "info";
     }
 
