@@ -100,7 +100,7 @@ public class WeatherStationWebController {
             if (ows != null) {
                 model.put("openweather_name", ows.getName());
                 model.put("openweather_latitude", ows.getLatitude());
-                model.put("openweather_longitude", ows.getLatitude());
+                model.put("openweather_longitude", ows.getLongitude());
             }
 
             model.put("openweather_sendcount", sender.getSendCount());

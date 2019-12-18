@@ -44,7 +44,7 @@ public class Sender {
 
     @Autowired
     private WeatherModel m;
-    
+
     @Getter
     private long sendCount = 0;
 
@@ -76,11 +76,11 @@ public class Sender {
 
     private String sendGET() throws IOException, InterruptedException {
         String retSrc = null;
-        
+
         CloseableHttpClient client = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet("http://api.openweathermap.org/data/3.0/stations/" + station_id + "?APPID=" + APPID);
         log.info("uri: " + httpGet.getURI());
-        
+
         CloseableHttpResponse response = client.execute(httpGet);
         int rc = response.getStatusLine().getStatusCode();
         if (rc > 299) {
@@ -93,9 +93,9 @@ public class Sender {
         client.close();
         return retSrc;
     }
-    
-    
-    
+
+
+
     @Scheduled(initialDelay = 120000, fixedDelay = 300000)
     public void sendCurrentWeatherToOpenWeather() {
         if (enable) {
@@ -111,7 +111,7 @@ public class Sender {
         }
     }
 
-    
+
     public WeatherStation getWeatherStationFromOpenWeather() {
         if (enable) {
             log.info("Get station info from OpenWeather.");
@@ -126,7 +126,7 @@ public class Sender {
                 return wsow;
             } catch (IOException | InterruptedException e) {
                 log.error("Can't send data to OpenWeather server.",e);
-                
+
             }
         }
         return null;
