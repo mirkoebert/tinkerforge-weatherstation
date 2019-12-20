@@ -26,8 +26,7 @@ weatherstation:
     nightmode: true
     alarmfashing: true
 
-tinkerforge:
-  enable: false
+tinkerforge.enable: true
   
 openweather:
   enable: true

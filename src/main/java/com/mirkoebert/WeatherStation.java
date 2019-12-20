@@ -72,15 +72,14 @@ public final class WeatherStation implements EnumerateListener {
     private WeatherMonitor weatherMonitor;
 
     @Value("${tinkerforge.enable}")
-    private boolean tinkerforgeEnable
-    ;
+    private boolean tinkerforgeEnable;
 
     public WeatherStation(WeatherModel w, WeatherMonitor f)  {
         weatherModel = w;
         weatherMonitor = f;
-        if (!tinkerforgeEnable) {
-            log.info("Dry run mode - no brick initialisation");
-        } else {
+        if(true) {
+        //if (tinkerforgeEnable) {
+            log.info("Initiate Tinkerforge");
             ipcon = new IPConnection();
             try {
                 ipcon.connect(HOST, PORT);
@@ -98,6 +97,8 @@ public final class WeatherStation implements EnumerateListener {
                     //
                 }
             }));
+        } else {
+            log.info("Dry run mode - no Tinkerforge brick initialisation");
         }
     }
 
