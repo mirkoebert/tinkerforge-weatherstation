@@ -25,6 +25,7 @@ class SenderTest {
         
         
         assertFalse(s.sendCurrentWeatherToOpenWeather());
+        assertNull(s.getWeatherStationFromOpenWeather());
     }
 
 }
