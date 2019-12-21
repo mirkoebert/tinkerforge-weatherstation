@@ -77,8 +77,8 @@ public final class WeatherStation implements EnumerateListener {
     public WeatherStation(WeatherModel w, WeatherMonitor f)  {
         weatherModel = w;
         weatherMonitor = f;
-        if(true) {
-        //if (tinkerforgeEnable) {
+        //if(true) {
+        if (tinkerforgeEnable) {
             log.info("Initiate Tinkerforge");
             ipcon = new IPConnection();
             try {

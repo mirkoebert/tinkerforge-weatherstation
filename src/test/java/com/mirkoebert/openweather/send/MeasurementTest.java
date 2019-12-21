@@ -11,6 +11,9 @@ class MeasurementTest {
         Measurement m = new Measurement("XX");
         assertTrue(m.getDt() < 15762552910L);
         assertTrue(m.getDt() > 157625529L);
+        
+        assertEquals(0, m.getPressure());
+        assertEquals("XX", m.getStation_id());
     }
 
 }

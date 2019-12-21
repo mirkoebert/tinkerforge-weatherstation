@@ -20,6 +20,11 @@ class SenderTest {
         System.out.println(j);
         assertNotNull(j);
         JSONAssert.assertEquals("{\"station_id\":\"testStationId\",\"dt\":"+now+",\"pressure\":23}",j, false);
+        
+        assertEquals(s.getSendCount(), 0L);
+        
+        
+        assertFalse(s.sendCurrentWeatherToOpenWeather());
     }
 
 }

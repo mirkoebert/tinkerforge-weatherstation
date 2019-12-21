@@ -97,7 +97,7 @@ public class Sender {
 
 
     @Scheduled(initialDelay = 120000, fixedDelay = 300000)
-    public void sendCurrentWeatherToOpenWeather() {
+    public boolean sendCurrentWeatherToOpenWeather() {
         if (enable) {
             log.info("Send data to OpenWeather.");
             Measurement me = new Measurement(station_id);
@@ -105,10 +105,14 @@ public class Sender {
 
             try {
                 sendPOST("[" + createJasonFromObject(me) + "]");
+                return true;
             } catch (IOException | InterruptedException e) {
                 log.error("Can't send data to OpenWeather server.",e);
             }
+        } else {
+            log.info("OpenWeather integration diabled.");            
         }
+        return false;
     }
 
 
