@@ -35,7 +35,7 @@ public class WeatherModel {
     @Autowired
     private AirPressurePointRepository apr;
 
-    public void setAirPressureQFE(double airPressureQFE) {
+    public void setAirPressureQFE(final double airPressureQFE) {
         date = System.currentTimeMillis();
         this.airPressureQFE = airPressureQFE;
         apr.add(new AirpressurePoint(date, airPressureQFE));

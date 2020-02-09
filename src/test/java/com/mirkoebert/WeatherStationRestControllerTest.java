@@ -40,8 +40,10 @@ class WeatherStationRestControllerTest {
         mvc.perform(get("/v1/xxx")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
-
-    }
     
+        mvc.perform(get("/v1/weatherstation")
+                .contentType(MediaType.IMAGE_JPEG))
+                .andExpect(status().isOk());
+    }
 
 }

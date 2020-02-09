@@ -72,11 +72,11 @@ public class WeatherViewLcd24x4 implements Runnable {
     private void flashBacklight() {
         try {
             lcd.backlightOff();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             lcd.backlightOn();
-            Thread.sleep(1000);
+            Thread.sleep(1500);
             lcd.backlightOff();
-            Thread.sleep(1000);
+            Thread.sleep(500);
             lcd.backlightOn();
         } catch (TinkerforgeException | InterruptedException e) {
             log.warn(e.getLocalizedMessage());        

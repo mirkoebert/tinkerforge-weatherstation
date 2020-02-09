@@ -7,7 +7,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class Measurement {
+public final class Measurement {
 
     final String station_id;
     final long dt = System.currentTimeMillis() / 1000;
