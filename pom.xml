@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ebertp</groupId>
 	<artifactId>tinkerforge-weatherstation</artifactId>
-	<version>0.6.3</version>
+	<version>0.6.3-SNAPSHOT</version>
 	<name>tinkerforge-weatherstation</name>
 	<description>Simple weather station based on Tinkerforge weather station kit.</description>
 
@@ -305,7 +305,7 @@
 
     <scm>
     	<url>https://github.com/mirkoebert/tinkerforge-weatherstation</url>
-        <developerConnection>scm:git:https://github.com/mirkoebert/tinkerforge-weatherstation.git&gt;</developerConnection>
+        <developerConnection>scm:git:https://github.com/mirkoebert/tinkerforge-weatherstation.git</developerConnection>
       <tag>tinkerforge-weatherstation-0.6.3</tag>
   </scm>
   
