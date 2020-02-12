@@ -300,8 +300,14 @@
     <scm>
     	<url>https://github.com/mirkoebert/tinkerforge-weatherstation</url>
         <connection>scm:git:git://github.com/mirkoebert/tinkerforge-weatherstation.git</connection>
+        <developerConnection>scm:git:git@github.com:mirkoebert/tinkerforge-weatherstation.git</developerConnection>
       <tag>tinkerforge-weatherstation-0.6.3</tag>
   </scm>
+  
+  <issueManagement>
+		<url>https://github.com/mirkoebert/tinkerforge-weatherstation</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
     
 	<organization>
 		<name>Dr. Ebert &amp; Partner IT Consulting</name>
