@@ -298,7 +298,7 @@
 	</reporting>
 
     <scm>
-        <connection>scm:git:git:git@github.com:mirkoebert/tinkerforge-weatherstation.git</connection>
+        <connection>scm:git:git@github.com:mirkoebert/tinkerforge-weatherstation.git</connection>
       <tag>tinkerforge-weatherstation-0.6.3</tag>
   </scm>
     
