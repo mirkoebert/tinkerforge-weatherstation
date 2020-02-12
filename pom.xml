@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ebertp</groupId>
 	<artifactId>tinkerforge-weatherstation</artifactId>
-	<version>0.6.2-SNAPSHOT</version>
+	<version>0.6.3-SNAPSHOT</version>
 	<name>tinkerforge-weatherstation</name>
 	<description>Simple weather station based on Tinkerforge weather station kit.</description>
 
@@ -298,6 +298,10 @@
 		</plugins>
 	</reporting>
 
+    <scm>
+        <connection>scm:git:git:git@github.com:mirkoebert/tinkerforge-weatherstation.git</connection>
+    </scm>
+    
 	<organization>
 		<name>Dr. Ebert &amp; Partner IT Consulting</name>
 	</organization>
