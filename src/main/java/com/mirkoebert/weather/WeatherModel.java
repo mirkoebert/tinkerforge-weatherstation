@@ -23,9 +23,6 @@ public class WeatherModel {
     @Getter
     @Setter
     long illumination = -1;
-//    @Getter
-//    @Setter
-//    long date = System.currentTimeMillis();
     @Getter
     double airPressureQFE = -1;
     @Getter
