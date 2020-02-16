@@ -16,6 +16,7 @@ import lombok.Getter;
 public class WeatherMonitor {
 
     
+    static final String NO_FORECAST = "Keine Vorhersage möglich";
     private final WeatherModel m;
     private final AirPressurePointRepository repo;
 
@@ -105,14 +106,14 @@ public class WeatherMonitor {
      */
     public String getForeCast() {
         String r = "Wetter unverändert";
-        double ap = m.getAirPressureQFE();
+        final double ap = m.airPressureQFE;
         if (ap > 1020) {
             r = "Gutes Wetter";
+        } else if (ap == -1) {
+            r = NO_FORECAST;
         } else if (ap < 950) {
             r = "Unfreundliches Wetter";
-        } else if (ap == -1) {
-            r = "Keine Vorhersage möglich";
-        } 
+        }
 
         if (repo.getSize() > 5) {
             final AirpressurePoint min = repo.getMin();

@@ -23,9 +23,9 @@ public class WeatherModel {
     @Getter
     @Setter
     long illumination = -1;
-    @Getter
-    @Setter
-    long date = System.currentTimeMillis();
+//    @Getter
+//    @Setter
+//    long date = System.currentTimeMillis();
     @Getter
     double airPressureQFE = -1;
     @Getter
@@ -36,9 +36,8 @@ public class WeatherModel {
     private AirPressurePointRepository apr;
 
     public void setAirPressureQFE(final double airPressureQFE) {
-        date = System.currentTimeMillis();
+        apr.add(new AirpressurePoint(airPressureQFE));
         this.airPressureQFE = airPressureQFE;
-        apr.add(new AirpressurePoint(date, airPressureQFE));
     }
 
 }

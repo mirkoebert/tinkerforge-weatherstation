@@ -8,8 +8,8 @@ class AirPressurePointRepositoryTest {
 
     @Test
     void testGetMin() {
-        AirpressurePoint ap1 = new AirpressurePoint(0, 1);
-        AirpressurePoint ap2 = new AirpressurePoint(1, 2);
+        AirpressurePoint ap1 = new AirpressurePoint(1);
+        AirpressurePoint ap2 = new AirpressurePoint(2);
         AirPressurePointRepository repo = new AirPressurePointRepository();
         repo.add(ap2);
         repo.add(ap1);
