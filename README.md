@@ -42,7 +42,8 @@ mvn exec:java -Dexec.mainClass="com.mirkoebert.Main"
 
 
 ```bash
-java -jar target/tinkerforge-weatherstation-0.4.5-SNAPSHOT-jar-with-dependencies.jar 
+export OPENWEATHER_APPID=f86xxxxxxxxxxxxxxxxxxxxxxxxx
+java -jar target/tinkerforge-weatherstation-@project.version@-SNAPSHOT-jar-with-dependencies.jar 
 ```
 If a sensor value has changed, the new value is printed out to console and the display of the weather station is updated.
 
@@ -70,7 +71,7 @@ Stop the program with `<crtl><c>`
   * Storm
   * Fire
 * Flashing display on warning
-* Open Weather integration
+* Open Weather integration https://openweathermap.org
   * Sending  air pressure data
 
 ### Features Website

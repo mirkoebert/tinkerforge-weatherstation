@@ -40,7 +40,10 @@ public class Sender {
     private String APPID;
     @Value("${openweather.enable}")
     private boolean enable;
-
+    @Value("${openweather.send}")
+    private boolean enableSend;
+    @Value("${tinkerforge.enable}")
+    private boolean enableTinkerforge;
 
     @Autowired
     private WeatherModel m;
@@ -98,7 +101,7 @@ public class Sender {
 
     @Scheduled(initialDelay = 120000, fixedDelay = 300000)
     public boolean sendCurrentWeatherToOpenWeather() {
-        if (enable) {
+        if (enable && enableSend && enableTinkerforge) {
             log.info("Send data to OpenWeather.");
             Measurement me = new Measurement(station_id);
             me.setPressure((int)Math.round(m.getAirPressureQFE()));
@@ -110,7 +113,7 @@ public class Sender {
                 log.error("Can't send data to OpenWeather server.",e);
             }
         } else {
-            log.info("OpenWeather integration diabled.");            
+            log.info("OpenWeather sending data diabled.");            
         }
         return false;
     }

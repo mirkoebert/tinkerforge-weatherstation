@@ -13,9 +13,9 @@ management:
 
 info:
   app: 
-    name: @project.artifactId@
+    name: "@project.artifactId@"
     description: "TinkerForge Weather Station"
-    version: @project.version@
+    version: "@project.version@"
 
 weatherstation:
   position:
@@ -26,10 +26,12 @@ weatherstation:
     nightmode: true
     alarmfashing: true
 
-tinkerforge.enable: true
+tinkerforge:
+  enable: true
   
 openweather:
   enable: true
+  send: true
   station_id: 5df37e046c634e00011dff22
   #APPID: XXXX write openweateher appid int ENV
   # Spring Boot will read the ENV  
@@ -50,9 +52,11 @@ weatherstation:
     nightmode: true
     alarmfashing: true
 
-tinkerforge.enable: false
+tinkerforge:
+  enable: false
   
 openweather:
   enable: false
+  send: false
   station_id: 5df37e046c634e00011dff22
   APPID: XXXX
