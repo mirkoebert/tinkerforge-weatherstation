@@ -21,5 +21,4 @@ public class WeatherStation {
     private int altitude; // 25,
     private int rank; //: 10
 
-
 }

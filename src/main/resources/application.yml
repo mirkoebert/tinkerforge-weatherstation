@@ -44,19 +44,14 @@ spring:
   profiles: test
 
 weatherstation:
-  position:
-    altitude: 25
-    latitude: 53.98465878500624
-    longitude: 12.183633460018223
   mode:
-    nightmode: true
-    alarmfashing: true
+    nightmode: false
 
 tinkerforge:
   enable: false
   
 openweather:
-  enable: false
+  enable: true
   send: false
   station_id: 5df37e046c634e00011dff22
   APPID: XXXX

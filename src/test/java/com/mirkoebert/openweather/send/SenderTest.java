@@ -1,8 +1,20 @@
 package com.mirkoebert.openweather.send;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.mirkoebert.openweather.OpenWeatherModel;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -27,5 +39,37 @@ class SenderTest {
         assertFalse(s.sendCurrentWeatherToOpenWeather());
         assertNull(s.getWeatherStationFromOpenWeather());
     }
+    
+    @Test
+    void testMapper() throws JsonParseException, JsonMappingException, IOException {
+        Sender s = new Sender();
+        OpenWeatherModel oww = s.convertJsonStringToObject(getStringFromFilename("openweatherweather.json"));
+        assertEquals("Rukieten", oww.getName());
+        assertEquals(7.27f, oww.getTemp(), 0.01f);
+        assertEquals(6.11f, oww.getMinTemp(), 0.01f);
+        assertEquals(8f, oww.getMaxTemp(), 0.01f);
+        assertEquals(1008f, oww.getPressure(), 0.01f);
+        assertEquals(65f, oww.getHumidity(), 0.01f);
+        assertEquals("Mäßig bewölkt", oww.getDescription());
+    }
+
+    
+    private String getStringFromFilename(String fileName) throws IOException {
+        BufferedReader br = new BufferedReader(getReaderFromFilename(fileName));
+        String sCurrentLine;
+        StringBuilder contentBuilder = new StringBuilder();
+        while ((sCurrentLine = br.readLine()) != null) {
+            contentBuilder.append(sCurrentLine).append("\n");
+        }
+        br.close();
+        return contentBuilder.toString();
+    }
+
+    private Reader getReaderFromFilename(String fileName) throws IOException {
+        final InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
+        Reader reader = new InputStreamReader(in, "UTF-8");
+        return reader;
+    }
+    
 
 }

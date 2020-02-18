@@ -1,7 +1,10 @@
 package com.mirkoebert.openweather.send;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mirkoebert.openweather.OpenWeatherModel;
 import com.mirkoebert.openweather.WeatherStation;
 import com.mirkoebert.weather.WeatherModel;
 
@@ -77,11 +80,11 @@ public class Sender {
     }
 
 
-    private String sendGET() throws IOException, InterruptedException {
+    private String sendGET(final String completeUrlString) throws IOException, InterruptedException {
         String retSrc = null;
 
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet("http://api.openweathermap.org/data/3.0/stations/" + station_id + "?APPID=" + APPID);
+        HttpGet httpGet = new HttpGet(completeUrlString);
         log.info("uri: " + httpGet.getURI());
 
         CloseableHttpResponse response = client.execute(httpGet);
@@ -125,14 +128,14 @@ public class Sender {
             try {
                 ObjectMapper mapper = new ObjectMapper();
 
-                String retSrc = sendGET();
+                String retSrc = sendGET("http://api.openweathermap.org/data/3.0/stations/" + station_id + "?APPID=" + APPID);
                 InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
                 WeatherStation wsow = mapper.readValue(fileInputStream, WeatherStation.class);
                 fileInputStream.close();            
 
                 return wsow;
             } catch (IOException | InterruptedException e) {
-                log.error("Can't send data to OpenWeather server.",e);
+                log.error("Can't get station data to OpenWeather server.",e);
 
             }
         }
@@ -140,5 +143,29 @@ public class Sender {
     }
 
 
+    public OpenWeatherModel getWeatherForWeatherDStationCoordinates() {
+        if (enable) {
+            log.info("Get station info from OpenWeather.");
+            try {
+                String retSrc = sendGET("http://api.openweathermap.org/data/2.5/weather?lat=53.894658&lon=12.183633&units=metric&lang=de&appid=" + APPID);
+                OpenWeatherModel wsow = convertJsonStringToObject(retSrc);            
+                return wsow;
+            } catch (IOException | InterruptedException e) {
+                log.error("Can't get weather from OpenWeather server.",e);
+
+            }
+        }
+        return null;
+    }
+
+
+    OpenWeatherModel convertJsonStringToObject(String retSrc)
+            throws IOException, JsonParseException, JsonMappingException {
+        InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
+        ObjectMapper mapper = new ObjectMapper();
+        OpenWeatherModel wsow = mapper.readValue(fileInputStream, OpenWeatherModel.class);
+        fileInputStream.close();
+        return wsow;
+    }
 
 }

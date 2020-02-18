@@ -69,6 +69,12 @@ public class WeatherStationWebController {
         model.put("forecast", monitor.getMessage());
         model.put("date", DateX.getInstance().getDateString());
         model.put("startDate", w.getStartDate());
+        model.put("description", owss.getOpenWeatherModel().getDescription());
+        model.put("name", owss.getOpenWeatherModel().getName());
+        model.put("temp", owss.getOpenWeatherModel().getTemp());
+        model.put("feelsLike", owss.getOpenWeatherModel().getFeelsTemp());
+        model.put("ow.airpressure", owss.getOpenWeatherModel().getPressure());
+        model.put("ow.humidity", owss.getOpenWeatherModel().getHumidity());
         log.info("HTTP Request done: " + model.toString());
         return new ModelAndView("index", model);
     }
