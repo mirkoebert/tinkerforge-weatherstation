@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -50,9 +51,10 @@ public class Sender {
 
     @Autowired
     private WeatherModel m;
-
     @Getter
-    private long sendCount = 0;
+    private int sendCount = 0;
+    @Getter
+    private int sendErrorCount = 0;
 
 
     String createJasonFromObject(Object o) throws JsonProcessingException {
@@ -61,22 +63,21 @@ public class Sender {
     }
 
 
-    private void sendPOST(final String json) throws IOException, InterruptedException {
-        sendCount++;
-        CloseableHttpClient client = HttpClients.createDefault();
+    private void sendPOST(final String json) throws ClientProtocolException, IOException   {
         HttpPost httpPost = new HttpPost("http://api.openweathermap.org/data/3.0/measurements?APPID=" + APPID);
-
-
         StringEntity entity = new StringEntity(json);
         httpPost.setEntity(entity);
         httpPost.setHeader("Content-Type", "application/json");
 
+
+        CloseableHttpClient client = HttpClients.createDefault();
         CloseableHttpResponse response = client.execute(httpPost);
-        int rc = response.getStatusLine().getStatusCode();
-        if (rc > 299) {
-            log.warn("Send data to OpenWeather error. Http status error code: " + rc );
-        }
+        final int rc = response.getStatusLine().getStatusCode();
+        response.close();
         client.close();
+        if (rc > 299) {
+            throw new RuntimeException("Send data to OpenWeather error. Http status error code: " + rc);
+        }
     }
 
 
@@ -111,8 +112,10 @@ public class Sender {
 
             try {
                 sendPOST("[" + createJasonFromObject(me) + "]");
+                sendCount++;
                 return true;
-            } catch (IOException | InterruptedException e) {
+            } catch (Exception e) {
+                sendErrorCount++;
                 log.error("Can't send data to OpenWeather server.",e);
             }
         } else {
@@ -125,16 +128,15 @@ public class Sender {
     public WeatherStation getWeatherStationFromOpenWeather() {
         if (enable) {
             log.info("Get station info from OpenWeather.");
+            ObjectMapper mapper = new ObjectMapper();
             try {
-                ObjectMapper mapper = new ObjectMapper();
-
                 String retSrc = sendGET("http://api.openweathermap.org/data/3.0/stations/" + station_id + "?APPID=" + APPID);
                 InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
                 WeatherStation wsow = mapper.readValue(fileInputStream, WeatherStation.class);
                 fileInputStream.close();            
 
                 return wsow;
-            } catch (IOException | InterruptedException e) {
+            } catch (Exception e) {
                 log.error("Can't get station data to OpenWeather server.",e);
 
             }

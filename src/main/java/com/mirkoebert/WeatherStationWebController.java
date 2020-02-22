@@ -110,6 +110,7 @@ public class WeatherStationWebController {
             }
 
             model.put("openweather_sendcount", sender.getSendCount());
+            model.put("openweather_senderrorcount", sender.getSendErrorCount());
         }
         return "info";
     }
