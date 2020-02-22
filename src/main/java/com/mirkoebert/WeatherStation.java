@@ -57,14 +57,6 @@ public final class WeatherStation implements EnumerateListener {
     private boolean alarmflashingmode;
 
     @Getter
-    @Value("${weatherstation.position.latitude}")
-    private String latitude;
-
-    @Getter
-    @Value("${weatherstation.position.longitude}")
-    private String longitude;
-
-    @Getter
     @Value("${weatherstation.position.altitude}")
     private String altitude;
 

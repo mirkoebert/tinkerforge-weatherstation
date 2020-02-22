@@ -28,8 +28,8 @@ info:
 weatherstation:
   position:
     altitude: 25
-    latitude: 53.98465878500624
-    longitude: 12.183633460018223
+#    latitude: 53.98465878500624
+#    longitude: 12.183633460018223
   mode:
     nightmode: true
     alarmfashing: true

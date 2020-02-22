@@ -34,12 +34,6 @@ public class WeatherStationWebController {
     @Value("${info.app.version}")
     private String buildVersion;
 
-    @Value("${weatherstation.position.latitude}")
-    private String latitude;
-
-    @Value("${weatherstation.position.longitude}")
-    private String longitude;
-
     @Value("${weatherstation.position.altitude}")
     private String altitude;
 
@@ -93,8 +87,6 @@ public class WeatherStationWebController {
         model.put("buildVersion", buildVersion);
         model.put("online", DateX.getInstance().isOnline());
         model.put("altitude", altitude);
-        model.put("latitude", latitude);
-        model.put("longitude", longitude);
         model.put("nightmode", nightmode);
         model.put("alarmflashingmode", alarmflashingmode);
 
