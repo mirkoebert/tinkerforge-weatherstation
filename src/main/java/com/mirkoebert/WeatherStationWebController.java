@@ -94,7 +94,7 @@ public class WeatherStationWebController {
         if(openweather_enable) {
             model.put("openweather_stationid", openweather_stationid);
 
-            com.mirkoebert.openweather.WeatherStation ows = owss.getStation();
+            com.mirkoebert.openweather.OpenWeatherWeatherStation ows = owss.getStation();
             if (ows != null) {
                 model.put("openweather_name", ows.getName());
                 model.put("openweather_latitude", ows.getLatitude());

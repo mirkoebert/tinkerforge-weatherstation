@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WeatherStation {
+public class OpenWeatherWeatherStation {
     
     private String id; //": "5df37e046c634e00011dff22",
     private String name; //": "Klingendorf",

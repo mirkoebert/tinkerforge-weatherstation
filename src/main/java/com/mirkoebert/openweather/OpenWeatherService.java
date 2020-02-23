@@ -14,10 +14,10 @@ public class OpenWeatherService {
     private Sender wows;
 
     private long lastWeatherUpdateAt = 0;
-    private WeatherStation ws = null;
+    private OpenWeatherWeatherStation ws = null;
     private OpenWeatherModel owm = null;
 
-    public WeatherStation getStation(){
+    public OpenWeatherWeatherStation getStation(){
         if (ws == null) {
             ws = wows.getWeatherStationFromOpenWeather();
         }

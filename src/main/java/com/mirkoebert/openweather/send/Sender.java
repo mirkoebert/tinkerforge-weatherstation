@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mirkoebert.openweather.OpenWeatherModel;
-import com.mirkoebert.openweather.WeatherStation;
+import com.mirkoebert.openweather.OpenWeatherWeatherStation;
 import com.mirkoebert.weather.WeatherModel;
 
 import java.io.ByteArrayInputStream;
@@ -125,14 +125,14 @@ public class Sender {
     }
 
 
-    public WeatherStation getWeatherStationFromOpenWeather() {
+    public OpenWeatherWeatherStation getWeatherStationFromOpenWeather() {
         if (enable) {
             log.info("Get station info from OpenWeather.");
             ObjectMapper mapper = new ObjectMapper();
             try {
                 String retSrc = sendGET("http://api.openweathermap.org/data/3.0/stations/" + station_id + "?APPID=" + APPID);
                 InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
-                WeatherStation wsow = mapper.readValue(fileInputStream, WeatherStation.class);
+                OpenWeatherWeatherStation wsow = mapper.readValue(fileInputStream, OpenWeatherWeatherStation.class);
                 fileInputStream.close();            
 
                 return wsow;
