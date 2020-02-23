@@ -36,6 +36,7 @@ public class OpenWeatherModel {
         maxTemp = getFloatFromNestedObject(brand.get("temp_max"));
         pressure = getFloatFromNestedObject(brand.get("pressure"));
         humidity = getFloatFromNestedObject(brand.get("humidity"));
+        feelsTemp = getFloatFromNestedObject(brand.get("feels_like"));
     }
     
     @SuppressWarnings("unchecked")
@@ -43,7 +44,7 @@ public class OpenWeatherModel {
     private void unpackNestedWeather(ArrayList brand) {
         log.debug(brand.getClass().getName().toString());
         Map<Object,Object> w = (Map<Object, Object>) brand.get(0);
-        description = getStringFromNestedObject(w.get("description"));
+        description = w.get("description").toString();
     }
     
     private float getFloatFromNestedObject(final Object traw) {
@@ -55,7 +56,4 @@ public class OpenWeatherModel {
         return -1;
     }
     
-    private String getStringFromNestedObject(final Object traw) {
-        return traw.toString();
-    }
 }
