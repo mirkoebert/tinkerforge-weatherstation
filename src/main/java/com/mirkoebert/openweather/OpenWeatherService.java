@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
 @Order(130)
+@Slf4j
 public class OpenWeatherService {
 
     @Autowired
@@ -26,9 +29,15 @@ public class OpenWeatherService {
 
     public OpenWeatherModel getOpenWeatherModel() {
         long now = System.currentTimeMillis();
+        OpenWeatherModel owmNew = null;
         if ((owm == null)||(now-lastWeatherUpdateAt> 60*1000)) {
-            owm = wows.getWeatherForWeatherDStationCoordinates();
+            owmNew = wows.getWeatherForWeatherDStationCoordinates();
             lastWeatherUpdateAt = System.currentTimeMillis();
+        }
+        if (owmNew != null) {
+            owm = owmNew;
+        } else {
+            log.warn("Use old OW data");
         }
         return owm ;
     }

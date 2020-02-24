@@ -55,6 +55,7 @@ public class WeatherStationWebController {
     @GetMapping("/")
     public ModelAndView home(Map<String, Object> model) {
         log.info("HTTP Request");
+        model.put("name", owss.getStation().getName());
         model.put("airpressure", (int) Math.round(m.getAirPressureQFE()));
         model.put("airpressuretrend", monitor.getAirpPressureTrend());
         model.put("humidity", m.getHumdidity());
@@ -64,7 +65,7 @@ public class WeatherStationWebController {
         model.put("date", DateX.getInstance().getDateString());
         model.put("startDate", w.getStartDate());
         model.put("description", owss.getOpenWeatherModel().getDescription());
-        model.put("name", owss.getOpenWeatherModel().getName());
+        model.put("ow.name", owss.getOpenWeatherModel().getName());
         model.put("temp", owss.getOpenWeatherModel().getTemp());
         model.put("feelsLike", owss.getOpenWeatherModel().getFeelsTemp());
         model.put("ow.airpressure", owss.getOpenWeatherModel().getPressure());
