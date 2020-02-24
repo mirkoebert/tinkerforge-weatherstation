@@ -1,9 +1,12 @@
 package com.mirkoebert;
 
-import com.mirkoebert.openweather.OpenWeatherService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mirkoebert.openweather.send.Sender;
 import com.mirkoebert.weather.WeatherModel;
 import com.mirkoebert.weather.WeatherMonitor;
+import com.mirkoebert.weather.WeatherService;
+import com.mirkoebert.weather.openweather.OpenWeatherService;
 
 import java.util.Map;
 
@@ -21,10 +24,6 @@ public class WeatherStationWebController {
 
     @Autowired
     private WeatherStation w;
-    @Autowired
-    private WeatherModel m;
-    @Autowired
-    private WeatherMonitor monitor;
     @Autowired 
     private Sender sender;
 
@@ -51,25 +50,15 @@ public class WeatherStationWebController {
 
     @Autowired
     private OpenWeatherService owss;
+    
+    @Autowired
+    private WeatherService ws;
 
     @GetMapping("/")
-    public ModelAndView home(Map<String, Object> model) {
+    public ModelAndView home(Map<String, Object> model) throws JsonProcessingException {
         log.info("HTTP Request");
-        model.put("name", owss.getStation().getName());
-        model.put("airpressure", (int) Math.round(m.getAirPressureQFE()));
-        model.put("airpressuretrend", monitor.getAirpPressureTrend());
-        model.put("humidity", m.getHumdidity());
-        model.put("tempInn", m.getTempIn());
-        model.put("lum", m.getIllumination());
-        model.put("forecast", monitor.getMessage());
-        model.put("date", DateX.getInstance().getDateString());
-        model.put("startDate", w.getStartDate());
-        model.put("description", owss.getOpenWeatherModel().getDescription());
-        model.put("ow.name", owss.getOpenWeatherModel().getName());
-        model.put("temp", owss.getOpenWeatherModel().getTemp());
-        model.put("feelsLike", owss.getOpenWeatherModel().getFeelsTemp());
-        model.put("ow.airpressure", owss.getOpenWeatherModel().getPressure());
-        model.put("ow.humidity", owss.getOpenWeatherModel().getHumidity());
+        ObjectMapper mapper = new ObjectMapper();
+        model = mapper.convertValue(ws.getWeather(), Map.class);
         log.info("HTTP Request done: " + model.toString());
         return new ModelAndView("index", model);
     }
@@ -95,7 +84,7 @@ public class WeatherStationWebController {
         if(openweather_enable) {
             model.put("openweather_stationid", openweather_stationid);
 
-            com.mirkoebert.openweather.OpenWeatherWeatherStation ows = owss.getStation();
+            com.mirkoebert.weather.openweather.OpenWeatherWeatherStation ows = owss.getStation();
             if (ows != null) {
                 model.put("openweather_name", ows.getName());
                 model.put("openweather_latitude", ows.getLatitude());

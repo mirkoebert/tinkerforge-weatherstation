@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mirkoebert.openweather.OpenWeatherModel;
-import com.mirkoebert.openweather.OpenWeatherWeatherStation;
 import com.mirkoebert.weather.WeatherModel;
+import com.mirkoebert.weather.openweather.OpenWeatherWeather;
+import com.mirkoebert.weather.openweather.OpenWeatherWeatherStation;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -145,12 +145,12 @@ public class Sender {
     }
 
 
-    public OpenWeatherModel getWeatherForWeatherDStationCoordinates() {
+    public OpenWeatherWeather getWeatherForWeatherDStationCoordinates() {
         if (enable) {
             log.info("Get station info from OpenWeather.");
             try {
                 String retSrc = sendGET("http://api.openweathermap.org/data/2.5/weather?lat=53.894658&lon=12.183633&units=metric&lang=de&appid=" + APPID);
-                OpenWeatherModel wsow = convertJsonStringToObject(retSrc);            
+                OpenWeatherWeather wsow = convertJsonStringToObject(retSrc);            
                 return wsow;
             } catch (IOException | InterruptedException e) {
                 log.error("Can't get weather from OpenWeather server.",e);
@@ -161,11 +161,11 @@ public class Sender {
     }
 
 
-    OpenWeatherModel convertJsonStringToObject(String retSrc)
+    OpenWeatherWeather convertJsonStringToObject(String retSrc)
             throws IOException, JsonParseException, JsonMappingException {
         InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
         ObjectMapper mapper = new ObjectMapper();
-        OpenWeatherModel wsow = mapper.readValue(fileInputStream, OpenWeatherModel.class);
+        OpenWeatherWeather wsow = mapper.readValue(fileInputStream, OpenWeatherWeather.class);
         fileInputStream.close();
         return wsow;
     }

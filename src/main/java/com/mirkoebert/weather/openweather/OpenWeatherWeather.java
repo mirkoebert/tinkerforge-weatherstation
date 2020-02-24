@@ -1,4 +1,4 @@
-package com.mirkoebert.openweather;
+package com.mirkoebert.weather.openweather;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Slf4j
-public class OpenWeatherModel {
+public class OpenWeatherWeather {
 
     private String name;
     private float temp;
@@ -41,7 +41,7 @@ public class OpenWeatherModel {
     
     @SuppressWarnings("unchecked")
     @JsonProperty("weather")
-    private void unpackNestedWeather(ArrayList brand) {
+    private void unpackNestedWeather(ArrayList<?> brand) {
         log.debug(brand.getClass().getName().toString());
         Map<Object,Object> w = (Map<Object, Object>) brand.get(0);
         description = w.get("description").toString();

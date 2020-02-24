@@ -1,4 +1,4 @@
-package com.mirkoebert.openweather;
+package com.mirkoebert.weather.openweather;
 
 import com.mirkoebert.openweather.send.Sender;
 
@@ -18,7 +18,7 @@ public class OpenWeatherService {
 
     private long lastWeatherUpdateAt = 0;
     private OpenWeatherWeatherStation ws = null;
-    private OpenWeatherModel owm = null;
+    private OpenWeatherWeather owm = null;
 
     public OpenWeatherWeatherStation getStation(){
         if (ws == null) {
@@ -27,9 +27,9 @@ public class OpenWeatherService {
         return ws;
     }
 
-    public OpenWeatherModel getOpenWeatherModel() {
+    public OpenWeatherWeather getWeather() {
         long now = System.currentTimeMillis();
-        OpenWeatherModel owmNew = null;
+        OpenWeatherWeather owmNew = null;
         if ((owm == null)||(now-lastWeatherUpdateAt> 60*1000)) {
             owmNew = wows.getWeatherForWeatherDStationCoordinates();
             lastWeatherUpdateAt = System.currentTimeMillis();

@@ -7,30 +7,24 @@
 
 <body>
 <h1>Wetterstation {{name}}</h1>
-<a href="/">Wetter</a> <a href="webcams">Wetter Webcams</a> <a href="setup">Setup</a> <a href="info">Über</a>
+<a href="/">Wetter</a> <a href="webcams">Wetter Webcams</a> <a href="info">Über</a>
 
 <br> 
 <hr>
 {{date}}
 <br>
-Luftfeuchtigkeit: {{humidity}} %RH
+Luftfeuchtigkeit Aussen: {{humidityOut}} %RH Luftfeuchtigkeit Innen: {{humidityIn}} %RH
 <br>
-Luftdruck: {{airpressure}} hPa, Tendenz {{airpressuretrend}}
+Luftdruck: {{airpressure}} hPa
 <br>
-Temperatur Innen: {{tempInn}}°C
+Temperatur Aussen: {{tempOut}}°C gefühlt {{feelsTemp}} °C Temperatur Innen: {{tempIn}}°C
 <br>
-Helligkeit: {{lum}} lx
+Vorhersage: {{forecast}} {{description}}
 <br>
-Vorhersage: {{forecast}}
+
 <br> 
 <hr>
 
-<h2>Wetter {{ow.name}}</h2>
-Luftfeuchtigkeit: {{ow.humidity}} %RH <br>
-Luftdruck: {{ow.airpressure}} hPa <br>
-Temperatur: {{temp}}°C gefühlt {{feelsLike}}°C <br>
-Wetter: {{description}} <br>
-<hr>  
 
 
 </body>

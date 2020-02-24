@@ -1,0 +1,14 @@
+{
+  "ID": "5df37e046c634e00011dff22",
+  "updated_at": "2019-12-13T12:03:16.034281694Z",
+  "created_at": "2019-12-13T12:03:16.034281672Z",
+  "user_id": "5a2ede30b31963000da56547",
+  "external_id": "KlingendorfTEST001",
+  "name": "Klingendorf",
+  "latitude": 53.98,
+  "longitude": 12.18,
+  "altitude": 25,
+  "rank": 10,
+  "source_type": 5
+}
+

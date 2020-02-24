@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.mirkoebert.openweather.OpenWeatherModel;
+import com.mirkoebert.weather.openweather.OpenWeatherWeather;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,7 +43,7 @@ class SenderTest {
     @Test
     void testMapper() throws JsonParseException, JsonMappingException, IOException {
         Sender s = new Sender();
-        OpenWeatherModel oww = s.convertJsonStringToObject(getStringFromFilename("openweatherweather.json"));
+        OpenWeatherWeather oww = s.convertJsonStringToObject(getStringFromFilename("openweatherweather.json"));
         assertEquals("Rukieten", oww.getName());
         assertEquals(7.27f, oww.getTemp(), 0.01f);
         assertEquals(6.11f, oww.getMinTemp(), 0.01f);

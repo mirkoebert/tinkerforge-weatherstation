@@ -1,4 +1,4 @@
-package com.mirkoebert.openweather;
+package com.mirkoebert.weather.openweather;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
