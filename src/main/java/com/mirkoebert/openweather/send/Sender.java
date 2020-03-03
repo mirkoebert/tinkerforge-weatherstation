@@ -65,8 +65,12 @@ public class Sender {
 
     private void sendPOST(final String json) throws ClientProtocolException, IOException   {
         HttpPost httpPost = new HttpPost("http://api.openweathermap.org/data/3.0/measurements?APPID=" + APPID);
-        StringEntity entity = new StringEntity(json);
-        httpPost.setEntity(entity);
+        if (json == null) {
+            log.warn("Json String is empty.");
+        } else {
+            StringEntity entity = new StringEntity(json);
+            httpPost.setEntity(entity);
+        }
         httpPost.setHeader("Content-Type", "application/json");
 
 
