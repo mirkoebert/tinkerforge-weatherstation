@@ -1,4 +1,4 @@
-package com.mirkoebert;
+package com.mirkoebert.controllerIn;
 
 import com.mirkoebert.weather.WeatherModel;
 import com.mirkoebert.weather.WeatherMonitor;

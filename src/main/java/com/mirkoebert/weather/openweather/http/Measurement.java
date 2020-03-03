@@ -1,4 +1,4 @@
-package com.mirkoebert.openweather.send;
+package com.mirkoebert.weather.openweather.http;
 
 
 import lombok.Getter;

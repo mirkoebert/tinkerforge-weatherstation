@@ -1,4 +1,4 @@
-package com.mirkoebert.openweather.send;
+package com.mirkoebert.weather.openweather.http;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -9,6 +9,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.mirkoebert.weather.openweather.OpenWeatherWeather;
+import com.mirkoebert.weather.openweather.http.Measurement;
+import com.mirkoebert.weather.openweather.http.Sender;
 
 import java.io.BufferedReader;
 import java.io.IOException;

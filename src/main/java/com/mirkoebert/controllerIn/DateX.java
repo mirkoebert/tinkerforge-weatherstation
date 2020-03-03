@@ -1,4 +1,4 @@
-package com.mirkoebert;
+package com.mirkoebert.controllerIn;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -10,24 +10,26 @@ import java.time.format.DateTimeFormatter;
 
 final class DateX {
 
+    private static final ZoneId TIMEZONE_ID = ZoneId.of("Europe/Berlin");
+    static final DateTimeFormatter DATE_TIME_FORMATER = DateTimeFormatter.ofPattern("EE HH:mm:ss d. MMMM YYYY");
     private static DateX instance = null;
     private boolean isOnline = false;
-    private ZoneId zoneId;
 
     private DateX() {
         isOnline = isOnline();
-        zoneId = ZoneId.of("Europe/Berlin");
+        
     }
 
+    
     String getDateString() {
         String r = "";
-        ZonedDateTime zdt = ZonedDateTime.now(zoneId);
+        ZonedDateTime zdt = ZonedDateTime.now(TIMEZONE_ID);
         if (isOnline) {
-            r = zdt.format(DateTimeFormatter.ofPattern("EE HH:mm:ss d. MMMM YYYY"));
+            r = zdt.format(DATE_TIME_FORMATER);
         } else {
             isOnline = isOnline();
             if (isOnline) {
-                r = zdt.format(DateTimeFormatter.ofPattern("EE HH:mm:ss d. MMMM YYYY"));
+                r = zdt.format(DATE_TIME_FORMATER);
             }
         }
         return r;
@@ -50,7 +52,6 @@ final class DateX {
         } catch (IOException e) {
             return false;
         }
-        isOnline = r;
         return r;
     }
 
@@ -64,7 +65,7 @@ final class DateX {
     public String getDateOnlyString() {
         String r = "";
         if (isOnline) {
-            ZonedDateTime zdt = ZonedDateTime.now(zoneId);
+            ZonedDateTime zdt = ZonedDateTime.now(TIMEZONE_ID);
             r = zdt.format(DateTimeFormatter.ofPattern("d. MMMM"));
         }
         return r;
@@ -73,7 +74,7 @@ final class DateX {
     public String getTimeOnlyString() {
         String r = "";
         if (isOnline) {
-            ZonedDateTime zdt = ZonedDateTime.now(zoneId);
+            ZonedDateTime zdt = ZonedDateTime.now(TIMEZONE_ID);
             r = zdt.format(DateTimeFormatter.ofPattern("EE HH:mm:ss"));
         }
         return r;

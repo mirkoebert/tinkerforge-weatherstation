@@ -1,6 +1,6 @@
 package com.mirkoebert.weather.openweather;
 
-import com.mirkoebert.openweather.send.Sender;
+import com.mirkoebert.weather.openweather.http.Sender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;

@@ -1,6 +1,8 @@
-package com.mirkoebert.openweather.send;
+package com.mirkoebert.weather.openweather.http;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.mirkoebert.weather.openweather.http.Measurement;
 
 import org.junit.jupiter.api.Test;
 

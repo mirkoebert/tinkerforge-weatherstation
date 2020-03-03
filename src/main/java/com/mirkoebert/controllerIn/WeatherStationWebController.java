@@ -1,13 +1,14 @@
-package com.mirkoebert;
+package com.mirkoebert.controllerIn;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mirkoebert.openweather.send.Sender;
-import com.mirkoebert.weather.WeatherModel;
-import com.mirkoebert.weather.WeatherMonitor;
+import com.mirkoebert.WeatherStation;
 import com.mirkoebert.weather.WeatherService;
 import com.mirkoebert.weather.openweather.OpenWeatherService;
+import com.mirkoebert.weather.openweather.OpenWeatherWeatherStation;
+import com.mirkoebert.weather.openweather.http.Sender;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,7 @@ public class WeatherStationWebController {
     @GetMapping("/info")
     public String info(Map<String, Object> model) {
         model.put("date", DateX.getInstance().getDateString());
-        model.put("startDate", w.getStartDate());
+        model.put("startDate",  DateX.DATE_TIME_FORMATER.format(w.getStartDate()));
         model.put("applicationName", applicationName);
         model.put("buildVersion", buildVersion);
         model.put("online", DateX.getInstance().isOnline());
@@ -84,7 +85,7 @@ public class WeatherStationWebController {
         if(openweather_enable) {
             model.put("openweather_stationid", openweather_stationid);
 
-            com.mirkoebert.weather.openweather.OpenWeatherWeatherStation ows = owss.getStation();
+            OpenWeatherWeatherStation ows = owss.getStation();
             if (ows != null) {
                 model.put("openweather_name", ows.getName());
                 model.put("openweather_latitude", ows.getLatitude());
@@ -97,9 +98,5 @@ public class WeatherStationWebController {
         return "info";
     }
 
-    @GetMapping("/setup")
-    public String setup(Map<String, Object> model) {
-        return "setup";
-    }
 
 }

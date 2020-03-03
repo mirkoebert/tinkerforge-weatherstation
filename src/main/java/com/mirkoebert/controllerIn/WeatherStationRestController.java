@@ -1,5 +1,6 @@
-package com.mirkoebert;
+package com.mirkoebert.controllerIn;
 
+import com.mirkoebert.WeatherStation;
 import com.mirkoebert.weather.AirPressurePointRepository;
 import com.mirkoebert.weather.AirpressurePoint;
 import com.mirkoebert.weather.WeatherModel;

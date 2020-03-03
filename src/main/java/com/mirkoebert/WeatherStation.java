@@ -1,5 +1,6 @@
 package com.mirkoebert;
 
+import com.mirkoebert.controllerIn.WeatherViewLcd24x4;
 import com.mirkoebert.weather.WeatherModel;
 import com.mirkoebert.weather.WeatherMonitor;
 import com.tinkerforge.AlreadyConnectedException;
@@ -14,7 +15,7 @@ import com.tinkerforge.NetworkException;
 import com.tinkerforge.NotConnectedException;
 import com.tinkerforge.TinkerforgeException;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
@@ -48,7 +49,7 @@ public final class WeatherStation implements EnumerateListener {
     private String buildVersion;
 
     @Getter
-    private final Date startDate = new Date();
+    private final LocalDateTime startDate = LocalDateTime.now();
 
     @Value("${weatherstation.mode.nightmode}")
     private boolean nightmode;
