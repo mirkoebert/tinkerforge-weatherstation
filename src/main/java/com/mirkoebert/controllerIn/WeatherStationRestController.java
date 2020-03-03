@@ -1,9 +1,9 @@
 package com.mirkoebert.controllerIn;
 
-import com.mirkoebert.WeatherStation;
 import com.mirkoebert.weather.AirPressurePointRepository;
 import com.mirkoebert.weather.AirpressurePoint;
 import com.mirkoebert.weather.WeatherModel;
+import com.mirkoebert.weather.tinkerforge.TinkerforgeWeatherStation;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class WeatherStationRestController {
 
     @Autowired
-    private WeatherStation w;
+    private TinkerforgeWeatherStation w;
     @Autowired
     private AirPressurePointRepository apr;
     @Autowired
@@ -32,7 +32,7 @@ public class WeatherStationRestController {
 
     @GetMapping("/v1/weatherstation")
     @ResponseBody
-    public WeatherStation weatherstation() {
+    public TinkerforgeWeatherStation weatherstation() {
         return w;
     }
 

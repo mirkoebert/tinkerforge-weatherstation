@@ -1,4 +1,4 @@
-package com.mirkoebert;
+package com.mirkoebert.weather.tinkerforge;
 
 import com.mirkoebert.controllerIn.WeatherViewLcd24x4;
 import com.mirkoebert.weather.WeatherModel;
@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @Order(20)
-public final class WeatherStation implements EnumerateListener {
+public final class TinkerforgeWeatherStation implements EnumerateListener {
 
     private static final int callbackPeriodMsec = 30002;
     private static final String HOST = "localhost";
@@ -67,7 +67,7 @@ public final class WeatherStation implements EnumerateListener {
     @Value("${tinkerforge.enable}")
     private boolean tinkerforgeEnable;
 
-    public WeatherStation(WeatherModel w, WeatherMonitor f)  {
+    public TinkerforgeWeatherStation(WeatherModel w, WeatherMonitor f)  {
         weatherModel = w;
         weatherMonitor = f;
         //if (tinkerforgeEnable) {

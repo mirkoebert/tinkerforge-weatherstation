@@ -2,13 +2,12 @@ package com.mirkoebert.controllerIn;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mirkoebert.WeatherStation;
 import com.mirkoebert.weather.WeatherService;
 import com.mirkoebert.weather.openweather.OpenWeatherService;
 import com.mirkoebert.weather.openweather.OpenWeatherWeatherStation;
 import com.mirkoebert.weather.openweather.http.Sender;
+import com.mirkoebert.weather.tinkerforge.TinkerforgeWeatherStation;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 public class WeatherStationWebController {
 
     @Autowired
-    private WeatherStation w;
+    private TinkerforgeWeatherStation w;
+
     @Autowired 
     private Sender sender;
 

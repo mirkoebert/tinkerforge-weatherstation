@@ -1,4 +1,4 @@
-package com.mirkoebert;
+package com.mirkoebert.weather.tinkerforge;
 
 import com.mirkoebert.weather.WeatherModel;
 import com.tinkerforge.BrickletAmbientLight.IlluminanceListener;

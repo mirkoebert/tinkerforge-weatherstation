@@ -27,7 +27,7 @@ public class WeatherService {
         w.setHumidityOut(oww.getHumidity());
         
         TinkerforgeWeather w2 = tfs.getWeather();
-        double pressure = w2.getAirPressureQFE();
+        final double pressure = w2.getAirPressureQFE();
         if (pressure > 0) {
             w.setAirpressure((float)pressure );
         }
