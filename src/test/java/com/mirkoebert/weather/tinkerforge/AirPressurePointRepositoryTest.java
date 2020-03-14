@@ -1,6 +1,9 @@
-package com.mirkoebert.weather;
+package com.mirkoebert.weather.tinkerforge;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.mirkoebert.weather.tinkerforge.AirPressurePointRepository;
+import com.mirkoebert.weather.tinkerforge.AirpressurePoint;
 
 import org.junit.jupiter.api.Test;
 

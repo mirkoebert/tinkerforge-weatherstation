@@ -1,5 +1,6 @@
 package com.mirkoebert.weather.openweather;
 
+import com.mirkoebert.weather.openweather.http.OpenWeatherWeatherStation;
 import com.mirkoebert.weather.openweather.http.Sender;
 
 import org.springframework.beans.factory.annotation.Autowired;

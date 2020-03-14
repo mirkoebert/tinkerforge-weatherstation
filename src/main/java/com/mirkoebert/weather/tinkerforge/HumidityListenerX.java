@@ -1,6 +1,5 @@
 package com.mirkoebert.weather.tinkerforge;
 
-import com.mirkoebert.weather.WeatherModel;
 import com.tinkerforge.BrickletHumidity.HumidityListener;
 
 import lombok.AllArgsConstructor;

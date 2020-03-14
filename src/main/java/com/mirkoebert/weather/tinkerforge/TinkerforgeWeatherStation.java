@@ -1,8 +1,6 @@
 package com.mirkoebert.weather.tinkerforge;
 
 import com.mirkoebert.controllerIn.WeatherViewLcd24x4;
-import com.mirkoebert.weather.WeatherModel;
-import com.mirkoebert.weather.WeatherMonitor;
 import com.tinkerforge.AlreadyConnectedException;
 import com.tinkerforge.BrickMaster;
 import com.tinkerforge.BrickletAmbientLight;

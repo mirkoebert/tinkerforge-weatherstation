@@ -1,6 +1,9 @@
-package com.mirkoebert.weather;
+package com.mirkoebert.weather.tinkerforge;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.mirkoebert.weather.tinkerforge.AirPressureTrend;
+import com.mirkoebert.weather.tinkerforge.WeatherMonitor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

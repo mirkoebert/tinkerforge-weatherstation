@@ -1,7 +1,7 @@
 package com.mirkoebert.controllerIn;
 
-import com.mirkoebert.weather.WeatherModel;
-import com.mirkoebert.weather.WeatherMonitor;
+import com.mirkoebert.weather.tinkerforge.WeatherModel;
+import com.mirkoebert.weather.tinkerforge.WeatherMonitor;
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.TinkerforgeException;
 

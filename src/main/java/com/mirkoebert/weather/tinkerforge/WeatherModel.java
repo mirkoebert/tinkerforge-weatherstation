@@ -1,4 +1,4 @@
-package com.mirkoebert.weather;
+package com.mirkoebert.weather.tinkerforge;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

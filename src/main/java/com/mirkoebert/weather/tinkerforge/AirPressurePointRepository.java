@@ -1,4 +1,4 @@
-package com.mirkoebert.weather;
+package com.mirkoebert.weather.tinkerforge;
 
 import java.util.ArrayList;
 import java.util.Comparator;

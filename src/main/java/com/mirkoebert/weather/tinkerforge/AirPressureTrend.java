@@ -1,4 +1,4 @@
-package com.mirkoebert.weather;
+package com.mirkoebert.weather.tinkerforge;
 
 enum AirPressureTrend {
 

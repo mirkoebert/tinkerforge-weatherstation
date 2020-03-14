@@ -1,6 +1,5 @@
 package com.mirkoebert.weather.tinkerforge;
 
-import com.mirkoebert.weather.WeatherModel;
 import com.tinkerforge.BrickletBarometer;
 import com.tinkerforge.BrickletBarometer.AirPressureListener;
 import com.tinkerforge.TinkerforgeException;
