@@ -17,14 +17,14 @@ public class WeatherMonitor {
 
     
     static final String NO_FORECAST = "Keine Vorhersage möglich";
-    private final WeatherModel m;
+    private final TinkerforgeWeather m;
     private final AirPressurePointRepository repo;
 
     @Getter
     private boolean alarm;
 
 
-    public WeatherMonitor(AirPressurePointRepository r, WeatherModel w) {
+    public WeatherMonitor(AirPressurePointRepository r, TinkerforgeWeather w) {
         m = w;
         repo = r;
     }

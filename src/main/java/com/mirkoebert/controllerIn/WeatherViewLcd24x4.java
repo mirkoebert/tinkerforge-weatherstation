@@ -1,6 +1,6 @@
 package com.mirkoebert.controllerIn;
 
-import com.mirkoebert.weather.tinkerforge.WeatherModel;
+import com.mirkoebert.weather.tinkerforge.TinkerforgeWeather;
 import com.mirkoebert.weather.tinkerforge.WeatherMonitor;
 import com.tinkerforge.BrickletLCD20x4;
 import com.tinkerforge.TinkerforgeException;
@@ -23,10 +23,10 @@ public class WeatherViewLcd24x4 implements Runnable {
     @Setter
     private boolean alarmflashingmode;
     
-    private final WeatherModel weatherModell;
+    private final TinkerforgeWeather weatherModell;
     private final WeatherMonitor weatherMonitor;
 
-    public WeatherViewLcd24x4(BrickletLCD20x4 lcd, WeatherModel weatherModell, WeatherMonitor weatherMonitor) {
+    public WeatherViewLcd24x4(BrickletLCD20x4 lcd, TinkerforgeWeather weatherModell, WeatherMonitor weatherMonitor) {
         this.lcd = lcd;
         this.weatherModell = weatherModell;
         this.weatherMonitor = weatherMonitor;

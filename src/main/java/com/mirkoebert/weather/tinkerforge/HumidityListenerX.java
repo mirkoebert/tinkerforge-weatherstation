@@ -16,13 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 class HumidityListenerX implements HumidityListener {
 
-    private final WeatherModel weaterModel;
+    private final TinkerforgeWeather weatherModel;
 
     @Override
     public void humidity(final int humidity) {
         final double h = humidity / 10.0;
-        weaterModel.setHumdidity(h);
-        log.info("Relative Humidity: " + h + " %RH");
+        weatherModel.setHumdidity(h);
+        log.debug("Relative Humidity: " + h + " %RH");
     }
 
 }

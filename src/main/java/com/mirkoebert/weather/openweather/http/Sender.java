@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mirkoebert.weather.openweather.OpenWeatherWeather;
-import com.mirkoebert.weather.tinkerforge.WeatherModel;
+import com.mirkoebert.weather.tinkerforge.TinkerforgeWeather;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class Sender {
     private boolean enableTinkerforge;
 
     @Autowired
-    private WeatherModel weatehrModel;
+    private TinkerforgeWeather weatehrModel;
     @Getter
     private int sendCount = 0;
     @Getter

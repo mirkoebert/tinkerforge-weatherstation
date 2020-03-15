@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 final class AirPressureListenerX implements AirPressureListener {
 
-    private final WeatherModel weatherModel;
+    private final TinkerforgeWeather weatherModel;
     private final BrickletBarometer barometer;
 
     @Override

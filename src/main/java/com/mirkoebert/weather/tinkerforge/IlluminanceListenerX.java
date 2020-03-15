@@ -1,3 +1,4 @@
+
 package com.mirkoebert.weather.tinkerforge;
 
 import com.tinkerforge.BrickletAmbientLight.IlluminanceListener;
@@ -15,13 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 final class IlluminanceListenerX implements IlluminanceListener {
 
-    private final WeatherModel weatherModel;
+    private final TinkerforgeWeather weatherModel;
 
     @Override
     public void illuminance(final int illuminance) {
         final long ill = Math.round(illuminance / 10.0);
         weatherModel.setIllumination(ill);
-        log.info("Illuminance: " + ill);
+        log.debug("Illuminance: " + ill);
     }
 
 }
