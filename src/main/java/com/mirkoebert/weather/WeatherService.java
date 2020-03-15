@@ -3,8 +3,8 @@ package com.mirkoebert.weather;
 import com.mirkoebert.weather.openweather.OpenWeatherService;
 import com.mirkoebert.weather.openweather.OpenWeatherWeather;
 import com.mirkoebert.weather.tinkerforge.TinkerforgeWeather;
+import com.mirkoebert.weather.tinkerforge.TinkerforgeWeatherMonitor;
 import com.mirkoebert.weather.tinkerforge.TinkerforgeWeatherService;
-import com.mirkoebert.weather.tinkerforge.TinkerforgeWeather;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,8 @@ public class WeatherService {
     private OpenWeatherService ows;
     @Autowired
     private TinkerforgeWeatherService tfs;
+    @Autowired
+    private TinkerforgeWeatherMonitor tfwm;
     
     public Weather getWeather(){
         Weather w = new Weather();
@@ -27,7 +29,6 @@ public class WeatherService {
         w.setFeelsTemp(oww.getFeelsTemp());
         w.setHumidityOut(oww.getHumidity());
         
-        //TinkerforgeWeather w2 = tfs.getWeather();
         TinkerforgeWeather w2 = tfs.getWeather2();
         final double pressure = w2.getAirPressureQFE();
         if (pressure > 0) {
@@ -36,6 +37,7 @@ public class WeatherService {
         w.setHumidityIn((float) (w2.getHumdidity()));
         w.setTempIn((float) w2.getTempIn());
         
+        w.setForecast(tfwm.getForeCast());
         return w;
     }
 

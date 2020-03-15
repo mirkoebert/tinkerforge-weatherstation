@@ -13,7 +13,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -62,7 +61,7 @@ public class Sender {
     }
 
 
-    private void sendPOST(final String json) throws ClientProtocolException, IOException   {
+    private void sendPOST(final String json) throws Exception   {
         HttpPost httpPost = new HttpPost("http://api.openweathermap.org/data/3.0/measurements?APPID=" + APPID);
         if (json == null) {
             log.warn("Json String is empty.");
@@ -84,7 +83,7 @@ public class Sender {
     }
 
 
-    private String sendGET(final String completeUrlString) throws IOException, InterruptedException {
+    private String sendGET(final String completeUrlString) throws Exception {
         String retSrc = null;
 
         CloseableHttpClient client = HttpClients.createDefault();
@@ -106,7 +105,7 @@ public class Sender {
 
 
 
-    @Scheduled(initialDelay = 120000, fixedDelay = 300000)
+    @Scheduled(initialDelay = 240000, fixedDelay = 300000)
     public boolean sendCurrentWeatherToOpenWeather() {
         if (enable && enableSend && enableTinkerforge) {
             log.info("Send data to OpenWeather.");
@@ -155,7 +154,7 @@ public class Sender {
                 String retSrc = sendGET("http://api.openweathermap.org/data/2.5/weather?lat=53.894658&lon=12.183633&units=metric&lang=de&appid=" + APPID);
                 OpenWeatherWeather wsow = convertJsonStringToObject(retSrc);            
                 return wsow;
-            } catch (IOException | InterruptedException e) {
+            } catch (Exception e) {
                 log.error("Can't get weather from OpenWeather server.",e);
 
             }

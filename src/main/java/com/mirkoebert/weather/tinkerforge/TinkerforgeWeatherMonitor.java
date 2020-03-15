@@ -13,7 +13,7 @@ import lombok.Getter;
  */
 @Component
 @Order(12)
-public class WeatherMonitor {
+public class TinkerforgeWeatherMonitor {
 
     
     static final String NO_FORECAST = "Keine Vorhersage möglich";
@@ -24,7 +24,7 @@ public class WeatherMonitor {
     private boolean alarm;
 
 
-    public WeatherMonitor(AirPressurePointRepository r, TinkerforgeWeather w) {
+    public TinkerforgeWeatherMonitor(AirPressurePointRepository r, TinkerforgeWeather w) {
         m = w;
         repo = r;
     }
@@ -65,7 +65,7 @@ public class WeatherMonitor {
 
 
     /**
-     * Weather forcast. 
+     * Weather forecast. 
      * @return Short forecast string to display on weather station's LSD.
      */
     public String getMessage() {

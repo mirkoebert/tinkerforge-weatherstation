@@ -3,7 +3,7 @@ package com.mirkoebert.weather.tinkerforge;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.mirkoebert.weather.tinkerforge.AirPressureTrend;
-import com.mirkoebert.weather.tinkerforge.WeatherMonitor;
+import com.mirkoebert.weather.tinkerforge.TinkerforgeWeatherMonitor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,12 @@ import org.springframework.test.context.ActiveProfiles;
 class WeatherMonitorTest  {
 
     @Autowired
-    WeatherMonitor wm;
+    TinkerforgeWeatherMonitor wm;
     
 
     @Test
     void testGetMessage() {
-        assertEquals(wm.NO_FORECAST, wm.getMessage());
+        assertEquals(TinkerforgeWeatherMonitor.NO_FORECAST, wm.getMessage());
     }
 
     @Test
@@ -30,7 +30,7 @@ class WeatherMonitorTest  {
 
     @Test
     void testGetForeCast() {
-        assertEquals(wm.NO_FORECAST, wm.getForeCast());
+        assertEquals(TinkerforgeWeatherMonitor.NO_FORECAST, wm.getForeCast());
     }
 
     @Test

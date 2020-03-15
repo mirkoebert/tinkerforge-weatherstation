@@ -16,7 +16,6 @@ import lombok.Setter;
 @Component
 @Order(11)
 public class TinkerforgeWeather {
-    // TODO rename to TinkerforgeWeather
 
     @Getter
     @Setter

@@ -60,12 +60,12 @@ public final class TinkerforgeWeatherStation implements EnumerateListener {
     private String altitude;
 
     private TinkerforgeWeather weatherModel;
-    private WeatherMonitor weatherMonitor;
+    private TinkerforgeWeatherMonitor weatherMonitor;
 
     @Value("${tinkerforge.enable}")
     private boolean tinkerforgeEnable;
 
-    public TinkerforgeWeatherStation(TinkerforgeWeather w, WeatherMonitor f)  {
+    public TinkerforgeWeatherStation(TinkerforgeWeather w, TinkerforgeWeatherMonitor f)  {
         weatherModel = w;
         weatherMonitor = f;
         //if (tinkerforgeEnable) {
