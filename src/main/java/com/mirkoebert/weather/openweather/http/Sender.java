@@ -149,14 +149,13 @@ public class Sender {
 
     public OpenWeatherWeather getWeatherForWeatherDStationCoordinates() {
         if (enable) {
-            log.info("Get station info from OpenWeather.");
+            log.info("Get weather from OpenWeather.");
             try {
                 String retSrc = sendGET("http://api.openweathermap.org/data/2.5/weather?lat=53.894658&lon=12.183633&units=metric&lang=de&appid=" + APPID);
                 OpenWeatherWeather wsow = convertJsonStringToObject(retSrc);            
                 return wsow;
             } catch (Exception e) {
                 log.error("Can't get weather from OpenWeather server.",e);
-
             }
         }
         return null;
