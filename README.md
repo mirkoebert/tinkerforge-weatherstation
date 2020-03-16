@@ -13,8 +13,9 @@ More Information, see
 * WIFI (WLAN) USB stick Edimax EW-7811Un http://amzn.to/2httW5O
 
 ## Requirements
-* Java 8 JDK
+* Java 8 JDK 
 * Maven 
+* Open weahter Id
 
 ## Build
 ```bash
@@ -35,6 +36,7 @@ Exception in thread "main" com.tinkerforge.TimeoutException: Did not receive res
 ### Local execution
 
 ```bash
+export OPENWEATHER_APPID=f86xxxxxxxxxxxxxxxxxxxxxxxxx
 mvn exec:java -Dexec.mainClass="com.mirkoebert.Main"
 ```
 
@@ -72,16 +74,12 @@ Stop the program with `<crtl><c>`
   * Fire
 * Flashing display on warning
 * Open Weather integration https://openweathermap.org
-  * Sending  air pressure data
+  * Sending  air pressure data to Open Weather
 
 ### Features Website
-* Display all data incl. forecast
+* Display accumulated weather data from Tinkerforge weather station and Open weater station  incl. forecast
 * Display air pressure trend
 * Display weather station location on Google Maps
 * Integrate DWD (Deutscher Wetterdienst) Webcams
-* Rest API to all data
 
-## Rest API
-* GET /v1/weatherstation
-* GET /v1/weatherdata
-* GET /v1/airpressure
+
