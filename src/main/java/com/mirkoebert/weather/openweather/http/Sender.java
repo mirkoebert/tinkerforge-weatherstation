@@ -164,6 +164,9 @@ public class Sender {
 
     OpenWeatherWeather convertJsonStringToObject(String retSrc)
             throws IOException, JsonParseException, JsonMappingException {
+        if (retSrc == null) {
+           return null; 
+        }
         InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
         ObjectMapper mapper = new ObjectMapper();
         OpenWeatherWeather wsow = mapper.readValue(fileInputStream, OpenWeatherWeather.class);

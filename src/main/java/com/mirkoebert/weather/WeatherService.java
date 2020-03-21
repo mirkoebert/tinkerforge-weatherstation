@@ -21,6 +21,7 @@ public class WeatherService {
     
     public Weather getWeather(){
         Weather w = new Weather();
+        
         OpenWeatherWeather oww = ows.getWeather();
         w.setName(oww.getName());
         w.setDescription(oww.getDescription());

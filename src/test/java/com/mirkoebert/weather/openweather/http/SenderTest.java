@@ -53,6 +53,8 @@ class SenderTest {
         assertEquals(1008f, oww.getPressure(), 0.01f);
         assertEquals(65f, oww.getHumidity(), 0.01f);
         assertEquals("Mäßig bewölkt", oww.getDescription());
+        
+        assertNull(oww = s.convertJsonStringToObject(null));
     }
 
     

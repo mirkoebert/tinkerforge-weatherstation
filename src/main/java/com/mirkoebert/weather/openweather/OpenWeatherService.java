@@ -5,6 +5,7 @@ import com.mirkoebert.weather.openweather.http.Sender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OpenWeatherService {
 
     @Autowired
-    private Sender wows;
+    private Sender owsender;
 
     private long lastWeatherUpdateAt = 0;
     private OpenWeatherWeatherStation ws = null;
@@ -23,16 +24,17 @@ public class OpenWeatherService {
 
     public OpenWeatherWeatherStation getStation(){
         if (ws == null) {
-            ws = wows.getWeatherStationFromOpenWeather();
+            ws = owsender.getWeatherStationFromOpenWeather();
         }
         return ws;
     }
 
+    @Scheduled(initialDelay = 240000, fixedDelay = 600000)
     public OpenWeatherWeather getWeather() {
         long now = System.currentTimeMillis();
         OpenWeatherWeather owmNew = null;
-        if ((owm == null)||(now-lastWeatherUpdateAt> 60*1000)) {
-            owmNew = wows.getWeatherForWeatherDStationCoordinates();
+        if ((owm == null)||(now - lastWeatherUpdateAt > 60 * 1000)) {
+            owmNew = owsender.getWeatherForWeatherDStationCoordinates();
             lastWeatherUpdateAt = System.currentTimeMillis();
         }
         if (owmNew != null) {
