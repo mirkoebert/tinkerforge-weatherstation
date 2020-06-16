@@ -23,7 +23,7 @@ public class WeatherService {
         Weather w = new Weather();
 
         OpenWeatherWeather oww = ows.getWeather();
-        if(oww != null) {
+        if (oww != null) {
             w.setName(oww.getName());
             w.setDescription(oww.getDescription());
             w.setAirpressure(oww.getPressure());
@@ -33,12 +33,14 @@ public class WeatherService {
         }
 
         TinkerforgeWeather w2 = tfs.getWeather2();
-        final double pressure = w2.getAirPressureQFE();
-        if (pressure > 0) {
-            w.setAirpressure((float)pressure );
+        if (w2 != null) {
+            final double pressure = w2.getAirPressureQFE();
+            if (pressure > 0) {
+                w.setAirpressure((float)pressure );
+            }
+            w.setHumidityIn((float) (w2.getHumdidity()));
+            w.setTempIn((float) w2.getTempIn());
         }
-        w.setHumidityIn((float) (w2.getHumdidity()));
-        w.setTempIn((float) w2.getTempIn());
 
         w.setForecast(tfwm.getForeCast());
         return w;
