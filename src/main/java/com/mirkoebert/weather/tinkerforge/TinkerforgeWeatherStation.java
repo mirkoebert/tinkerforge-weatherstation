@@ -131,8 +131,8 @@ public final class TinkerforgeWeatherStation implements EnumerateListener {
                     lcd.backlightOff();
                     lcd.clearDisplay();
                     lcd.backlightOn();
-                    lcd.writeLine((short) 0, (short) 0, applicationName);
-                    lcd.writeLine((short) 1, (short) 0, buildVersion);
+                    lcd.writeLine((short) 1, (short) 1, applicationName);
+                    lcd.writeLine((short) 2, (short) 1, buildVersion);
                     WeatherViewLcd24x4 lcdView = new WeatherViewLcd24x4(lcd, weatherModel, weatherMonitor);
                     lcdView.setNightmode(nightmode);
                     lcdView.setAlarmflashingmode(alarmflashingmode);

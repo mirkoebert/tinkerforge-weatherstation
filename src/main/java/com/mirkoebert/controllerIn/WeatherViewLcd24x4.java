@@ -60,14 +60,6 @@ public class WeatherViewLcd24x4 implements Runnable {
 
                 lcd.writeLine((short) 1, (short) 8, message);
 
-                //StringBuilder forcast = new StringBuilder(utf16ToKS0066U(weatherMonitor.getMessage()));
-                //                int l = forcast.length();
-                //                if (forcast.length() < 24) {
-                //                    for (int i = 0; i < (24 - l); i++) {
-                //                        forcast.append(" ");
-                //                    }
-                //                }
-                //lcd.writeLine((short) 3, (short) 0, forcast.toString());
                 lcd.writeLine((short) 3, (short) 0, utf16ToKS0066U(weatherMonitor.getMessage()));
                 timeOrdate = !timeOrdate;
             }
@@ -99,6 +91,10 @@ public class WeatherViewLcd24x4 implements Runnable {
 
     @Override
     public void run() {
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            log.error("run 1", e);        }
         while (true) {
             try {
                 paint();
@@ -109,7 +105,7 @@ public class WeatherViewLcd24x4 implements Runnable {
                     Thread.sleep(3500);
                 }
             } catch (InterruptedException e) {
-                log.error("run", e);
+                log.error("run 2", e);
             }
 
         }
@@ -253,7 +249,7 @@ public class WeatherViewLcd24x4 implements Runnable {
                     c = (char) 0xff; // BLACK SQUARE
                 }
 
-                if (ks0066u.length() > 0) {
+                if (!ks0066u.isEmpty()) {
                     ks0066u = ks0066u.substring(0, ks0066u.length() - 1);
                 }
             }
