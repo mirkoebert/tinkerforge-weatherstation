@@ -1,5 +1,8 @@
 package com.mirkoebert.weather;
 
+import com.mirkoebert.controllerIn.DateX;
+
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +23,6 @@ public class Weather {
     private String description = "XXX";
     private String forecast = "DDDD";
     private long date = System.currentTimeMillis();
-
+    private String dateFormated = DateX.getInstance().getDateString();
 
 }

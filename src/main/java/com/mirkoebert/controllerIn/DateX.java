@@ -8,10 +8,10 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-final class DateX {
+public final class DateX {
 
     private static final ZoneId TIMEZONE_ID = ZoneId.of("Europe/Berlin");
-    static final DateTimeFormatter DATE_TIME_FORMATER = DateTimeFormatter.ofPattern("EE HH:mm:ss d. MMMM YYYY");
+    public static final DateTimeFormatter DATE_TIME_FORMATER = DateTimeFormatter.ofPattern("EE HH:mm:ss d. MMMM YYYY");
     private static DateX instance = null;
     private boolean isOnline = false;
 
@@ -21,7 +21,7 @@ final class DateX {
     }
 
     
-    String getDateString() {
+    public String getDateString() {
         String r = "";
         ZonedDateTime zdt = ZonedDateTime.now(TIMEZONE_ID);
         if (isOnline) {
@@ -55,7 +55,7 @@ final class DateX {
         return r;
     }
 
-    static DateX getInstance() {
+    public static DateX getInstance() {
         if (instance == null) {
             instance = new DateX();
         }
