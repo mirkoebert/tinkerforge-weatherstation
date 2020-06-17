@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter;
 
 public final class DateX {
 
+    private static final DateTimeFormatter TIEM_ONLY_PATTERN = DateTimeFormatter.ofPattern("EE HH:mm:ss");
+    private static final DateTimeFormatter DATE_ONLY_PATTERN = DateTimeFormatter.ofPattern("d. MMMM");
     private static final ZoneId TIMEZONE_ID = ZoneId.of("Europe/Berlin");
     public static final DateTimeFormatter DATE_TIME_FORMATER = DateTimeFormatter.ofPattern("EE HH:mm:ss d. MMMM YYYY");
     private static DateX instance = null;
@@ -66,7 +68,7 @@ public final class DateX {
         String r = "";
         if (isOnline) {
             ZonedDateTime zdt = ZonedDateTime.now(TIMEZONE_ID);
-            r = zdt.format(DateTimeFormatter.ofPattern("d. MMMM"));
+            r = zdt.format(DATE_ONLY_PATTERN);
         }
         return r;
     }
@@ -75,7 +77,7 @@ public final class DateX {
         String r = "";
         if (isOnline) {
             ZonedDateTime zdt = ZonedDateTime.now(TIMEZONE_ID);
-            r = zdt.format(DateTimeFormatter.ofPattern("EE HH:mm:ss"));
+            r = zdt.format(TIEM_ONLY_PATTERN);
         }
         return r;
     }

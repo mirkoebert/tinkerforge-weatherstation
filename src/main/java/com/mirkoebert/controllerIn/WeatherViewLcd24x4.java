@@ -22,7 +22,7 @@ public class WeatherViewLcd24x4 implements Runnable {
     private boolean nightmode;
     @Setter
     private boolean alarmflashingmode;
-    
+
     private final TinkerforgeWeather weatherModell;
     private final TinkerforgeWeatherMonitor weatherMonitor;
 
@@ -36,32 +36,39 @@ public class WeatherViewLcd24x4 implements Runnable {
 
     public void paint() {
         try {
-            lcd.clearDisplay();
             if (nightmode && isNight()) {
-                lcd.backlightOff();
+                if (lcd.isBacklightOn()){
+                    lcd.backlightOff();
+                    lcd.clearDisplay();
+                }
             } else {
-                lcd.backlightOn();
-                lcd.writeLine((short) 0, (short) 12, (int) Math.round(weatherModell.getAirPressureQFE()) + " hPa");
-                lcd.writeLine((short) 0, (short) 0, df1.format(weatherModell.getHumdidity()) + " %RH");
-                lcd.writeLine((short) 1, (short) 0, df1.format(weatherModell.getTempIn()) + " C");
-                lcd.writeLine((short) 2, (short) 0, df0.format(weatherModell.getIllumination()) + " lx  ");
-
                 String message;
                 if (timeOrdate) {
                     message = DateX.getInstance().getDateOnlyString();
                 } else {
                     message = DateX.getInstance().getTimeOnlyString();
                 }
+
+                if (!lcd.isBacklightOn()) {
+                    lcd.backlightOn();
+                }
+                lcd.clearDisplay();
+                lcd.writeLine((short) 0, (short) 12, (int) Math.round(weatherModell.getAirPressureQFE()) + " hPa");
+                lcd.writeLine((short) 0, (short) 0, df1.format(weatherModell.getHumdidity()) + " %RH");
+                lcd.writeLine((short) 1, (short) 0, df1.format(weatherModell.getTempIn()) + " C");
+                lcd.writeLine((short) 2, (short) 0, df0.format(weatherModell.getIllumination()) + " lx  ");
+
                 lcd.writeLine((short) 1, (short) 8, message);
 
-                StringBuilder forcast = new StringBuilder(utf16ToKS0066U(weatherMonitor.getMessage()));
-                int l = forcast.length();
-                if (forcast.length() < 24) {
-                    for (int i = 0; i < (24 - l); i++) {
-                        forcast.append(" ");
-                    }
-                }
-                lcd.writeLine((short) 3, (short) 0, forcast.toString());
+                //StringBuilder forcast = new StringBuilder(utf16ToKS0066U(weatherMonitor.getMessage()));
+                //                int l = forcast.length();
+                //                if (forcast.length() < 24) {
+                //                    for (int i = 0; i < (24 - l); i++) {
+                //                        forcast.append(" ");
+                //                    }
+                //                }
+                //lcd.writeLine((short) 3, (short) 0, forcast.toString());
+                lcd.writeLine((short) 3, (short) 0, utf16ToKS0066U(weatherMonitor.getMessage()));
                 timeOrdate = !timeOrdate;
             }
         } catch (TinkerforgeException e) {

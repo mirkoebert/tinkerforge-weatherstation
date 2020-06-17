@@ -21,11 +21,11 @@ public class WeatherStationWebWeatherController {
  
     @Autowired
     private WeatherService ws;
-
+    private ObjectMapper mapper = new ObjectMapper();
+    
     @GetMapping("/")
     public ModelAndView home(Map<String, Object> model) throws JsonProcessingException {
         log.info("HTTP Request");
-        ObjectMapper mapper = new ObjectMapper();
         model = mapper.convertValue(ws.getWeather(), Map.class);
         log.info("HTTP Request done: " + model.toString());
         return new ModelAndView("index", model);

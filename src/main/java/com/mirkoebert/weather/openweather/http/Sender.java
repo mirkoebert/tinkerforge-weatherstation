@@ -53,10 +53,10 @@ public class Sender {
     private int sendCount = 0;
     @Getter
     private int sendErrorCount = 0;
+    private final ObjectMapper mapper = new ObjectMapper();
 
 
     String createJasonFromObject(Object o) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(o);
     }
 
@@ -130,7 +130,6 @@ public class Sender {
     public OpenWeatherWeatherStation getWeatherStationFromOpenWeather() {
         if (enable) {
             log.info("Get station info from OpenWeather.");
-            ObjectMapper mapper = new ObjectMapper();
             try {
                 String retSrc = sendGET("http://api.openweathermap.org/data/3.0/stations/" + station_id + "?APPID=" + APPID);
                 InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
@@ -139,7 +138,7 @@ public class Sender {
 
                 return wsow;
             } catch (Exception e) {
-                log.error("Can't get station data to OpenWeather server.",e);
+                log.error("Can't get station data to OpenWeather server. " + e.getLocalizedMessage());
 
             }
         }
@@ -155,7 +154,7 @@ public class Sender {
                 OpenWeatherWeather wsow = convertJsonStringToObject(retSrc);            
                 return wsow;
             } catch (Exception e) {
-                log.error("Can't get weather from OpenWeather server.",e);
+                log.error("Can't get weather from OpenWeather server. " + e.getLocalizedMessage());
             }
         }
         return null;
@@ -168,7 +167,6 @@ public class Sender {
            return null; 
         }
         InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
-        ObjectMapper mapper = new ObjectMapper();
         OpenWeatherWeather wsow = mapper.readValue(fileInputStream, OpenWeatherWeather.class);
         fileInputStream.close();
         return wsow;
