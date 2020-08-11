@@ -26,6 +26,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import lombok.Cleanup;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -56,29 +57,26 @@ public class Sender {
     private final ObjectMapper mapper = new ObjectMapper();
 
 
-    String createJasonFromObject(Object o) throws JsonProcessingException {
+    String createJasonFromObject(final Object o) throws JsonProcessingException {
         return mapper.writeValueAsString(o);
     }
 
 
     private void sendPOST(final String json) throws Exception   {
-        HttpPost httpPost = new HttpPost("http://api.openweathermap.org/data/3.0/measurements?APPID=" + APPID);
         if (json == null) {
             log.warn("Json String is empty.");
         } else {
-            StringEntity entity = new StringEntity(json);
-            httpPost.setEntity(entity);
-        }
-        httpPost.setHeader("Content-Type", "application/json");
+            HttpPost httpPost = new HttpPost("http://api.openweathermap.org/data/3.0/measurements?APPID=" + APPID);
+            httpPost.setEntity(new StringEntity(json));            
+            httpPost.setHeader("Content-Type", "application/json");
 
 
-        CloseableHttpClient client = HttpClients.createDefault();
-        CloseableHttpResponse response = client.execute(httpPost);
-        final int rc = response.getStatusLine().getStatusCode();
-        response.close();
-        client.close();
-        if (rc > 299) {
-            throw new RuntimeException("Send data to OpenWeather error. Http status error code: " + rc);
+            @Cleanup CloseableHttpClient client = HttpClients.createDefault();
+            @Cleanup CloseableHttpResponse response = client.execute(httpPost);
+            final int rc = response.getStatusLine().getStatusCode();
+            if (rc > 299) {
+                throw new RuntimeException("Send data to OpenWeather error. Http status error code: " + rc);
+            }
         }
     }
 
@@ -132,14 +130,10 @@ public class Sender {
             log.info("Get station info from OpenWeather.");
             try {
                 String retSrc = sendGET("http://api.openweathermap.org/data/3.0/stations/" + station_id + "?APPID=" + APPID);
-                InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
-                OpenWeatherWeatherStation wsow = mapper.readValue(fileInputStream, OpenWeatherWeatherStation.class);
-                fileInputStream.close();            
-
-                return wsow;
+                @Cleanup InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
+                return mapper.readValue(fileInputStream, OpenWeatherWeatherStation.class);
             } catch (Exception e) {
                 log.error("Can't get station data to OpenWeather server. " + e.getLocalizedMessage());
-
             }
         }
         return null;
@@ -151,8 +145,7 @@ public class Sender {
             log.info("Get weather from OpenWeather.");
             try {
                 String retSrc = sendGET("http://api.openweathermap.org/data/2.5/weather?lat=53.894658&lon=12.183633&units=metric&lang=de&appid=" + APPID);
-                OpenWeatherWeather wsow = convertJsonStringToObject(retSrc);            
-                return wsow;
+                return convertJsonStringToObject(retSrc);            
             } catch (Exception e) {
                 log.error("Can't get weather from OpenWeather server. " + e.getLocalizedMessage());
             }
@@ -161,15 +154,12 @@ public class Sender {
     }
 
 
-    OpenWeatherWeather convertJsonStringToObject(String retSrc)
-            throws IOException, JsonParseException, JsonMappingException {
+    OpenWeatherWeather convertJsonStringToObject(String retSrc) throws IOException, JsonParseException, JsonMappingException {
         if (retSrc == null) {
            return null; 
         }
-        InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
-        OpenWeatherWeather wsow = mapper.readValue(fileInputStream, OpenWeatherWeather.class);
-        fileInputStream.close();
-        return wsow;
+        @Cleanup InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
+        return mapper.readValue(fileInputStream, OpenWeatherWeather.class);
     }
 
 }
