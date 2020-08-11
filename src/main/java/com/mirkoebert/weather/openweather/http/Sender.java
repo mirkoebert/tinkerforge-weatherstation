@@ -83,13 +83,13 @@ public class Sender {
 
     private String sendGET(final String completeUrlString) throws Exception {
         String retSrc = null;
-
-        CloseableHttpClient client = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(completeUrlString);
         log.info("uri: " + httpGet.getURI());
 
-        CloseableHttpResponse response = client.execute(httpGet);
-        int rc = response.getStatusLine().getStatusCode();
+        
+        @Cleanup CloseableHttpClient client = HttpClients.createDefault();
+        @Cleanup CloseableHttpResponse response = client.execute(httpGet);
+        final int rc = response.getStatusLine().getStatusCode();
         if (rc > 299) {
             log.warn("Can't get station info from OpenWeather error. Http status error code: " + rc );
         } else {
@@ -97,7 +97,6 @@ public class Sender {
             HttpEntity entity = response.getEntity();
             retSrc =  EntityUtils.toString(entity);
         }
-        client.close();
         return retSrc;
     }
 
