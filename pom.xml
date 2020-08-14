@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ebertp</groupId>
 	<artifactId>tinkerforge-weatherstation</artifactId>
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.2.1-SNAPSHOT</version>
 	<name>tinkerforge-weatherstation</name>
 	<description>Simple weather station based on Tinkerforge weather station kit.</description>
 
@@ -43,6 +43,17 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -99,8 +110,8 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
 				<configuration>
+					<release>8</release>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
@@ -118,10 +129,6 @@
 				</executions>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -182,147 +189,12 @@
 					</execution>
 				</executions>
 			</plugin>
+
+
 		</plugins>
 	</build>
 
 
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration>
-					<configLocation>config/1google_checks.xml</configLocation>
-					<encoding>UTF-8</encoding>
-					<linkXRef>true</linkXRef>
-				</configuration>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>checkstyle</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.12.0</version>
-				<configuration>
-					<targetJdk>1.8</targetJdk>
-					<linkXRef>true</linkXRef>
-					<sourceEncoding>utf-8</sourceEncoding>
-					<analysisCache>true</analysisCache>
-					<rulesets>
-						<ruleset>/rulesets/java/basic.xml</ruleset>
-						<ruleset>/rulesets/java/imports.xml</ruleset>
-						<ruleset>/rulesets/java/unusedcode.xml</ruleset>
-					</rulesets>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>com.github.spotbugs</groupId>
-				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>3.1.12.2</version>
-			</plugin>
-
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>3.0.0-M4</version>
-			</plugin>
-
-			<plugin>
-				<groupId>org.owasp</groupId>
-				<artifactId>dependency-check-maven</artifactId>
-				<version>5.3.0</version>
-				<configuration>
-					<nodeAuditAnalyzerEnabled>false</nodeAuditAnalyzerEnabled>
-					<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
-				</configuration>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>aggregate</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>versions-maven-plugin</artifactId>
-				<version>2.7</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>dependency-updates-report</report>
-							<report>plugin-updates-report</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<version>3.0.0</version>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>taglist-maven-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<tagListOptions>
-						<tagClasses>
-							<tagClass>
-								<displayName>Todo Work</displayName>
-								<tags>
-									<tag>
-										<matchString>todo</matchString>
-										<matchType>ignoreCase</matchType>
-									</tag>
-									<tag>
-										<matchString>FIXME</matchString>
-										<matchType>ignoreCase</matchType>
-									</tag>
-								</tags>
-							</tagClass>
-						</tagClasses>
-					</tagListOptions>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>report</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>3.0.0-M1</version>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jdepend-maven-plugin</artifactId>
-				<version>2.0</version>
-			</plugin>
-		</plugins>
-	</reporting>
 
 	<scm>
 		<url>https://github.com/mirkoebert/tinkerforge-weatherstation</url>

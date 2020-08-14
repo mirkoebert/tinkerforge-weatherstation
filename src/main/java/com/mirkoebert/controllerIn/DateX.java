@@ -40,7 +40,7 @@ public final class DateX {
     /**
      * Check if weather station is online. Try to reach an internet server.
      * If station is online, the date and time are correct.
-     * @return 
+     * @return true if weather station can reach the internet 
      */
     public boolean isOnline() {
         boolean r = false;

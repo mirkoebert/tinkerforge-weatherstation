@@ -48,9 +48,12 @@ public class WeatherViewLcd24x4 implements Runnable {
                 } else {
                     message = DateX.getInstance().getTimeOnlyString();
                 }
-
-                if (!lcd.isBacklightOn()) {
-                    lcd.backlightOn();
+                try {
+                    if (!lcd.isBacklightOn()) {
+                        lcd.backlightOn();
+                    }
+                } catch (com.tinkerforge.DeviceReplacedException ex) {
+                    // ignore
                 }
                 lcd.clearDisplay();
                 lcd.writeLine((short) 0, (short) 12, (int) Math.round(weatherModell.getAirPressureQFE()) + " hPa");

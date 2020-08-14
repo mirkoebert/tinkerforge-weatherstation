@@ -31,7 +31,7 @@ public class OpenWeatherService {
 
     @Scheduled(initialDelay = 240000, fixedDelay = 600000)
     public OpenWeatherWeather getWeather() {
-        long now = System.currentTimeMillis();
+        final long now = System.currentTimeMillis();
         OpenWeatherWeather owmNew = null;
         if ((owm == null)||(now - lastWeatherUpdateAt > 60 * 1000)) {
             owmNew = owsender.getWeatherForWeatherDStationCoordinates();

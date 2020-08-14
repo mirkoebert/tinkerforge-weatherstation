@@ -10,7 +10,9 @@ import com.mirkoebert.weather.tinkerforge.TinkerforgeWeather;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -23,8 +25,11 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Recover;
 
 import lombok.Cleanup;
 import lombok.Getter;
@@ -62,6 +67,11 @@ public class Sender {
     }
 
 
+    @Retryable(
+            value = {UnknownHostException.class},
+            maxAttempts = 2,
+            backoff = @Backoff(delay = 5000)
+            )
     private void sendPOST(final String json) throws Exception   {
         if (json == null) {
             log.warn("Json String is empty.");
@@ -100,7 +110,10 @@ public class Sender {
         return retSrc;
     }
 
-
+    @Recover
+    public void recover(UnknownHostException t){
+        log.warn("Can't reach host. " + t.getLocalizedMessage());
+    }
 
     @Scheduled(initialDelay = 240000, fixedDelay = 300000)
     public boolean sendCurrentWeatherToOpenWeather() {
@@ -160,5 +173,7 @@ public class Sender {
         @Cleanup InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
         return mapper.readValue(fileInputStream, OpenWeatherWeather.class);
     }
+    
+
 
 }
