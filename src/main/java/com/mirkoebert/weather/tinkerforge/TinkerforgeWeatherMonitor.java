@@ -12,7 +12,6 @@ import lombok.Getter;
  *
  */
 @Component
-@Order(12)
 public class TinkerforgeWeatherMonitor {
 
     

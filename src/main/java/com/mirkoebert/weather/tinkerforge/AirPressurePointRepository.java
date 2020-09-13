@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
 
 import lombok.Getter;
 
 @Repository
-@Order(10)
 public class AirPressurePointRepository {
 
     @Getter

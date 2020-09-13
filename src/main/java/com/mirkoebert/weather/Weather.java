@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class Weather {
     
-    private String name = "AA";
+    private String name = "not set";
     private double longitude = 12;//: 12.18,
     private double latitudec = -2; //": 53.98,
     private int altitude = 34; // 25,
@@ -20,8 +20,8 @@ public class Weather {
     private float airpressure =1023;
     private float  humidityIn =34;
     private float  humidityOut = 55;
-    private String description = "XXX";
-    private String forecast = "DDDD";
+    private String description = "";
+    private String forecast = "";
     private long date = System.currentTimeMillis();
     private String dateFormated = DateX.getInstance().getDateString();
 

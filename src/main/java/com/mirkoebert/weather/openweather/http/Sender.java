@@ -54,7 +54,7 @@ public class Sender {
     private boolean enableTinkerforge;
 
     @Autowired
-    private TinkerforgeWeather weatehrModel;
+    private TinkerforgeWeather weatherModel;
     @Getter
     private int sendCount = 0;
     @Getter
@@ -120,7 +120,7 @@ public class Sender {
         if (enable && enableSend && enableTinkerforge) {
             log.info("Send data to OpenWeather.");
             Measurement me = new Measurement(station_id);
-            me.setPressure((int)Math.round(weatehrModel.getAirPressureQFE()));
+            me.setPressure((int)Math.round(weatherModel.getAirPressureQFE()));
 
             try {
                 sendPOST("[" + createJasonFromObject(me) + "]");

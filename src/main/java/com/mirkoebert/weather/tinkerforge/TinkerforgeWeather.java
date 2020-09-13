@@ -1,8 +1,6 @@
 package com.mirkoebert.weather.tinkerforge;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
@@ -14,7 +12,6 @@ import lombok.Setter;
  *
  */
 @Component
-@Order(11)
 public class TinkerforgeWeather {
 
     @Getter
@@ -29,8 +26,11 @@ public class TinkerforgeWeather {
     @Setter
     double humdidity = -1;
 
-    @Autowired
-    private AirPressurePointRepository apr;
+    private final AirPressurePointRepository apr;
+    
+    public TinkerforgeWeather(final AirPressurePointRepository apr) {
+        this.apr = apr;
+    }
 
     public void setAirPressureQFE(final double airPressureQFE) {
         apr.add(new AirpressurePoint(airPressureQFE));
