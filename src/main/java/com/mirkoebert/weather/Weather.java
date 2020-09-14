@@ -2,6 +2,7 @@ package com.mirkoebert.weather;
 
 import com.mirkoebert.controllerIn.DateX;
 
+import java.util.Optional;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class Weather {
     private float tempIn = 3;
     private float tempOut = 33;
     private float feelsTemp = 34;
-    private float airpressure = 0;
+    private Optional<Float> airpressure;
     private float  humidityIn =34;
     private float  humidityOut = 55;
     private String description = "";
