@@ -1,6 +1,8 @@
 package com.mirkoebert.weather.tinkerforge;
 
 
+import com.mirkoebert.weather.openweather.http.ObserverableWeather;
+
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
@@ -12,7 +14,7 @@ import lombok.Setter;
  *
  */
 @Component
-public class TinkerforgeWeather {
+public class TinkerforgeWeather implements ObserverableWeather{
 
     @Getter
     @Setter
@@ -21,10 +23,11 @@ public class TinkerforgeWeather {
     @Setter
     long illumination = -1;
     @Getter
-    double airPressureQFE = -1;
-    @Getter
     @Setter
     double humdidity = -1;
+    @Getter
+    double airPressureQFE = -1;
+
 
     private final AirPressurePointRepository apr;
     
@@ -36,5 +39,6 @@ public class TinkerforgeWeather {
         apr.add(new AirpressurePoint(airPressureQFE));
         this.airPressureQFE = airPressureQFE;
     }
+
 
 }

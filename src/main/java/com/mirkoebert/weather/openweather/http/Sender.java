@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mirkoebert.weather.openweather.OpenWeatherWeather;
-import com.mirkoebert.weather.tinkerforge.TinkerforgeWeather;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -54,7 +53,7 @@ public class Sender {
     private boolean enableTinkerforge;
 
     @Autowired
-    private TinkerforgeWeather weatherModel;
+    private ObserverableWeather weatherModel;
     @Getter
     private int sendCount = 0;
     @Getter
@@ -119,11 +118,10 @@ public class Sender {
     public boolean sendCurrentWeatherToOpenWeather() {
         if (enable && enableSend && enableTinkerforge) {
             log.info("Send data to OpenWeather.");
-            Measurement me = new Measurement(station_id);
-            me.setPressure((int)Math.round(weatherModel.getAirPressureQFE()));
+            Measurement measurment = new Measurement(station_id, (int)Math.round(weatherModel.getAirPressureQFE()));
 
             try {
-                sendPOST("[" + createJasonFromObject(me) + "]");
+                sendPOST("[" + createJasonFromObject(measurment) + "]");
                 sendCount++;
                 return true;
             } catch (Exception e) {

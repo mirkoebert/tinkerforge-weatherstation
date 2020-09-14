@@ -2,7 +2,7 @@ package com.mirkoebert.weather.tinkerforge;
 
 import lombok.Getter;
 
-public final class AirpressurePoint {
+final class AirpressurePoint {
     
     final long date;
     @Getter

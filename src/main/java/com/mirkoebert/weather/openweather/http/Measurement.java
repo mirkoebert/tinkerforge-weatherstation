@@ -2,7 +2,6 @@ package com.mirkoebert.weather.openweather.http;
 
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
@@ -11,10 +10,10 @@ final class Measurement {
 
     final String station_id;
     final long dt = System.currentTimeMillis() / 1000;
-    @Setter
     private int pressure = 0;
     
-    public Measurement(String station_id) {
+    public Measurement(String station_id, final int pressure) {
         this.station_id = station_id;
+        this.pressure = pressure;
     }
 }

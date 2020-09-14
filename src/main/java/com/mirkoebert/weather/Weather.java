@@ -17,7 +17,7 @@ public class Weather {
     private float tempIn = 3;
     private float tempOut = 33;
     private float feelsTemp = 34;
-    private float airpressure =1023;
+    private float airpressure = 0;
     private float  humidityIn =34;
     private float  humidityOut = 55;
     private String description = "";

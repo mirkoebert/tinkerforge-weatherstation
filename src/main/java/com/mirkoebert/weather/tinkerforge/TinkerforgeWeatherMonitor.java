@@ -1,6 +1,5 @@
 package com.mirkoebert.weather.tinkerforge;
 
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;

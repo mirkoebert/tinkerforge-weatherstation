@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import lombok.Getter;
 
 @Repository
-public class AirPressurePointRepository {
+class AirPressurePointRepository {
 
     @Getter
     private List<AirpressurePoint> aplist = new ArrayList<AirpressurePoint>();

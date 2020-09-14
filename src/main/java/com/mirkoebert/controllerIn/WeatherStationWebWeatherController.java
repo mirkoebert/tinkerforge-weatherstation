@@ -20,13 +20,13 @@ import lombok.extern.slf4j.Slf4j;
 public class WeatherStationWebWeatherController {
  
     @Autowired
-    private WeatherService ws;
+    private WeatherService weatherService;
     private ObjectMapper mapper = new ObjectMapper();
     
     @GetMapping("/")
     public ModelAndView home(Map<String, Object> model) throws JsonProcessingException {
         log.info("HTTP Request");
-        model = mapper.convertValue(ws.getWeather(), Map.class);
+        model = mapper.convertValue(weatherService.getWeather(), Map.class);
         log.info("HTTP Request done: " + model.toString());
         return new ModelAndView("index", model);
     }

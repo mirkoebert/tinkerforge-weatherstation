@@ -2,7 +2,6 @@ package com.mirkoebert.weather;
 
 import com.mirkoebert.weather.openweather.OpenWeatherService;
 import com.mirkoebert.weather.openweather.OpenWeatherWeather;
-import com.mirkoebert.weather.tinkerforge.TinkerforgeWeather;
 import com.mirkoebert.weather.tinkerforge.TinkerforgeWeatherMonitor;
 import com.mirkoebert.weather.tinkerforge.TinkerforgeWeatherService;
 
@@ -32,14 +31,14 @@ public class WeatherService {
             w.setHumidityOut(oww.getHumidity());
         }
 
-        TinkerforgeWeather w2 = tfs.getWeather2();
+        Weather w2 = tfs.getWeather();
         if (w2 != null) {
-            final double pressure = w2.getAirPressureQFE();
+            final float pressure = w2.getAirpressure();
             if (pressure > 0) {
                 w.setAirpressure((float)pressure );
             }
-            w.setHumidityIn((float) (w2.getHumdidity()));
-            w.setTempIn((float) w2.getTempIn());
+            w.setHumidityIn(( w2.getHumidityIn()));
+            w.setTempIn(w2.getTempIn());
         }
 
         w.setForecast(tfwm.getForeCast());

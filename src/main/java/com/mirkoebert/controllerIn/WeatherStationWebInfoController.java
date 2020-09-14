@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class WeatherStationWebInfoController {
 
     @Autowired
-    private TinkerforgeWeatherStation w;
+    private TinkerforgeWeatherStation tinkerforgeWeatherStation;
 
     @Autowired 
     private Sender sender;
@@ -51,7 +51,7 @@ public class WeatherStationWebInfoController {
     @GetMapping("/info")
     public String info(Map<String, Object> model) {
         model.put("date", DateX.getInstance().getDateString());
-        model.put("startDate",  DateX.DATE_TIME_FORMATER.format(w.getStartDate()));
+        model.put("startDate",  DateX.DATE_TIME_FORMATER.format(tinkerforgeWeatherStation.getStartDate()));
         model.put("applicationName", applicationName);
         model.put("buildVersion", buildVersion);
         model.put("online", DateX.getInstance().isOnline());

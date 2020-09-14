@@ -9,8 +9,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.mirkoebert.weather.openweather.OpenWeatherWeather;
-import com.mirkoebert.weather.openweather.http.Measurement;
-import com.mirkoebert.weather.openweather.http.Sender;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,8 +25,7 @@ class SenderTest {
     @Test
     void test() throws JsonProcessingException, JSONException {
         long now = System.currentTimeMillis() / 1000;
-        Measurement m = new Measurement("testStationId");
-        m.setPressure(23);
+        Measurement m = new Measurement("testStationId", 23);
         Sender s = new Sender();
         String j = s.createJasonFromObject(m);
         System.out.println(j);
