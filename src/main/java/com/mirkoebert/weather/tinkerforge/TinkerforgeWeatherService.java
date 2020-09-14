@@ -5,19 +5,16 @@ import com.mirkoebert.weather.WeatherProvider;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class TinkerforgeWeatherService implements WeatherProvider{
     
-    @Autowired
-    private TinkerforgeWeather weatherModel;
+    private final TinkerforgeWeather weatherModel;
     
-
-    public TinkerforgeWeather getWeather2() {
-        return weatherModel;
-    }
     
     public Weather getWeather() {
         Weather weather = new Weather();
