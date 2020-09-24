@@ -87,7 +87,7 @@ public class WeatherViewLcd24x4 implements Runnable {
     }
 
     private boolean isNight() {
-        int h = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        final int h = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         return (h <= 5) || (h >= 22);
     }
 

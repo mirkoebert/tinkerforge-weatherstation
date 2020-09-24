@@ -15,30 +15,30 @@ public class TinkerforgeWeatherMonitor {
 
     
     static final String NO_FORECAST = "Keine Vorhersage möglich";
-    private final TinkerforgeWeather m;
+    private final TinkerforgeWeather tinkerforgeWeather;
     private final AirPressurePointRepository repo;
 
     @Getter
     private boolean alarm;
 
 
-    public TinkerforgeWeatherMonitor(AirPressurePointRepository r, TinkerforgeWeather w) {
-        m = w;
+    public TinkerforgeWeatherMonitor(AirPressurePointRepository r, TinkerforgeWeather tinkerforgeWeather) {
+        this.tinkerforgeWeather = tinkerforgeWeather;
         repo = r;
     }
 
     private boolean isHumidityAlarm() {
-        final double h = m.getHumdidity();
+        final double h = tinkerforgeWeather.getHumdidity();
         return (h > 0) && (h > 60 || h < 40);
     }
 
     private boolean isFrostAlarm() {
-        final double t = m.getTempIn();
+        final double t = tinkerforgeWeather.getTempIn();
         return (t < 5) && (t > -273);
     }
 
     private boolean isFireAlarm() {
-        return (m.getTempIn() > 50);
+        return (tinkerforgeWeather.getTempIn() > 50);
     }
 
     /**
@@ -104,7 +104,7 @@ public class TinkerforgeWeatherMonitor {
      */
     public String getForeCast() {
         String r = "Wetter unverändert";
-        final double ap = m.airPressureQFE;
+        final double ap = tinkerforgeWeather.airPressureQFE;
         if (ap > 1020) {
             r = "Gutes Wetter";
         } else if (ap == -1) {
