@@ -26,7 +26,8 @@ public class WeatherViewLcd24x4 implements Runnable {
     private final TinkerforgeWeather weatherModell;
     private final TinkerforgeWeatherMonitor weatherMonitor;
 
-    public WeatherViewLcd24x4(BrickletLCD20x4 lcd, TinkerforgeWeather weatherModell, TinkerforgeWeatherMonitor weatherMonitor) {
+    public WeatherViewLcd24x4(BrickletLCD20x4 lcd, TinkerforgeWeather weatherModell,
+            TinkerforgeWeatherMonitor weatherMonitor) {
         this.lcd = lcd;
         this.weatherModell = weatherModell;
         this.weatherMonitor = weatherMonitor;
@@ -37,9 +38,13 @@ public class WeatherViewLcd24x4 implements Runnable {
     public void paint() {
         try {
             if (nightmode && isNight()) {
-                if (lcd.isBacklightOn()){
-                    lcd.backlightOff();
-                    lcd.clearDisplay();
+                try {
+                    if (lcd.isBacklightOn()) {
+                        lcd.backlightOff();
+                        lcd.clearDisplay();
+                    }
+                } catch (com.tinkerforge.DeviceReplacedException ex) {
+                    // ignore
                 }
             } else {
                 String message;
@@ -81,8 +86,8 @@ public class WeatherViewLcd24x4 implements Runnable {
             Thread.sleep(500);
             lcd.backlightOn();
         } catch (TinkerforgeException | InterruptedException e) {
-            log.warn(e.getLocalizedMessage());        
-        } 
+            log.warn(e.getLocalizedMessage());
+        }
 
     }
 
@@ -91,17 +96,17 @@ public class WeatherViewLcd24x4 implements Runnable {
         return (h <= 5) || (h >= 22);
     }
 
-
     @Override
     public void run() {
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {
-            log.error("run 1", e);        }
+            log.error("run 1", e);
+        }
         while (true) {
             try {
                 paint();
-                if(weatherMonitor.isAlarm() && alarmflashingmode) {
+                if (weatherMonitor.isAlarm() && alarmflashingmode) {
                     flashBacklight();
                     Thread.sleep(500);
                 } else {
