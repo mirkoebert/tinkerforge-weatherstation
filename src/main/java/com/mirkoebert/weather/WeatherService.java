@@ -19,7 +19,7 @@ public class WeatherService {
     private final TinkerforgeWeatherService tfs;
     private final TinkerforgeWeatherMonitor tfwm;
 
-    public Weather getWeather(){
+    public Weather getWeather() {
         Weather w = new Weather();
 
         OpenWeatherWeather oww = ows.getWeather();

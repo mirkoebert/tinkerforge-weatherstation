@@ -18,15 +18,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Lazy
 public class WeatherStationWebWeatherController {
- 
+
     @Autowired
     private WeatherService weatherService;
     private ObjectMapper mapper = new ObjectMapper();
-    
+
     @GetMapping("/")
-    public ModelAndView home(Map<String, Object> model) throws JsonProcessingException {
+    public ModelAndView home() throws JsonProcessingException {
         log.info("HTTP Request");
-        model = mapper.convertValue(weatherService.getWeather(), Map.class);
+        final Map model = mapper.convertValue(weatherService.getWeather(), Map.class);
+
         log.info("HTTP Request done: " + model.toString());
         return new ModelAndView("index", model);
     }
@@ -36,7 +37,5 @@ public class WeatherStationWebWeatherController {
         model.put("date", DateX.getInstance().getDateString());
         return "webcams";
     }
-
- 
 
 }
