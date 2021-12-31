@@ -7,18 +7,19 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.val;
 
 @Service
-@AllArgsConstructor
-public class TinkerforgeWeatherService implements WeatherProvider{
-    
+@RequiredArgsConstructor
+public class TinkerforgeWeatherService implements WeatherProvider {
+
     private final TinkerforgeWeather weatherModel;
-    
-    
+
+    @Override
     public Weather getWeather() {
-        Weather weather = new Weather();
-        weather.setAirpressure(Optional.of((float)weatherModel.getAirPressureQFE()));
+        val weather = new Weather();
+        weather.setAirpressure(Optional.of((float) weatherModel.getAirPressureQFE()));
         weather.setTempIn((float) weatherModel.getTempIn());
         weather.setHumidityIn((float) weatherModel.getHumdidity());
         return weather;

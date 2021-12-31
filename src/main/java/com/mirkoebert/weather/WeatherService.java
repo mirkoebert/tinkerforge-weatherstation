@@ -9,10 +9,10 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WeatherService {
 
     private final OpenWeatherService ows;

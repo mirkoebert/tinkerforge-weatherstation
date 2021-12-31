@@ -3,6 +3,7 @@ package com.mirkoebert.weather.tinkerforge;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Monitor the weather data (weather model) and predict weather.
@@ -11,21 +12,15 @@ import lombok.Getter;
  *
  */
 @Component
+@RequiredArgsConstructor
 public class TinkerforgeWeatherMonitor {
 
-    
     static final String NO_FORECAST = "Keine Vorhersage möglich";
     private final TinkerforgeWeather tinkerforgeWeather;
     private final AirPressurePointRepository repo;
 
     @Getter
     private boolean alarm;
-
-
-    public TinkerforgeWeatherMonitor(AirPressurePointRepository r, TinkerforgeWeather tinkerforgeWeather) {
-        this.tinkerforgeWeather = tinkerforgeWeather;
-        repo = r;
-    }
 
     private boolean isHumidityAlarm() {
         final double h = tinkerforgeWeather.getHumdidity();
@@ -61,9 +56,9 @@ public class TinkerforgeWeatherMonitor {
         return r;
     }
 
-
     /**
-     * Weather forecast. 
+     * Weather forecast.
+     * 
      * @return Short forecast string to display on weather station's LSD.
      */
     public String getMessage() {
@@ -84,8 +79,6 @@ public class TinkerforgeWeatherMonitor {
         return r;
     }
 
-
-
     public String getAirpPressureTrend() {
         AirPressureTrend trend = getAirPressureTrend();
         if (trend == AirPressureTrend.falling) {
@@ -98,6 +91,7 @@ public class TinkerforgeWeatherMonitor {
             return "steigend";
         }
     }
+
     /**
      * 
      * @return Weather forecast for the next 1-2 hours.
@@ -132,11 +126,12 @@ public class TinkerforgeWeatherMonitor {
                 } else if (delta > 3) {
                     r = "Sturm 10- Bft";
                 }
-            }}
+            }
+        }
         return r;
     }
 
-    private boolean isAirpressureDecreasing(AirpressurePoint min, AirpressurePoint max) {
+    private boolean isAirpressureDecreasing(final AirpressurePoint min, final AirpressurePoint max) {
         return max.date < min.date;
     }
 

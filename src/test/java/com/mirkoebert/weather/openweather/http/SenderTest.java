@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mirkoebert.weather.openweather.OpenWeatherWeather;
 
 import java.io.BufferedReader;
@@ -26,22 +27,21 @@ class SenderTest {
     void test() throws JsonProcessingException, JSONException {
         long now = System.currentTimeMillis() / 1000;
         Measurement m = new Measurement("testStationId", 23);
-        Sender s = new Sender();
+        Sender s = new Sender(new ObjectMapper());
         String j = s.createJasonFromObject(m);
         System.out.println(j);
         assertNotNull(j);
-        JSONAssert.assertEquals("{\"station_id\":\"testStationId\",\"dt\":"+now+",\"pressure\":23}",j, false);
-        
+        JSONAssert.assertEquals("{\"station_id\":\"testStationId\",\"dt\":" + now + ",\"pressure\":23}", j, false);
+
         assertEquals(s.getSendCount(), 0L);
-        
-        
+
         assertFalse(s.sendCurrentWeatherToOpenWeather());
         assertNull(s.getWeatherStationFromOpenWeather());
     }
-    
+
     @Test
     void testMapper() throws JsonParseException, JsonMappingException, IOException {
-        Sender s = new Sender();
+        Sender s = new Sender(new ObjectMapper());
         OpenWeatherWeather oww = s.convertJsonStringToObject(getStringFromFilename("openweatherweather.json"));
         assertEquals("Rukieten", oww.getName());
         assertEquals(7.27f, oww.getTemp(), 0.01f);
@@ -50,11 +50,10 @@ class SenderTest {
         assertEquals(1008f, oww.getPressure(), 0.01f);
         assertEquals(65f, oww.getHumidity(), 0.01f);
         assertEquals("Mäßig bewölkt", oww.getDescription());
-        
+
         assertNull(oww = s.convertJsonStringToObject(null));
     }
 
-    
     private String getStringFromFilename(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(getReaderFromFilename(fileName));
         String sCurrentLine;
@@ -71,6 +70,5 @@ class SenderTest {
         Reader reader = new InputStreamReader(in, "UTF-8");
         return reader;
     }
-    
 
 }

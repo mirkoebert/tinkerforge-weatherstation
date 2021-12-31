@@ -14,14 +14,14 @@ class AirPressurePointRepository {
     @Getter
     private List<AirpressurePoint> aplist = new ArrayList<AirpressurePoint>();
     private static final long H1_IN_MSEC = 60 * 60 * 1000;
-    private Comparator<AirpressurePoint> comparator = Comparator.comparing( AirpressurePoint::getAirpressureQFE );
-    
+    private Comparator<AirpressurePoint> comparator = Comparator.comparing(AirpressurePoint::getAirpressureQFE);
+
     private void removeOldData() {
         final long now = System.currentTimeMillis();
         aplist.removeIf((airpressurePoint) -> (now - airpressurePoint.date) > H1_IN_MSEC);
     }
-    
-    void add(AirpressurePoint cap) {
+
+    void add(final AirpressurePoint cap) {
         removeOldData();
         aplist.add(cap);
     }

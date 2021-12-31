@@ -13,14 +13,16 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @Lazy
 public class WeatherStationWebInfoController {
 
-    @Autowired
-    private TinkerforgeWeatherStation tinkerforgeWeatherStation;
+    private final TinkerforgeWeatherStation tinkerforgeWeatherStation;
 
-    @Autowired 
+    @Autowired
     private Sender sender;
 
     @Value("${info.app.name}")
@@ -44,14 +46,12 @@ public class WeatherStationWebInfoController {
     @Value("${openweather.station_id}")
     private String openweather_stationid;
 
-    @Autowired
-    private OpenWeatherService owss;
-  
+    private final OpenWeatherService owss;
 
     @GetMapping("/info")
     public String info(Map<String, Object> model) {
         model.put("date", DateX.getInstance().getDateString());
-        model.put("startDate",  DateX.DATE_TIME_FORMATER.format(tinkerforgeWeatherStation.getStartDate()));
+        model.put("startDate", DateX.DATE_TIME_FORMATER.format(tinkerforgeWeatherStation.getStartDate()));
         model.put("applicationName", applicationName);
         model.put("buildVersion", buildVersion);
         model.put("online", DateX.getInstance().isOnline());
@@ -59,8 +59,8 @@ public class WeatherStationWebInfoController {
         model.put("nightmode", nightmode);
         model.put("alarmflashingmode", alarmflashingmode);
 
-        model.put("openweather_enable" , openweather_enable);
-        if(openweather_enable) {
+        model.put("openweather_enable", openweather_enable);
+        if (openweather_enable) {
             model.put("openweather_stationid", openweather_stationid);
 
             OpenWeatherWeatherStation ows = owss.getStation();
@@ -75,6 +75,5 @@ public class WeatherStationWebInfoController {
         }
         return "info";
     }
-
 
 }
