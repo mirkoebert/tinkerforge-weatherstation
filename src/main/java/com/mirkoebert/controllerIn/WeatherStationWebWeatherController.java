@@ -26,7 +26,7 @@ public class WeatherStationWebWeatherController {
     @GetMapping("/")
     public ModelAndView home() throws JsonProcessingException {
         log.info("HTTP Request");
-        final Map model = mapper.convertValue(weatherService.getWeather(), Map.class);
+        final Map model = mapper.convertValue(weatherService.getAggregatedWeather(), Map.class);
 
         log.info("HTTP Request done: " + model.toString());
         return new ModelAndView("index", model);

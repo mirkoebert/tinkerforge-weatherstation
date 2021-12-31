@@ -7,7 +7,6 @@ import com.mirkoebert.weather.tinkerforge.TinkerforgeWeatherStation;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -21,9 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class WeatherStationWebInfoController {
 
     private final TinkerforgeWeatherStation tinkerforgeWeatherStation;
-
-    @Autowired
-    private Sender sender;
+    private final OpenWeatherService owss;
+    private final Sender sender;
 
     @Value("${info.app.name}")
     private String applicationName;
@@ -46,8 +44,6 @@ public class WeatherStationWebInfoController {
     @Value("${openweather.station_id}")
     private String openweather_stationid;
 
-    private final OpenWeatherService owss;
-
     @GetMapping("/info")
     public String info(Map<String, Object> model) {
         model.put("date", DateX.getInstance().getDateString());
@@ -63,7 +59,7 @@ public class WeatherStationWebInfoController {
         if (openweather_enable) {
             model.put("openweather_stationid", openweather_stationid);
 
-            OpenWeatherWeatherStation ows = owss.getStation();
+            final OpenWeatherWeatherStation ows = owss.getStation();
             if (ows != null) {
                 model.put("openweather_name", ows.getName());
                 model.put("openweather_latitude", ows.getLatitude());

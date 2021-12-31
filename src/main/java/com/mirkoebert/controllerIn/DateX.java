@@ -19,10 +19,8 @@ public final class DateX {
 
     private DateX() {
         isOnline = isOnline();
-        
     }
 
-    
     public String getDateString() {
         String r = "";
         ZonedDateTime zdt = ZonedDateTime.now(TIMEZONE_ID);
@@ -38,9 +36,10 @@ public final class DateX {
     }
 
     /**
-     * Check if weather station is online. Try to reach an internet server.
-     * If station is online, the date and time are correct.
-     * @return true if weather station can reach the internet 
+     * Check if weather station is online. Try to reach an internet server. If
+     * station is online, the date and time are correct.
+     * 
+     * @return true if weather station can reach the internet
      */
     public boolean isOnline() {
         boolean r = false;

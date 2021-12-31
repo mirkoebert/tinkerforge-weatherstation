@@ -1,6 +1,5 @@
 package com.mirkoebert.weather.openweather;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -25,12 +24,11 @@ public class OpenWeatherWeather {
     private float minTemp;
     private float maxTemp;
     private float pressure;
-    private float  humidity;
+    private float humidity;
     private String description;
-    
-    @SuppressWarnings("unchecked")
+
     @JsonProperty("main")
-    private void unpackNestedMain(Map<Object,Object> brand) {
+    private void unpackNestedMain(Map<Object, Object> brand) {
         temp = getFloatFromNestedObject(brand.get("temp"));
         minTemp = getFloatFromNestedObject(brand.get("temp_min"));
         maxTemp = getFloatFromNestedObject(brand.get("temp_max"));
@@ -38,22 +36,22 @@ public class OpenWeatherWeather {
         humidity = getFloatFromNestedObject(brand.get("humidity"));
         feelsTemp = getFloatFromNestedObject(brand.get("feels_like"));
     }
-    
+
     @SuppressWarnings("unchecked")
     @JsonProperty("weather")
     private void unpackNestedWeather(ArrayList<?> brand) {
         log.debug(brand.getClass().getName().toString());
-        Map<Object,Object> w = (Map<Object, Object>) brand.get(0);
+        Map<Object, Object> w = (Map<Object, Object>) brand.get(0);
         description = w.get("description").toString();
     }
-    
+
     private float getFloatFromNestedObject(final Object traw) {
         log.debug(traw.toString());
         if (traw instanceof Number) {
             return Float.valueOf(traw.toString());
-        } 
+        }
         log.warn("Can't convert Json " + traw.toString() + " to float.");
         return -1;
     }
-    
+
 }
