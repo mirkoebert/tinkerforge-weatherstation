@@ -26,8 +26,10 @@ public class WeatherViewLcd24x4 implements Runnable {
     private final TinkerforgeWeather weatherModell;
     private final TinkerforgeWeatherMonitor weatherMonitor;
 
-    public WeatherViewLcd24x4(BrickletLCD20x4 lcd, TinkerforgeWeather weatherModell,
-            TinkerforgeWeatherMonitor weatherMonitor) {
+    public WeatherViewLcd24x4(
+            final BrickletLCD20x4 lcd,
+            final TinkerforgeWeather weatherModell,
+            final TinkerforgeWeatherMonitor weatherMonitor) {
         this.lcd = lcd;
         this.weatherModell = weatherModell;
         this.weatherMonitor = weatherMonitor;
@@ -119,7 +121,7 @@ public class WeatherViewLcd24x4 implements Runnable {
         }
     }
 
-    static String utf16ToKS0066U(String utf16) {
+    static String utf16ToKS0066U(final String utf16) {
         String ks0066u = "";
         char c;
 

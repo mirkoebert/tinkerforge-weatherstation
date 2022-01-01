@@ -20,6 +20,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -59,39 +60,38 @@ public final class TinkerforgeWeatherStation implements EnumerateListener {
     @Value("${weatherstation.position.altitude}")
     private String altitude;
 
-    private TinkerforgeWeather weatherModel;
-    private TinkerforgeWeatherMonitor weatherMonitor;
+    private final TinkerforgeWeather weatherModel;
+    private final TinkerforgeWeatherMonitor weatherMonitor;
 
     @Value("${tinkerforge.enable}")
     private boolean tinkerforgeEnable;
 
-    public TinkerforgeWeatherStation(TinkerforgeWeather w, TinkerforgeWeatherMonitor f)  {
+    public TinkerforgeWeatherStation(final TinkerforgeWeather w, final TinkerforgeWeatherMonitor f) {
         weatherModel = w;
         weatherMonitor = f;
-        //if (tinkerforgeEnable) {
-            log.info("Initiate Tinkerforge tinkerforgeEnable" + tinkerforgeEnable);
-            ipcon = new IPConnection();
-            try {
-                ipcon.connect(HOST, PORT);
-                ipcon.addEnumerateListener(this);
-                // configure all bricks and bricklets
-                ipcon.enumerate();
-            } catch (NetworkException | AlreadyConnectedException | NotConnectedException e) {
-                log.error(e.getLocalizedMessage(),e);
+        // if (tinkerforgeEnable) {
+        log.info("Initiate Tinkerforge tinkerforgeEnable" + tinkerforgeEnable);
+        ipcon = new IPConnection();
+        try {
+            ipcon.connect(HOST, PORT);
+            ipcon.addEnumerateListener(this);
+            // configure all bricks and bricklets
+            ipcon.enumerate();
+        } catch (NetworkException | AlreadyConnectedException | NotConnectedException e) {
+            log.error(e.getLocalizedMessage(), e);
+        }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //
             }
-
-
-            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    //
-                }
-            }));
-        //} else {
-        //    log.info("Dry run mode - no Tinkerforge brick initialisation tinkerforgeEnable" + tinkerforgeEnable);
-        //}
+        }));
+        // } else {
+        // log.info("Dry run mode - no Tinkerforge brick initialisation
+        // tinkerforgeEnable" + tinkerforgeEnable);
+        // }
     }
-
 
     @Override
     protected void finalize() throws Throwable {
@@ -100,10 +100,15 @@ public final class TinkerforgeWeatherStation implements EnumerateListener {
         ipcon.disconnect();
     }
 
-
     @Override
-    public void enumerate(String uid, String connectedUid, char position, short[] hardwareVersion,
-            short[] firmwareVersion, int deviceIdentifier, short enumerationType) {
+    public void enumerate(
+            final String uid,
+            final String connectedUid,
+            final char position,
+            final short[] hardwareVersion,
+            final short[] firmwareVersion,
+            final int deviceIdentifier,
+            final short enumerationType) {
         switch (deviceIdentifier) {
             case 13:
                 final BrickMaster master = new BrickMaster(uid, ipcon);
@@ -114,7 +119,7 @@ public final class TinkerforgeWeatherStation implements EnumerateListener {
                 }
                 break;
             case 17:
-                //String UIDred = uid;
+                // String UIDred = uid;
                 break;
             case 21:
                 final BrickletAmbientLight ambientLightBrick = new BrickletAmbientLight(uid, ipcon);
@@ -133,7 +138,7 @@ public final class TinkerforgeWeatherStation implements EnumerateListener {
                     lcd.backlightOn();
                     lcd.writeLine((short) 1, (short) 1, applicationName);
                     lcd.writeLine((short) 2, (short) 1, buildVersion);
-                    WeatherViewLcd24x4 lcdView = new WeatherViewLcd24x4(lcd, weatherModel, weatherMonitor);
+                    val lcdView = new WeatherViewLcd24x4(lcd, weatherModel, weatherMonitor);
                     lcdView.setNightmode(nightmode);
                     lcdView.setAlarmflashingmode(alarmflashingmode);
                 } catch (TinkerforgeException ex) {
@@ -161,11 +166,13 @@ public final class TinkerforgeWeatherStation implements EnumerateListener {
                 humBrick.addHumidityListener(humListener);
                 break;
             default:
-                String hardwareVersionString = hardwareVersion[0] +"."+ hardwareVersion[1];
-                String firmwareVersionString = firmwareVersion[0] +"."+ firmwareVersion[1];
-                log.warn("Unsupported Brick or Bricklet. Uid: " + uid + "  " + connectedUid + " " + position+ " " + hardwareVersionString + " " + firmwareVersionString + " " + deviceIdentifier+ " " + enumerationType);
-                //              2GewbC       0                   0           [S@150d707          [S@197219d                      17                    1
+                String hardwareVersionString = hardwareVersion[0] + "." + hardwareVersion[1];
+                String firmwareVersionString = firmwareVersion[0] + "." + firmwareVersion[1];
+                log.warn("Unsupported Brick or Bricklet. Uid: " + uid + "  " + connectedUid + " " + position + " "
+                        + hardwareVersionString + " " + firmwareVersionString + " " + deviceIdentifier + " "
+                        + enumerationType);
+                // 2GewbC 0 0 [S@150d707 [S@197219d 17 1
                 break;
         }
-    }       
+    }
 }
