@@ -18,16 +18,16 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 final class AirPressureListenerX implements AirPressureListener {
 
-    private final TinkerforgeWeather weatherModel;
+    private final TinkerforgeWeather weather;
     private final BrickletBarometer barometer;
 
     @Override
     public void airPressure(final int airPressure) {
-        final double QFE = airPressure / 1000f;
-        weatherModel.setAirPressureQFE(QFE);
+        final double qfe = airPressure / 1000f;
+        weather.setAirPressureQFE(qfe);
         try {
             final double Tfe = barometer.getChipTemperature() / 100.0;
-            weatherModel.setTempIn(Tfe);
+            weather.setTempIn(Tfe);
         } catch (TinkerforgeException e) {
             log.error("Can't get chip temp.", e);
         }

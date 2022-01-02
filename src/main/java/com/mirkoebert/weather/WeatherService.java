@@ -30,7 +30,7 @@ public class WeatherService {
         return w;
     }
 
-    private void addWeatherFromTinkerforgeWeatherStation(final com.mirkoebert.weather.Weather w) {
+    private void addWeatherFromTinkerforgeWeatherStation(final Weather w) {
         final Weather w2 = tfs.getWeather();
         if (w2 != null) {
             w.setAirpressure(w2.getAirpressure());
@@ -39,7 +39,7 @@ public class WeatherService {
         }
     }
 
-    private void addWeatherFromOpenWeather(final com.mirkoebert.weather.Weather w) {
+    private void addWeatherFromOpenWeather(final Weather w) {
         final OpenWeatherWeather oww = ows.getWeather();
         if (oww != null) {
             w.setName(oww.getName());

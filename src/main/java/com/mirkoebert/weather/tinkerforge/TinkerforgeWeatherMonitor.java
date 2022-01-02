@@ -98,7 +98,7 @@ public class TinkerforgeWeatherMonitor {
      */
     public String getForeCast() {
         String r = "Wetter unverändert";
-        final double ap = tinkerforgeWeather.airPressureQFE;
+        final double ap = tinkerforgeWeather.getAirPressureQFE();
         if (ap > 1020) {
             r = "Gutes Wetter";
         } else if (ap == -1) {

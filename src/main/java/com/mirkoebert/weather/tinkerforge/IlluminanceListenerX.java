@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Illumination listener that also switches the back light of the LCD display.
- * 
+ *
  * @author mebert
  *
  */

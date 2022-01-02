@@ -112,12 +112,12 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-site-plugin</artifactId>
-              <version>3.7.1</version>
+              <version>3.10.0</version>
             </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-project-info-reports-plugin</artifactId>
-              <version>3.0.0</version>
+              <version>3.1.2</version>
             </plugin>
         </plugins>
     </pluginManagement>  
@@ -181,7 +181,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>3.1.1</version>
+				<version>3.1.2</version>
 			</plugin>
 
 			<plugin>
@@ -204,12 +204,16 @@
 				</executions>
 			</plugin>
 
-
 		</plugins>
 	</build>
 
     <reporting>
         <plugins>
+        	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+			</plugin>            
+
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
@@ -222,6 +226,38 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+        
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.15.0</version>
+            </plugin>
+		
+		    <plugin>
+		      <groupId>org.apache.maven.plugins</groupId>
+		      <artifactId>maven-checkstyle-plugin</artifactId>
+		      <version>3.1.2</version>
+		      <reportSets>
+		        <reportSet>
+		          <reports>
+		            <report>checkstyle</report>
+		          </reports>
+		        </reportSet>
+		      </reportSets>
+		    </plugin>
+                
+            <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <!-- select non-aggregate reports -->
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
         </plugins>
     </reporting>
 
