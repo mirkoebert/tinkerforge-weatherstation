@@ -28,6 +28,7 @@ import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import lombok.Cleanup;
 import lombok.Getter;
@@ -67,8 +68,8 @@ public class OpenWeatherSecondaryController {
 
     @Retryable(value = { UnknownHostException.class }, maxAttempts = 2, backoff = @Backoff(delay = 5000))
     private void sendPOST(final String json) throws Exception {
-        if (json == null) {
-            log.warn("Json String is empty.");
+        if (StringUtils.hasLength(json)) {
+            log.warn("Json String should contain data.");
         } else {
             HttpPost httpPost = new HttpPost("http://api.openweathermap.org/data/3.0/measurements?APPID=" + APPID);
             httpPost.setEntity(new StringEntity(json));
