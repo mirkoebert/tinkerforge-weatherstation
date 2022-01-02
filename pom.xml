@@ -24,6 +24,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<dependency.locations.enabled>false</dependency.locations.enabled>
+		<log4j2.version>2.17.1</log4j2.version>
 	</properties>
 
 	<parent>
@@ -207,7 +208,22 @@
 		</plugins>
 	</build>
 
-
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>6.5.1</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 
 	<scm>
 		<url>https://github.com/mirkoebert/tinkerforge-weatherstation</url>
