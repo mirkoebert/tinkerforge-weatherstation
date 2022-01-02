@@ -39,26 +39,20 @@ public final class TinkerforgeWeatherStation implements EnumerateListener {
     private static final int PORT = 4223;
     private IPConnection ipcon = null;
 
-    @Getter
     @Value("${info.app.name}")
     private String applicationName;
 
-    @Getter
     @Value("${info.app.version}")
     private String buildVersion;
 
     @Getter
     private final LocalDateTime startDate = LocalDateTime.now();
 
-    @Value("${weatherstation.mode.nightmode}")
+    @Value("${weatherstation.mode.night-mode}")
     private boolean nightmode;
 
-    @Value("${weatherstation.mode.alarmfashing}")
+    @Value("${weatherstation.mode.alarm-flashing}")
     private boolean alarmflashingmode;
-
-    @Getter
-    @Value("${weatherstation.position.altitude}")
-    private String altitude;
 
     private final TinkerforgeWeather weatherModel;
     private final TinkerforgeWeatherMonitor weatherMonitor;

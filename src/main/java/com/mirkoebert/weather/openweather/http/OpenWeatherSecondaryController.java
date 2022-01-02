@@ -20,7 +20,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.retry.annotation.Backoff;
@@ -54,13 +53,12 @@ public class OpenWeatherSecondaryController {
     @Value("${tinkerforge.enable}")
     private boolean enableTinkerforge;
 
-    @Autowired
-    private ObserverableWeather weatherModel;
     @Getter
     private int sendCount = 0;
     @Getter
     private int sendErrorCount = 0;
     private final ObjectMapper mapper;
+    private final ObserverableWeather weatherModel;
 
     String createJasonFromObject(final Object o) throws JsonProcessingException {
         return mapper.writeValueAsString(o);

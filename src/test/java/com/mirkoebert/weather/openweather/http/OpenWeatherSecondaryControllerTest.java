@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mirkoebert.weather.openweather.OpenWeatherWeather;
+import com.mirkoebert.weather.tinkerforge.TinkerforgeWeather;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,28 +22,31 @@ import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
-class SenderTest {
+class OpenWeatherSecondaryControllerTest {
+
+    private final OpenWeatherSecondaryController sut = new OpenWeatherSecondaryController(
+            new ObjectMapper(),
+            new TinkerforgeWeather(null));
 
     @Test
     void test() throws JsonProcessingException, JSONException {
-        long now = System.currentTimeMillis() / 1000;
-        Measurement m = new Measurement("testStationId", 23);
-        OpenWeatherSecondaryController s = new OpenWeatherSecondaryController(new ObjectMapper());
-        String j = s.createJasonFromObject(m);
+        final long now = System.currentTimeMillis() / 1000;
+        final Measurement m = new Measurement("testStationId", 23);
+
+        final String j = sut.createJasonFromObject(m);
         System.out.println(j);
         assertNotNull(j);
         JSONAssert.assertEquals("{\"station_id\":\"testStationId\",\"dt\":" + now + ",\"pressure\":23}", j, false);
 
-        assertEquals(s.getSendCount(), 0L);
+        assertEquals(sut.getSendCount(), 0L);
 
-        assertFalse(s.sendCurrentWeatherToOpenWeather());
-        assertNull(s.getWeatherStationFromOpenWeather());
+        assertFalse(sut.sendCurrentWeatherToOpenWeather());
+        assertNull(sut.getWeatherStationFromOpenWeather());
     }
 
     @Test
     void testMapper() throws JsonParseException, JsonMappingException, IOException {
-        OpenWeatherSecondaryController s = new OpenWeatherSecondaryController(new ObjectMapper());
-        OpenWeatherWeather oww = s.convertJsonStringToObject(getStringFromFilename("openweatherweather.json"));
+        final OpenWeatherWeather oww = sut.convertJsonStringToObject(getStringFromFilename("openweatherweather.json"));
         assertEquals("Rukieten", oww.getName());
         assertEquals(7.27f, oww.getTemp(), 0.01f);
         assertEquals(6.11f, oww.getMinTemp(), 0.01f);
@@ -51,11 +55,11 @@ class SenderTest {
         assertEquals(65f, oww.getHumidity(), 0.01f);
         assertEquals("Mäßig bewölkt", oww.getDescription());
 
-        assertNull(oww = s.convertJsonStringToObject(null));
+        assertNull(sut.convertJsonStringToObject(null));
     }
 
     private String getStringFromFilename(String fileName) throws IOException {
-        BufferedReader br = new BufferedReader(getReaderFromFilename(fileName));
+        final BufferedReader br = new BufferedReader(getReaderFromFilename(fileName));
         String sCurrentLine;
         StringBuilder contentBuilder = new StringBuilder();
         while ((sCurrentLine = br.readLine()) != null) {
@@ -67,8 +71,7 @@ class SenderTest {
 
     private Reader getReaderFromFilename(String fileName) throws IOException {
         final InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
-        Reader reader = new InputStreamReader(in, "UTF-8");
-        return reader;
+        return new InputStreamReader(in, "UTF-8");
     }
 
 }

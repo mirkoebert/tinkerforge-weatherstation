@@ -26,11 +26,9 @@ info:
     version: "@project.version@"
 
 weatherstation:
-  position:
-    altitude: 25
   mode:
-    nightmode: true
-    alarmfashing: true
+    night-mode: true
+    alarm-flashing: true
 
 tinkerforge:
   enable: true
