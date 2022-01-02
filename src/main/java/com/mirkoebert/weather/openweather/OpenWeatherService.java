@@ -1,7 +1,7 @@
 package com.mirkoebert.weather.openweather;
 
 import com.mirkoebert.weather.openweather.http.OpenWeatherWeatherStation;
-import com.mirkoebert.weather.openweather.http.Sender;
+import com.mirkoebert.weather.openweather.http.OpenWeatherSecondaryController;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OpenWeatherService {
 
-    private final Sender owsender;
+    private final OpenWeatherSecondaryController owsender;
 
     private long lastWeatherUpdateAt = 0;
     private OpenWeatherWeatherStation ws = null;

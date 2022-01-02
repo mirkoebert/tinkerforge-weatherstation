@@ -27,7 +27,7 @@ class SenderTest {
     void test() throws JsonProcessingException, JSONException {
         long now = System.currentTimeMillis() / 1000;
         Measurement m = new Measurement("testStationId", 23);
-        Sender s = new Sender(new ObjectMapper());
+        OpenWeatherSecondaryController s = new OpenWeatherSecondaryController(new ObjectMapper());
         String j = s.createJasonFromObject(m);
         System.out.println(j);
         assertNotNull(j);
@@ -41,7 +41,7 @@ class SenderTest {
 
     @Test
     void testMapper() throws JsonParseException, JsonMappingException, IOException {
-        Sender s = new Sender(new ObjectMapper());
+        OpenWeatherSecondaryController s = new OpenWeatherSecondaryController(new ObjectMapper());
         OpenWeatherWeather oww = s.convertJsonStringToObject(getStringFromFilename("openweatherweather.json"));
         assertEquals("Rukieten", oww.getName());
         assertEquals(7.27f, oww.getTemp(), 0.01f);

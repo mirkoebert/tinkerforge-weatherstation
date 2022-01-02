@@ -2,7 +2,7 @@ package com.mirkoebert.controllerIn;
 
 import com.mirkoebert.weather.openweather.OpenWeatherService;
 import com.mirkoebert.weather.openweather.http.OpenWeatherWeatherStation;
-import com.mirkoebert.weather.openweather.http.Sender;
+import com.mirkoebert.weather.openweather.http.OpenWeatherSecondaryController;
 import com.mirkoebert.weather.tinkerforge.TinkerforgeWeatherStation;
 
 import java.util.Map;
@@ -21,7 +21,7 @@ public class WeatherStationWebInfoController {
 
     private final TinkerforgeWeatherStation tinkerforgeWeatherStation;
     private final OpenWeatherService owss;
-    private final Sender sender;
+    private final OpenWeatherSecondaryController sender;
 
     @Value("${info.app.name}")
     private String applicationName;

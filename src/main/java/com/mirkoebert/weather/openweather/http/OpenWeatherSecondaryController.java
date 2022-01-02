@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @Order(120)
 @RequiredArgsConstructor
 @Slf4j
-public class Sender {
+public class OpenWeatherSecondaryController {
 
     @Value("${info.app.name}")
     private String applicationName;
@@ -161,7 +161,7 @@ public class Sender {
         return null;
     }
 
-    OpenWeatherWeather convertJsonStringToObject(String retSrc)
+    OpenWeatherWeather convertJsonStringToObject(final String retSrc)
             throws IOException, JsonParseException, JsonMappingException {
         if (retSrc == null) {
             return null;
