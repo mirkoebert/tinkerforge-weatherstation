@@ -26,6 +26,8 @@ info:
     version: "@project.version@"
 
 weatherstation:
+  position:
+    altitude: 25
   mode:
     night-mode: true
     alarm-flashing: true

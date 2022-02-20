@@ -113,7 +113,8 @@ public class OpenWeatherSecondaryController {
     public boolean sendCurrentWeatherToOpenWeather() {
         if (enable && enableSend && enableTinkerforge) {
             log.info("Send data to OpenWeather.");
-            Measurement measurment = new Measurement(station_id, (int) Math.round(weatherModel.getAirPressureQFE()));
+            final Measurement measurment = new Measurement(station_id,
+                    (int) Math.round(weatherModel.getAirPressureQFE()));
 
             try {
                 sendPOST("[" + createJasonFromObject(measurment) + "]");
@@ -139,7 +140,7 @@ public class OpenWeatherSecondaryController {
                 InputStream fileInputStream = new ByteArrayInputStream(retSrc.getBytes(StandardCharsets.UTF_8));
                 return mapper.readValue(fileInputStream, OpenWeatherWeatherStation.class);
             } catch (Exception e) {
-                log.error("Can't get station data to OpenWeather server. " + e.getLocalizedMessage());
+                log.error("Can't get station data from OpenWeather server. " + e.getLocalizedMessage());
             }
         }
         return null;

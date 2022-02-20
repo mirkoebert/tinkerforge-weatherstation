@@ -1,8 +1,8 @@
 package com.mirkoebert.controllerIn;
 
 import com.mirkoebert.weather.openweather.OpenWeatherService;
-import com.mirkoebert.weather.openweather.http.OpenWeatherWeatherStation;
 import com.mirkoebert.weather.openweather.http.OpenWeatherSecondaryController;
+import com.mirkoebert.weather.openweather.http.OpenWeatherWeatherStation;
 import com.mirkoebert.weather.tinkerforge.TinkerforgeWeatherStation;
 
 import java.util.Map;
@@ -29,16 +29,16 @@ public class WeatherStationWebInfoController {
     @Value("${info.app.version}")
     private String buildVersion;
 
-    @Value("${weatherstation.position.altitude}")
+    @Value("${weatherstation.position.altitude:0}")
     private String altitude;
 
-    @Value("${weatherstation.mode.nightmode}")
+    @Value("${weatherstation.mode.night-mode: false}")
     private String nightmode;
 
-    @Value("${weatherstation.mode.alarmfashing}")
+    @Value("${weatherstation.mode.alarm-fashing: true}")
     private String alarmflashingmode;
 
-    @Value("${openweather.enable}")
+    @Value("${openweather.enable: false}")
     private boolean openweather_enable;
 
     @Value("${openweather.station_id}")
