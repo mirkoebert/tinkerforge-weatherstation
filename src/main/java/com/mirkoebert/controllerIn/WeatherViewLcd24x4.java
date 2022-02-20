@@ -39,7 +39,7 @@ public class WeatherViewLcd24x4 implements Runnable {
 
     public void paint() {
         try {
-            if (nightmode && isNight()) {
+            if (isNightModeAndNight()) {
                 try {
                     if (lcd.isBacklightOn()) {
                         lcd.backlightOff();
@@ -78,6 +78,10 @@ public class WeatherViewLcd24x4 implements Runnable {
         }
     }
 
+    private boolean isNightModeAndNight() {
+        return nightmode && isNight();
+    }
+
     private void flashBacklight() {
         try {
             lcd.backlightOff();
@@ -108,7 +112,7 @@ public class WeatherViewLcd24x4 implements Runnable {
         while (true) {
             try {
                 paint();
-                if (weatherMonitor.isAlarm() && alarmflashingmode) {
+                if (weatherMonitor.isAlarm() && alarmflashingmode && !isNightModeAndNight()) {
                     flashBacklight();
                     Thread.sleep(500);
                 } else {
