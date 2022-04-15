@@ -24,16 +24,16 @@ public class TinkerforgeWeatherMonitor {
 
     private boolean isHumidityAlarm() {
         final double h = tinkerforgeWeather.getHumdidity();
-        return (h > 0) && (h > 60 || h < 40);
+        return h > 0 && (h > 60 || h < 40);
     }
 
     private boolean isFrostAlarm() {
         final double t = tinkerforgeWeather.getTempIn();
-        return (t < 5) && (t > -273);
+        return t < 5 && t > -273;
     }
 
     private boolean isFireAlarm() {
-        return (tinkerforgeWeather.getTempIn() > 50);
+        return tinkerforgeWeather.getTempIn() > 50;
     }
 
     /**
@@ -49,7 +49,7 @@ public class TinkerforgeWeatherMonitor {
             final double deltaMaxMin = max.airpressureQFE - min.airpressureQFE;
             if (deltaMaxMin > 3.3) {
                 r = true;
-            } else if ((deltaMaxMin > 2) && (max.date < min.date)) {
+            } else if (deltaMaxMin > 2 && max.date < min.date) {
                 r = true;
             }
         }
@@ -119,9 +119,9 @@ public class TinkerforgeWeatherMonitor {
                     }
                 }
             } else {
-                if ((delta > 1.3) && (delta < 2)) {
+                if (delta > 1.3 && delta < 2) {
                     r = "Starker Wind 6-7 Bft";
-                } else if ((delta >= 2) && (delta < 3)) {
+                } else if (delta >= 2 && delta < 3) {
                     r = "Wind 8-9 Bft";
                 } else if (delta > 3) {
                     r = "Sturm 10- Bft";

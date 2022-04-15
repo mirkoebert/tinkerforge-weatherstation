@@ -1,7 +1,7 @@
 package com.mirkoebert.weather.openweather;
 
-import com.mirkoebert.weather.openweather.http.OpenWeatherWeatherStation;
 import com.mirkoebert.weather.openweather.http.OpenWeatherSecondaryController;
+import com.mirkoebert.weather.openweather.http.OpenWeatherWeatherStation;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class OpenWeatherService {
     public OpenWeatherWeather getWeather() {
         final long now = System.currentTimeMillis();
         OpenWeatherWeather owmNew = null;
-        if ((owm == null) || (now - lastWeatherUpdateAt > 60 * 1000)) {
+        if (owm == null || now - lastWeatherUpdateAt > 60 * 1000) {
             owmNew = owsender.getWeatherForWeatherDStationCoordinates();
             lastWeatherUpdateAt = System.currentTimeMillis();
         }

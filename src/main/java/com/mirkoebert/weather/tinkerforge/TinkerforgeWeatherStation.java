@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @Order(20)
-public final class TinkerforgeWeatherStation implements EnumerateListener {
+public class TinkerforgeWeatherStation implements EnumerateListener {
 
     private static final int callbackPeriodMsec = 30002;
     private static final String HOST = "localhost";
